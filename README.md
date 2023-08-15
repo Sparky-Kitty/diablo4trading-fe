@@ -4,12 +4,10 @@
 
 Requires [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/).
 
-## Project setup
-
-#### Windows Set Up
+## Windows Set Up
 Follow this setup guide - [Windows Setup Instructions](https://github.com/SanctuaryTeam/.github/blob/main/profile/SETUP.md)
 
-#### Unix Set Up
+## Unix Set Up
 1. Create a [new GitHub personal access token](https://github.com/settings/tokens/new) with the following scopes:
 
     ```
