@@ -1,63 +1,95 @@
-# @sanctuaryteam/web-app
+# sanctuaryteam/diablotrading-fe
+## Description
 
-## Pre-requisites
+diablo4.trading backend application
 
-Requires [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/).
-
-## Windows Set Up
+## Windows Installation
 Follow this setup guide - [Windows Setup Instructions](https://github.com/SanctuaryTeam/.github/wiki/WindowsSetUp)
 
-## Unix Set Up
-1. Create a [new GitHub personal access token](https://github.com/settings/tokens/new) with the following scopes:
+## Running the Application with Docker
 
-    ```
-    read:packages
-    ```
+To get your application up and running:
+- Ensure you have both Docker and Docker Compose installed.
+- Navigate to the directory containing your docker-compose.yml file.
+- Run the following command: `docker-compose up`
+- Access your application in your browser at http://localhost:3000.
 
-2. Set env variable `SANCTUARYTEAM_AUTH_TOKEN` to the token value. You should run `cp .env.example .env` and modify this new file to store your token.
-
-3. Run
-    ```bash
-    yarn install
-    ```
-
-## Compiles and hot-reloads for development
-
+## Development
+start: Starts the application in development mode.
 ```bash
-yarn dev
+$ yarn run start
 ```
 
-## Running commands on Docker service
-
+start:dev: Starts the application in development mode with watch enabled.
 ```bash
-docker-compose run web-app yarn add my-package --dev
+$ yarn run start:dev
 ```
 
-## Running dprint
-
+start:prod: Starts the application in production mode.
 ```bash
-yarn run format
+$ yarn run start:prod
 ```
-## Adding or updating localizations
 
-1. Add localizations in English using the string templating pattern that is throughout the project
-2. Run `yarn lingui:extract` to extract the English words to hashes.
-3. Update any localization `.json` files found in `src/modules/common/i18n`, this folder is auto-generated.
-4. Once you have updated the `.json` files run `yarn lingui:compile`.
-5. Check in the changes in a PR
-
-## Running Tests
-After a Unit test execution, a coverage folder will be created. Reports will be displayed in the output.
-an HTML copy you can open in a boewser will be located here "coverage/unit/src/index.html"
-1. Execute Unit tests
-   1. Will run all files with *.test.ts
+dev: Starts the Vite development server.
 ```bash
-yarn run test:unit
+$ yarn run dev
 ```
-2. Execute unit tests and provide coverage
-   1. After a Unit test execution, a coverage folder will be created.
-   2. Reports will be displayed in the output.
-   3. An HTML copy you can open in a boewser will be located here "coverage/unit/src/index.html"
+
+preview: Previews the production build using Vite.
 ```bash
-yarn run test:coverage 
+$ yarn run preview
+```
+
+tsc: Runs TypeScript compiler (tsc) without emitting any files.
+```bash
+$ yarn run tsc
+```
+
+## Translation
+
+lingui:extract:  Extracts translations with LinguiJS, and removes obsolete translations.
+```bash
+$ yarn run lingui:extract
+```
+
+lingui:compile: Compiles translations with LinguiJS and outputs TypeScript files.
+```bash
+$ yarn run lingui:compile
+```
+
+## Build & Deployment
+prebuild: Compiles translations before building.
+```bash
+$ yarn run prebuild
+```
+build: Compiles TypeScript and then builds the project using Vite.
+```bash
+$ yarn run build
+```
+## Code Quality (Linting & Formatting)
+lint: Lints TypeScript files with ESLint.
+```bash
+$ yarn run lint
+```
+format: Formats the code using dprint.
+```bash
+$ yarn run format
+```
+## Testing
+test: Runs both unit and UI tests.
+```bash
+$ yarn run test
+```
+
+test:unit: Runs unit tests with Jest using a specific configuration.
+```bash
+$ yarn run test:unit
+```
+test:ui: Runs UI tests with Jest using a specific configuration.
+```bash
+$ yarn run test:ui
+```
+test:coverage: Runs unit tests with Jest, generating coverage information.
+```bash
+$ yarn run test:coverage
 ```
