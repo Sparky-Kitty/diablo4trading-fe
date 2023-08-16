@@ -1,30 +1,14 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { Common } from '@modules/common';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
-import { Box, Card, Divider, Grid, Button, ToggleButton, ToggleButtonGroup, Typography, FormHelperText, TextField, Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
+import { Box, Card, Divider, Grid, Button, Typography, FormHelperText, TextField, Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
 import React from 'react';
-import { ServiceListing, ServiceOffer } from '../components';
+import { ServiceListing, ServiceOffer, ServiceTags } from '../components';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 
-const TAGS = {
-    POWERLEVELING: 1 << 0,
-    BOSS_HELP: 1 << 1,
-    UBER_LILITH: 1 << 2,
-    CAPSTONE_BOOST: 1 << 3,
-    EUROPE: 1 << 4,
-    ASIA: 1 << 5,
-    AMERICA: 1 << 6,
-};
-
 export const ListingsPage: React.FC = () => {
-    const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
-
-    const handleTagSelection = (_, newTags: number[]) => {
-        setSelectedTags(() => newTags);
-    };
 
     const [numOfSlots, setSlotAmount] = React.useState('');
 
@@ -84,29 +68,17 @@ export const ListingsPage: React.FC = () => {
 
                                 <Grid container spacing={1}>
                                     <Grid item xs={9}>
-                                        <ToggleButtonGroup
-                                            value={selectedTags}
-                                            onChange={handleTagSelection}
-                                            aria-label={t(i18n)`Service Types`}
-                                        >
-                                            <ToggleButton value={TAGS.POWERLEVELING}>{t(i18n)`Powerleveling`}</ToggleButton>
-                                            <ToggleButton value={TAGS.BOSS_HELP}>{t(i18n)`Boss Help`}</ToggleButton>
-                                            <ToggleButton value={TAGS.UBER_LILITH}>{t(i18n)`Uber Lilith`}</ToggleButton>
-                                            <ToggleButton value={TAGS.CAPSTONE_BOOST}>{t(i18n)`Capstone Boost`}</ToggleButton>
-                                            <ToggleButton value={TAGS.EUROPE}>{t(i18n)`Europe`}</ToggleButton>
-                                            <ToggleButton value={TAGS.ASIA}>{t(i18n)`Asia`}</ToggleButton>
-                                            <ToggleButton value={TAGS.AMERICA}>{t(i18n)`America`}</ToggleButton>
-                                        </ToggleButtonGroup>
+                                        <ServiceTags />
                                     </Grid>
                                     <Grid item xs={3}>
                                         <ServerTypeInput
                                             value={serverType}
                                             onChange={setServerType}                                            
                                         />
-                                        <FormHelperText>Seasonal/Eternal</FormHelperText>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField id="title-text-field" label="Title" variant="outlined" />
+                                        <FormHelperText>Please include price/rate in Title.</FormHelperText>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField id="content-text-field" label="Content" variant="outlined" multiline rows={5} />
