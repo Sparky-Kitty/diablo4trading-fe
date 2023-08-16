@@ -6,12 +6,24 @@ diablo4.trading backend application
 ## Windows Installation
 Follow this setup guide - [Windows Setup Instructions](https://github.com/SanctuaryTeam/.github/wiki/WindowsSetUp)
 
+## Set Up .env
+Docker will user this file for project specific environment variables
+- Create a [new GitHub personal access token](https://github.com/settings/tokens/new) with the following scopes:
+```
+    read:packages
+```
+
+- Update .env File:  run `cp .env.example .env` to create a new .env file. Update the new .env file with SANCTUARYTEAM_AUTH_TOKEN=YOUR_NEW_TOKEN
+
 ## Running the Application with Docker
 
 To get your application up and running:
 - Ensure you have both Docker and Docker Compose installed.
 - Navigate to the directory containing your docker-compose.yml file.
-- Run the following command: `docker-compose up`
+```bash
+$ cd ~/sanctuaryteam/diablo4trading-fe
+```
+- Run the following command: `docker compose up`
 - Access the Application: Once the containers are up and running, you can access the application in your browser using the URL: http://localhost:5173
 
 ## Development
