@@ -1,151 +1,26 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
-import { Box, Card, Divider, Grid, Button, Typography, FormHelperText, TextField, Select, MenuItem, FormControl, SelectChangeEvent } from '@mui/material';
+import { Grid } from '@mui/material';
 import React from 'react';
-import { ServiceListing, ServiceOffer, ServiceTags } from '../components';
-import { ServerTypeInput } from '../../common/components';
-import { useRouteServerType } from '../../common/providers';
+import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
 
 export const ListingsPage: React.FC = () => {
-
-    const [numOfSlots, setSlotAmount] = React.useState('');
-
-    const handleSlotsChange = (event: SelectChangeEvent) => {
-        setSlotAmount(event.target.value as string);
-    };
-
-    // const [realm, setRealm] = React.useState('');
-
-    // const handleRealmChange = (event: SelectChangeEvent) => {
-    //     setRealm(event.target.value as string);
-    // };
-
-    
-    const [serverType, setServerType] = useRouteServerType();
-    // let serverType, setServerType
-
-    // const tagsToNumber = React.useMemo(
-    //     () =>
-    //         selectedTags.reduce(
-    //             (previousValue: number, currentValue: number) => previousValue | currentValue,
-    //             0
-    //         ),
-    //     [selectedTags]
-    // );
-
     const { i18n } = useLingui();
 
     return (
         <React.Fragment>
-            <Grid container spacing={1}> 
-                <Grid item xs={12} md={3} alignContent={"flex-start"}>
-
-                    <Card sx={{ p: 2, pt: 0 }}>
-                        <Box pt={2} sx={{height: '100vh'}}>
-                            <Typography variant='subtitle2' color='text.secondary'>
-                                {t(i18n)`Notifications`}
-                            </Typography>
-                            <Divider />
-                            <ServiceOffer
-                                score={4.3}
-                                buyer={'Billybob'}
-                                service={'T4 Capstone Dungeon'}
-                            />
-                        </Box>
-                    </Card>
+            <Grid container spacing={1}>
+                <Grid item xs={12} md={3} alignContent={'flex-start'}>
+                    <ServiceOffers />
                 </Grid>
-                <Grid item xs={12} md={9} alignContent={"flex-end"}>
-                    <Card sx={{ p: 2, pt: 0 }}>
-                        <Box pt={2} sx={{height: '65vh'}}>
-                            <FormControl>
-
-                                <Typography variant='subtitle2' color='text.secondary'>
-                                    {t(i18n)`Create New Service`}
-                                </Typography>
-                                <Divider />
-
-                                <Grid container spacing={1}>
-                                    <Grid item xs={9}>
-                                        <ServiceTags />
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        <ServerTypeInput
-                                            value={serverType}
-                                            onChange={setServerType}                                            
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField id="title-text-field" label="Title" variant="outlined" />
-                                        <FormHelperText>Please include price/rate in Title.</FormHelperText>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <TextField id="content-text-field" label="Content" variant="outlined" multiline rows={5} />
-                                    </Grid>
-                                    <Grid item xs={9}>
-                                        <Select
-                                            labelId="slot-select-field-label"
-                                            id="slot-select-field"
-                                            value={numOfSlots}
-                                            label="Slots"
-                                            onChange={handleSlotsChange}
-                                        >
-                                            <MenuItem value={1}>One</MenuItem>
-                                            <MenuItem value={2}>Two</MenuItem>
-                                            <MenuItem value={3}>Three</MenuItem>
-                                        </Select>
-                                        <FormHelperText># of slots (max 3)</FormHelperText>
-                                    </Grid>
-                                    <Grid item xs={3} spacing={1}>
-                                        <Button
-                                            color='success'
-                                            variant='outlined'
-                                            startIcon={<PlaylistAddOutlinedIcon />}
-                                            sx={{ ml: 1 }}
-                                        >
-                                            {t(i18n)`Create`}
-                                        </Button>
-                                        <Button
-                                            color='error'
-                                            variant='outlined'
-                                            startIcon={<RestartAltIcon />}
-                                            sx={{ ml: 1 }}
-                                        >
-                                            {t(i18n)`Clear`}
-                                        </Button>
-                                    </Grid>
-
-                                </Grid>
-                            </FormControl>
-                        </Box>
-                    </Card>
+                <Grid item xs={12} md={9} alignContent={'flex-end'}>
+                    <ServiceCreate />
 
                     <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <ServiceListing
-                                user={'SparkyOnyx'}
-                                lastUpdated={'Today at 9:21 pm'}
-                                title='T4 Capstone Dungeon'
-                                content='Will run 1-3 people through the Fallen Temple dungeon'
-                            />
-                            <ServiceListing
-                                user={''}
-                                lastUpdated={''}
-                                title=''
-                                content=''
-                            />
-                            <ServiceListing
-                                user={''}
-                                lastUpdated={''}
-                                title=''
-                                content=''
-                            />
-                        </Grid>
+                        <ServiceListings />
                     </Grid>
-
                 </Grid>
             </Grid>
         </React.Fragment>
-    )
+    );
 };

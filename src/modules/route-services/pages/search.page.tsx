@@ -1,13 +1,12 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { Box, Card, Divider, Grid, Typography } from '@mui/material';
-import React from 'react';
-import { SearchResult, ServiceTags } from '../components';
 import { ServerTypeInput } from '@modules/common/components';
+import { Box, Button, Card, Divider, Grid, TextField, Typography } from '@mui/material';
+import React from 'react';
 import { useRouteServerType } from '../../common/providers';
+import { SearchResult, ServiceTags } from '../components';
 
 export const SearchPage: React.FC = () => {
-
     // const tagsToNumber = React.useMemo(
     //     () =>
     //         selectedTags.reduce(
@@ -25,21 +24,38 @@ export const SearchPage: React.FC = () => {
         <React.Fragment>
             <Card sx={{ p: 2, pt: 0 }}>
                 <Box pt={2}>
-                    <Grid container spacing={1}>
+                    <Grid container spacing={1} alignItems='center' justifyContent='space-around'>
                         <Grid item xs={12}>
                             <Typography variant='subtitle2' color='text.secondary'>
-                                {t(i18n)`Services`}
+                                {t(i18n)`Search Services`}
                             </Typography>
                             <Divider />
                         </Grid>
-                        <Grid item xs={9}>
-                            <ServiceTags />
-                        </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={2}>
                             <ServerTypeInput
                                 value={serverType}
-                                onChange={setServerType}                                            
-                            />                            
+                                onChange={setServerType}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Box
+                                display='flex'
+                                justifyContent='center'
+                            >
+                                <ServiceTags />
+                            </Box>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <TextField id='title-text-search-field' label='Title' variant='outlined' />
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Button
+                                color='success'
+                                variant='outlined'
+                                sx={{ ml: 1 }}
+                            >
+                                {t(i18n)`Search`}
+                            </Button>
                         </Grid>
                     </Grid>
                 </Box>

@@ -1,10 +1,10 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Common } from '@modules/common';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Avatar, Box, Button, Card, Collapse, Divider, Typography } from '@mui/material';
 import React from 'react';
 
@@ -137,5 +137,4 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
             </Card>
         );
     }
-
 };

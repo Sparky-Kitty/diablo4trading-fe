@@ -1,5 +1,5 @@
-import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { Box, Button, Card, Typography } from '@mui/material';
 import React from 'react';
 
@@ -29,23 +29,23 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
                         <Typography variant='subtitle1' fontWeight='bold'>
                             User with a rating of {score} would like to purchase {service}.
                         </Typography>
-                            <Button
-                                color='success'
-                                variant='outlined'
-                                startIcon={<ThumbUpOutlinedIcon />}
-                                sx={{ ml: 1 }}
-                            >
-                            </Button>
-                            <Button
-                                color='error'
-                                variant='outlined'
-                                startIcon={<ThumbDownOutlinedIcon />}
-                                sx={{ ml: 1 }}
-                            >
-                            </Button>
+                        <Button
+                            color='success'
+                            variant='outlined'
+                            startIcon={<ThumbUpOutlinedIcon />}
+                            sx={{ ml: 1 }}
+                        >
+                        </Button>
+                        <Button
+                            color='error'
+                            variant='outlined'
+                            startIcon={<ThumbDownOutlinedIcon />}
+                            sx={{ ml: 1 }}
+                        >
+                        </Button>
                     </Box>
                 </Box>
             </Card>
         );
-    } 
+    }
 };
