@@ -12,7 +12,7 @@ To get your application up and running:
 - Ensure you have both Docker and Docker Compose installed.
 - Navigate to the directory containing your docker-compose.yml file.
 - Run the following command: `docker-compose up`
-- Access your application in your browser at http://localhost:3000.
+- Access the Application: Once the containers are up and running, you can access the application in your browser using the URL: http://localhost:5173
 
 ## Development
 start: Starts the application in development mode.
