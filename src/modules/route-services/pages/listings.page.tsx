@@ -1,12 +1,12 @@
 // import { t } from '@lingui/macro';
 // import { useLingui } from '@lingui/react';
-import { Grid, useMediaQuery } from '@mui/material';
+import { Grid } from '@mui/material';
 import React from 'react';
 import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
 
 export const ListingsPage: React.FC = () => {
     // const { i18n } = useLingui();
-    const matches = useMediaQuery('(min-width:600px)');
+    // const matches = useMediaQuery('(min-width:600px)');
 
     return (
         <React.Fragment>
