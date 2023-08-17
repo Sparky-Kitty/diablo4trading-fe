@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup, useMediaQuery } from '@mui/material';
 import React from 'react';
 
 const TAGS = {
@@ -21,12 +21,14 @@ export const ServiceTags: React.FC = () => {
     };
 
     const { i18n } = useLingui();
+    const matches = useMediaQuery('(min-width:600px)');
 
     return (
         <ToggleButtonGroup
             value={selectedTags}
             onChange={handleTagSelection}
             aria-label={t(i18n)`Service Types`}
+            orientation={`${matches ? `horizontal` : `vertical`}`}
         >
             <ToggleButton value={TAGS.POWERLEVELING}>{t(i18n)`Powerleveling`}</ToggleButton>
             <ToggleButton value={TAGS.BOSS_HELP}>{t(i18n)`Boss Help`}</ToggleButton>

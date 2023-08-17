@@ -15,6 +15,7 @@ import {
     SelectChangeEvent,
     TextField,
     Typography,
+    useMediaQuery,
 } from '@mui/material';
 import React from 'react';
 import { ServerTypeInput } from '../../common/components';
@@ -22,7 +23,7 @@ import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
 
 export const ServiceCreate: React.FC = () => {
-    const [numOfSlots, setSlotAmount] = React.useState('');
+    const [numOfSlots, setSlotAmount] = React.useState('1');
 
     const handleSlotsChange = (event: SelectChangeEvent) => {
         setSlotAmount(event.target.value as string);
@@ -31,6 +32,7 @@ export const ServiceCreate: React.FC = () => {
     const [serverType, setServerType] = useRouteServerType();
 
     const { i18n } = useLingui();
+    const matches = useMediaQuery('(min-width:600px)');
 
     return (
         <Card sx={{ p: 2, pt: 0 }}>
@@ -41,18 +43,18 @@ export const ServiceCreate: React.FC = () => {
                     </Typography>
                     <Divider />
 
-                    <Grid container spacing={1}>
-                        <Grid item xs={9}>
+                    <Grid container spacing={1} sx={{ pt: 2 }}>
+                        <Grid item xs={6} md={9}>
                             <ServiceTags />
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={6} md={3}>
                             <ServerTypeInput
                                 value={serverType}
                                 onChange={setServerType}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField id='title-text-field' label='Title' variant='outlined' />
+                            <TextField id='title-text-field' label='Title' variant='outlined' sx={{ pt: 2 }} />
                             <FormHelperText>{t(i18n)`Please include price/rate in Title.`}</FormHelperText>
                         </Grid>
                         <Grid item xs={12}>
@@ -62,9 +64,10 @@ export const ServiceCreate: React.FC = () => {
                                 variant='outlined'
                                 multiline
                                 rows={5}
+                                sx={{ pt: 2 }}
                             />
                         </Grid>
-                        <Grid item xs={9}>
+                        <Grid item xs={9} sx={{ mt: 2 }}>
                             <Select
                                 labelId='slot-select-field-label'
                                 id='slot-select-field'
@@ -78,12 +81,12 @@ export const ServiceCreate: React.FC = () => {
                             </Select>
                             <FormHelperText># of slots (max 3)</FormHelperText>
                         </Grid>
-                        <Grid item xs={3} spacing={1}>
+                        <Grid item xs={3} sx={{ mt: 2 }}>
                             <Button
                                 color='success'
                                 variant='outlined'
                                 startIcon={<PlaylistAddOutlinedIcon />}
-                                sx={{ ml: 1 }}
+                                sx={{ ml: matches ? 0 : -2 }}
                             >
                                 {t(i18n)`Create`}
                             </Button>
@@ -91,7 +94,7 @@ export const ServiceCreate: React.FC = () => {
                                 color='error'
                                 variant='outlined'
                                 startIcon={<RestartAltIcon />}
-                                sx={{ ml: 1 }}
+                                sx={{ ml: matches ? 1 : -1, mt: matches ? 0 : 1 }}
                             >
                                 {t(i18n)`Clear`}
                             </Button>

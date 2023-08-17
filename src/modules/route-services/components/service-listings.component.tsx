@@ -1,8 +1,6 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import {
-    Grid,
-} from '@mui/material';
+import { Grid } from '@mui/material';
 import React from 'react';
 import { ServiceListing } from '../components';
 
@@ -10,7 +8,7 @@ export const ServiceListings: React.FC = () => {
     const { i18n } = useLingui();
 
     return (
-        <Grid item xs={12}>
+        <Grid item xs={12} md={12} sx={{}}>
             <ServiceListing // TODO: Replace with pulled data once understood.
                 user={'SparkyOnyx#1187'}
                 lastUpdated={'Today at 9:21 pm'}

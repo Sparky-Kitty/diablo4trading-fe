@@ -5,7 +5,7 @@ import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Avatar, Box, Button, Card, Collapse, Divider, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, Collapse, Divider, Grid, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 
 interface ServiceListingProps {
@@ -22,6 +22,7 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
     content,
 }) => {
     const { i18n } = useLingui();
+    const matches = useMediaQuery('(min-width:600px)');
     const [visible, setVisible] = React.useState<boolean>(false);
 
     if (user && title && content) {
@@ -66,34 +67,45 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                             <Box>
                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Avatar
-                                        src='https://placekitten.com/40/40'
-                                        sx={{ mr: 1 }}
-                                    />
-                                    <Box>
-                                        <Typography variant='subtitle1' fontWeight='bold'>
-                                            {user}
-                                        </Typography>
-                                        <Common.UserRating rating={6} score={456} />
-                                    </Box>
+                                    <Grid container spacing={1}>
+                                        <Grid item xs={12} md={6}>
+                                            <Avatar
+                                                src='https://placekitten.com/40/40'
+                                                sx={{ mr: 1 }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} md={6}>
+                                            <Box>
+                                                <Typography variant='subtitle1' fontWeight='bold'>
+                                                    {user}
+                                                </Typography>
+                                                <Common.UserRating rating={6} score={456} />
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
                                 </Box>
                             </Box>
-                            <Button
-                                color='info'
-                                variant='outlined'
-                                startIcon={<ArrowCircleUpOutlinedIcon />}
-                                sx={{ ml: 1 }}
-                            >
-                                {t(i18n)`Bump`}
-                            </Button>
-                            <Button
-                                color='error'
-                                variant='outlined'
-                                startIcon={<DeleteForeverIcon />}
-                                sx={{ ml: 1 }}
-                            >
-                                {t(i18n)`Delete Service`}
-                            </Button>
+
+                            <Grid container>
+                                <Grid item xs={3} md={12}>
+                                    <Button
+                                        color='info'
+                                        variant='outlined'
+                                        startIcon={<ArrowCircleUpOutlinedIcon />}
+                                        sx={{ ml: matches ? 40 : 3 }}
+                                    >
+                                        {t(i18n)`Bump`}
+                                    </Button>
+                                    <Button
+                                        color='error'
+                                        variant='outlined'
+                                        startIcon={<DeleteForeverIcon />}
+                                        sx={{ ml: matches ? 1 : 3, mt: matches ? 0 : 1 }}
+                                    >
+                                        {t(i18n)`Delete Service`}
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Box>
                         <Box>
                             <Typography variant='body2' color='textSecondary'>
