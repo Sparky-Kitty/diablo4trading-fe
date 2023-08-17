@@ -6,8 +6,9 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import TollIcon from '@mui/icons-material/Toll';
-import { Avatar, Box, Button, Card, Collapse, Divider, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, Collapse, Divider, Grid, Typography } from '@mui/material';
 import React from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 interface SearchResultProps {
     user: string;
@@ -37,17 +38,44 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                         alignItems: 'center',
                     }}
                 >
-                    <Typography variant='h6' fontWeight='bold'>
-                        {title}
-                    </Typography>
-                    <Button
-                        variant='outlined'
-                        color='secondary'
-                        onClick={() => setVisible(!visible)}
-                        endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                    >
-                        {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
-                    </Button>
+                    <BrowserView>
+                        <Grid container>
+                            <Grid item xs={9} alignContent='flex-start' justifyContent='flex-start'>
+                                <Typography variant='h6' fontWeight='bold'>
+                                    {title}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3} alignContent='flex-end' justifyContent='flex-end'>
+                                <Button
+                                    variant='outlined'
+                                    color='secondary'
+                                    onClick={() => setVisible(!visible)}
+                                    endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                >
+                                    {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </BrowserView>
+                    <MobileView>
+                        <Grid container spacing={1}>
+                            <Grid item xs={6}>
+                                <Typography variant='h6' fontWeight='bold'>
+                                    {title}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    variant='outlined'
+                                    color='secondary'
+                                    onClick={() => setVisible(!visible)}
+                                    endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                >
+                                    {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </MobileView>
                 </Box>
                 <Collapse in={visible}>
                     <Typography variant='body1' sx={{ mt: 1 }} component='pre'>
