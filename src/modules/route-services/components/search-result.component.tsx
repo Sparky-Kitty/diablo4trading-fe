@@ -6,9 +6,8 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import TollIcon from '@mui/icons-material/Toll';
-import { Avatar, Box, Button, Card, Collapse, Divider, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, Collapse, Divider, Grid, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
 
 interface SearchResultProps {
     user: string;
@@ -24,6 +23,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     content,
 }) => {
     const { i18n } = useLingui();
+    const matches = useMediaQuery('(min-width:600px)');
     const [visible, setVisible] = React.useState<boolean>(false);
 
     return (
@@ -38,8 +38,8 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                         alignItems: 'center',
                     }}
                 >
-                    <BrowserView>
-                        <Grid container>
+                    {matches // Browser View
+                        ? <Grid container>
                             <Grid item xs={9} alignContent='flex-start' justifyContent='flex-start'>
                                 <Typography variant='h6' fontWeight='bold'>
                                     {title}
@@ -56,26 +56,25 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                                 </Button>
                             </Grid>
                         </Grid>
-                    </BrowserView>
-                    <MobileView>
-                        <Grid container spacing={1}>
-                            <Grid item xs={6}>
-                                <Typography variant='h6' fontWeight='bold'>
-                                    {title}
-                                </Typography>
+                        : ( // Mobile View
+                            <Grid container spacing={1}>
+                                <Grid item xs={6}>
+                                    <Typography variant='h6' fontWeight='bold'>
+                                        {title}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Button
+                                        variant='outlined'
+                                        color='secondary'
+                                        onClick={() => setVisible(!visible)}
+                                        endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                    >
+                                        {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={6}>
-                                <Button
-                                    variant='outlined'
-                                    color='secondary'
-                                    onClick={() => setVisible(!visible)}
-                                    endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                                >
-                                    {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </MobileView>
+                        )}
                 </Box>
                 <Collapse in={visible}>
                     <Typography variant='body1' sx={{ mt: 1 }} component='pre'>
