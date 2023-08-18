@@ -6,40 +6,58 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Box, Button, Card, Collapse, Divider, Grid, Typography } from '@mui/material';
 import React from 'react';
-import { useRouteServerType } from '../../common/providers';
-import { SearchResult, ServiceTags } from '../components';
+// import { API } from './../../../../../shared/src';
+import { API } from '@sanctuaryteam/shared'
+import { useSearchParams } from 'react-router-dom';
+// import { useRouteServerType } from '../../common/providers';
+import { SearchFilter, Search, SearchResult, ServiceTags } from '../components';
 import { ServiceTitleInput } from '../components/inputs';
+import { useRouteServerType } from '@modules/common/providers';
+// import { ServiceTitleInput } from '../components/inputs';
+
+const PARAM_PAYLOAD = 'p';
 
 export const SearchPage: React.FC = () => {
     const [serverType, setServerType] = useRouteServerType();
 
     const [visible, setVisible] = React.useState<boolean>(true);
-
-    // const handleServiceTitleChange = (event: SelectChangeEvent) => {
-    //     setServiceTitle(event.target.value as string);
-    // };
+    const { i18n } = useLingui();
+    const [params, setParams] = useSearchParams();
 
     const [serviceTitle, setServiceTitle] = React.useState('');
     const handleServiceTitleChange = (value: string) => {
         setServiceTitle(() => value);
     };
+    
+    const serializedPayload = params.get(PARAM_PAYLOAD);
+    // const payload = React.useMemo(() => {
+    //     return API.deserializeServiceSearchPayload(serializedPayload);
+    // }, [serializedPayload]);
 
-    // const handleSubmit = (event: React.FormEvent) => {
-    //     event.preventDefault();
-    //     onSearch(payload);
-    //     setVisible(false);
+    const [timestamp, setTimestamp] = React.useState<number>(undefined);
+
+    // const handleSearch = (payload: API.ServiceSearchPayload) => {
+    //     // Reset timestamp to force re-render
+    //     setTimestamp(undefined);
+    //     setParams({
+    //         [PARAM_PAYLOAD]: API.serializeServiceSearchPayload(payload),
+    //     });
     // };
 
-    const handleClear = () => {
-        // setPayload({});
-        setVisible(true);
-    };
-
-    const { i18n } = useLingui();
-    // const matches = useMediaQuery('(min-width:600px)');
-
     return (
-        <React.Fragment>
+        <React.Fragment>            
+            {/* <SearchFilter // TODO: Implement this mostly working setup for using shared interfaces.
+                payload={payload}
+                onSearch={handleSearch}
+            />
+            {serializedPayload?.length > 0 && (
+                <Search
+                    serializedPayload={serializedPayload}
+                    timestamp={timestamp}
+                    onTimestampChange={setTimestamp}
+                />
+            )} */}
+
             <Card sx={{ p: 2, pt: 0 }}>
                 <Collapse in={visible}>
                     <Box pt={2}>
@@ -112,7 +130,7 @@ export const SearchPage: React.FC = () => {
                         >
                             <Button
                                 variant='outlined'
-                                onClick={handleClear}
+                                // onClick={handleClear}
                                 startIcon={<RestoreIcon />}
                             >
                                 {t(i18n)`Clear`}

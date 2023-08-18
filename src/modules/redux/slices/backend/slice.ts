@@ -1,6 +1,7 @@
 import { API_ENDPOINT } from '@config';
 import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { API } from '@sanctuaryteam/shared';
+import { API } from '../../../../../../shared/src/'; // Temporarily for my usage of the correct Payload
+// import { API } from '@sanctuaryteam/shared'; // Commented for above reason
 import { AuthSelectors } from '../auth/selectors';
 import { AuthSlice } from '../auth/slice';
 import { RootState } from '../root';
@@ -48,6 +49,14 @@ export const BackendSlice = createApi({
                 params,
             }),
         }),
+        // service
+        serviceSearch: builder.query<API.ServiceGetSearchResponse, API.ServiceGetSearchQuery>({
+            query: params => ({
+                url: '/service/search',
+                method: 'GET',
+                params,
+            }),
+        }),
     }),
 });
 
@@ -56,4 +65,6 @@ export const {
     useAuthDiscordCallbackQuery,
     // trade
     useLazyTradeSearchQuery,
+    // trade
+    useLazyServiceSearchQuery,
 } = BackendSlice;
