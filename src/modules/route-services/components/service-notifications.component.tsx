@@ -17,7 +17,7 @@ export const ServiceOffers: React.FC = () => {
                 <ServiceOffer
                     score={4.3}
                     buyer={'Billybob#0382'}
-                    service={t(i18n)`T4 Capstone Dungeon`}
+                    service={'T4 Capstone Dungeon'}
                 />
             </Box>
         </Card>

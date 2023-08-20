@@ -33,7 +33,7 @@ interface ServiceData {
   title: string;
   content: string;
   userId: number;
-  tags: number[];
+  tags: number;
   maxAcceptedSlots: number;
 }
 
@@ -46,7 +46,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
       title: '',
       content: '',
       userId: 1,
-      tags: [],
+      tags: 0,
       maxAcceptedSlots: 3,
     });
 
@@ -66,7 +66,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
 
     const handleTagsSelection = (newTags: number[]) => {
         setSelectedTags(newTags);
-        setServiceData({ ...serviceData, tags: selectedTags});
+        setServiceData({ ...serviceData, tags: selectedTags.reduce((acc, tag) => acc | tag, 0)});
     };
     
     const handleSubmit = async (e) => {

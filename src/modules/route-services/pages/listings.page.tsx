@@ -3,8 +3,6 @@
 import { Grid } from '@mui/material';
 import React from 'react';
 import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
-// import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
-// import { BackendSlice  } from './../../redux/slices'
 
 export const ListingsPage: React.FC = () => {
     
@@ -14,8 +12,6 @@ export const ListingsPage: React.FC = () => {
         }, 1000 * 5);
         
     };
-    // const { i18n } = useLingui();
-    // const matches = useMediaQuery('(min-width:600px)');
 
     return (
         <React.Fragment>

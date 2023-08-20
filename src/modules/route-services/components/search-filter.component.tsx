@@ -30,7 +30,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     const [serverType, setServerType] = Common.useRouteServerType();
 
     const [visible, setVisible] = React.useState<boolean>(true);
-    const [payload, setPayload] = React.useState<API.ServiceSearchPayload>(initialPayload); // TODO: Replace with new ServiceSearchPayload
+    const [payload, setPayload] = React.useState<API.ServiceSearchPayload>(initialPayload); 
 
     const {
         query = {},

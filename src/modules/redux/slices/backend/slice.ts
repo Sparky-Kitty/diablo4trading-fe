@@ -52,7 +52,7 @@ export const BackendSlice = createApi({
         // service-search
         serviceSearch: builder.query<API.ServiceGetSearchResponse, API.ServiceGetSearchQuery>({
             query: params => ({
-                url: '/service/search',
+                url: '/services',
                 method: 'GET',
                 params,
             }),
