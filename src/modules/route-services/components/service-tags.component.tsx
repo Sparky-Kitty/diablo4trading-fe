@@ -13,18 +13,12 @@ const TAGS = {
     AMERICA: 1 << 6,
 };
 
-export const ServiceTags: React.FC = () => {
-    const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
+interface ServiceTagsProps {
+    selectedTags: number[];
+    onSelectTags: (newTags: number[]) => void;
+}
 
-    const handleTagSelection = (_, newTags: number[]) => {
-        setSelectedTags(() => newTags);
-    };
-    const [selectedRegion, setSelectedRegion] = React.useState<number>();
-
-    const handleRegionSelection = (_, newRegion: number) => {
-        setSelectedRegion(() => newRegion);
-    };
-
+export const ServiceTags: React.FC<ServiceTagsProps> = ({ selectedTags, onSelectTags }) => {
     const { i18n } = useLingui();
     const matches = useMediaQuery('(min-width:600px)');
 
@@ -32,7 +26,7 @@ export const ServiceTags: React.FC = () => {
         <React.Fragment>
             <ToggleButtonGroup
                 value={selectedTags}
-                onChange={handleTagSelection}
+                onChange={(_, newTags: number[]) => onSelectTags(newTags)} 
                 aria-label={t(i18n)`Service Types`}
                 orientation={`${matches ? `horizontal` : `vertical`}`}
             >
@@ -40,15 +34,6 @@ export const ServiceTags: React.FC = () => {
                 <ToggleButton value={TAGS.BOSS_HELP}>{t(i18n)`Boss Help`}</ToggleButton>
                 <ToggleButton value={TAGS.UBER_LILITH}>{t(i18n)`Uber Lilith`}</ToggleButton>
                 <ToggleButton value={TAGS.CAPSTONE_BOOST}>{t(i18n)`Capstone Boost`}</ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup
-                value={selectedRegion}
-                onChange={handleRegionSelection}
-                exclusive
-                aria-label={t(i18n)`Region`}
-                orientation={`${matches ? `horizontal` : `vertical`}`}
-                sx={{ ml: 1 }}
-            >
                 <ToggleButton value={TAGS.EUROPE}>{t(i18n)`Europe`}</ToggleButton>
                 <ToggleButton value={TAGS.ASIA}>{t(i18n)`Asia`}</ToggleButton>
                 <ToggleButton value={TAGS.AMERICA}>{t(i18n)`America`}</ToggleButton>

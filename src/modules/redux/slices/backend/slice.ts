@@ -49,13 +49,21 @@ export const BackendSlice = createApi({
                 params,
             }),
         }),
-        // service
+        // service-search
         serviceSearch: builder.query<API.ServiceGetSearchResponse, API.ServiceGetSearchQuery>({
             query: params => ({
                 url: '/service/search',
                 method: 'GET',
                 params,
             }),
+        }),
+        // service-create
+        createService: builder.mutation({
+          query: (serviceData) => ({
+            url: '/services', // Replace with your actual API endpoint
+            method: 'POST',
+            body: serviceData,
+          }),
         }),
     }),
 });
@@ -67,4 +75,5 @@ export const {
     useLazyTradeSearchQuery,
     // trade
     useLazyServiceSearchQuery,
+    useCreateServiceMutation,
 } = BackendSlice;

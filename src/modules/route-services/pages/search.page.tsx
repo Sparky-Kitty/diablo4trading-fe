@@ -28,6 +28,12 @@ export const SearchPage: React.FC = () => {
     const handleServiceTitleChange = (value: string) => {
         setServiceTitle(() => value);
     };
+
+    const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
+
+    const handleTagsSelection = (newTags: number[]) => {
+        setSelectedTags(newTags);
+    };
     
     const serializedPayload = params.get(PARAM_PAYLOAD);
     // const payload = React.useMemo(() => {
@@ -91,7 +97,7 @@ export const SearchPage: React.FC = () => {
                                     display='flex'
                                     justifyContent='flex-start'
                                 >
-                                    <ServiceTags />
+                                    <ServiceTags selectedTags={selectedTags} onSelectTags={handleTagsSelection} />
                                 </Box>
                             </Grid>
                         </Grid>
