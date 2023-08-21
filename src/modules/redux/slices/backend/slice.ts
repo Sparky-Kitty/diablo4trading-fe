@@ -60,9 +60,23 @@ export const BackendSlice = createApi({
         // service-create
         createService: builder.mutation({
           query: (serviceData) => ({
-            url: '/services', // Replace with your actual API endpoint
+            url: '/services',
             method: 'POST',
             body: serviceData,
+          }),
+        }),
+        // service-bump
+        bumpService: builder.mutation({
+          query: (id) => ({
+            url: `/services/${id}/bump`,
+            method: 'POST',
+          }),
+        }),
+        // service-delete
+        softDeleteService: builder.mutation({
+          query: (id) => ({
+            url: `/services/${id}/soft-delete`,
+            method: 'PUT',
           }),
         }),
     }),
@@ -71,9 +85,14 @@ export const BackendSlice = createApi({
 export const {
     // auth
     useAuthDiscordCallbackQuery,
-    // trade
+    // trade-search
     useLazyTradeSearchQuery,
-    // trade
+    // service-search
     useLazyServiceSearchQuery,
+    // service-create
     useCreateServiceMutation,
+    // service-bump
+    useBumpServiceMutation,
+    // service-delete
+    useSoftDeleteServiceMutation,
 } = BackendSlice;
