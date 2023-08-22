@@ -49,6 +49,11 @@ export const ServiceListings: React.FC = () => {
                 id={service1?.listing?.id}
                 // lastUpdated={'Today at 9:21 pm'}
                 lastUpdated={new Date(service1?.listing?.updatedAt).toLocaleString()}
+            <ServiceListing
+                user={'SparkyOnyx#1187'} // TODO: Replace with pulled account data once understood.
+                id={service1?.listing?.id}
+                // lastUpdated={'Today at 9:21 pm'}
+                lastUpdated={new Date(service1?.listing?.updatedAt).toLocaleString()}
                 title={service1?.listing?.title}
                 content={service1?.listing?.content}
             />
@@ -57,11 +62,18 @@ export const ServiceListings: React.FC = () => {
                 id={service2?.listing?.id}
                 // lastUpdated={'Today at 9:21 pm'}
                 lastUpdated={new Date(service2?.listing?.updatedAt).toLocaleString()}
+                id={service2?.listing?.id}
+                // lastUpdated={'Today at 9:21 pm'}
+                lastUpdated={new Date(service2?.listing?.updatedAt).toLocaleString()}
                 title={service2?.listing?.title}
                 content={service2?.listing?.content}
             />
             <ServiceListing
                 user={'SparkyOnyx#1187'}
+                id={service3?.listing?.id}
+                // lastUpdated={'Today at 9:21 pm'}
+                lastUpdated={new Date(service3?.listing?.updatedAt).toLocaleString()}
+                title={service3?.listing?.title}
                 id={service3?.listing?.id}
                 // lastUpdated={'Today at 9:21 pm'}
                 lastUpdated={new Date(service3?.listing?.updatedAt).toLocaleString()}
