@@ -34,6 +34,7 @@ interface ServiceData {
   content: string;
   userId: number;
   tags: number;
+  deleted: boolean;
   maxAcceptedSlots: number;
 }
 
@@ -47,6 +48,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
       content: '',
       userId: 1,
       tags: 0,
+      deleted: false,
       maxAcceptedSlots: 3,
     });
 
