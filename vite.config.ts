@@ -15,7 +15,9 @@ export default defineConfig({
             '@assets': path.resolve(__dirname, './src/assets'),
             '@config': path.resolve(__dirname, './src/config.ts'),
             '@modules': path.resolve(__dirname, './src/modules'),
+            '@sanctuaryteam/shared': path.resolve(__dirname, './shared/src'),
         },
+        preserveSymlinks: true
     },
     plugins: [
         react({
@@ -27,6 +29,9 @@ export default defineConfig({
         svgr(),
         reactVirtualized(),
     ],
+    optimizeDeps: {
+        exclude: ['@sanctuaryteam/shared'],
+    },
 });
 
 // https://github.com/uber/baseweb/issues/4129#issuecomment-1208168306

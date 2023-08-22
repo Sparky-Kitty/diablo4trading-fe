@@ -12,6 +12,7 @@ services:
         # Mount the current directory into the container for live code editing
         volumes:
             - .:/app
+            - ../shared:/app/shared
         # Expose the development server port (if needed)
         ports:
             - '5173:5173'
@@ -20,5 +21,11 @@ services:
             - sh
             - -c
             - |
+                cd /app/shared
                 yarn install
+                yarn build
+                yarn link
+                cd /app
+                yarn install
+                yarn link '@sanctuaryteam/shared'
                 yarn dev --host

@@ -8,7 +8,8 @@
     "paths": {
       "@assets/*": ["./src/assets/*"],
       "@config": ["./src/config.ts"],
-      "@modules/*": ["./src/modules/*"]
+      "@modules/*": ["./src/modules/*"],
+      "@sanctuaryteam/shared": ["../shared/src"]
     },
     /* Bundler mode */
     "moduleResolution": "bundler",
