@@ -6,5 +6,7 @@ export * from './search-result.component';
 export * from './service-create.component';
 export * from './service-listing.component';
 export * from './service-listings.component';
+export * from './search-filter-tags.component';
+export * from './search-filter-title.component';
 export * from './service-notification.component';
 export * from './service-notifications.component';

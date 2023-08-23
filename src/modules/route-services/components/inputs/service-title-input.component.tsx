@@ -18,14 +18,14 @@ export const ServiceTitleInput: React.FC<ServiceTitleProps> = ({
     helperText,
     disabled,
 }) => {
-    const [textValue, setTextValue] = React.useState<string>(toString(value));
+    const [textValue, setTextValue] = React.useState<string>(value);
     useEffect(() => {
-        setTextValue(toString(value));
+        setTextValue(value);
     }, [value]);
 
     const setValue = (next: string) => {
         if (next === value) {
-            setTextValue(toString(value));
+            setTextValue(value);
             return;
         }
         onChange(next);

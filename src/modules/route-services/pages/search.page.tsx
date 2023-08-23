@@ -6,19 +6,22 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Box, Button, Card, Collapse, Divider, Grid, Typography } from '@mui/material';
 import React from 'react';
-// import { API } from './../../../../../shared/src';
-import { API } from '@sanctuaryteam/shared'
+import { API } from './../../../abcd-shared/api';
+// import { API } from '@sanctuaryteam/shared'
 import { useSearchParams } from 'react-router-dom';
 // import { useRouteServerType } from '../../common/providers';
 import { SearchFilter, Search, SearchResult, ServiceTags } from '../components';
 import { ServiceTitleInput } from '../components/inputs';
 import { useRouteServerType } from '@modules/common/providers';
+import { useSelector } from 'react-redux';
+import { AuthSelectors, ServiceSelectors, useServiceSearchQuery } from '@modules/redux/slices';
 // import { ServiceTitleInput } from '../components/inputs';
 
 const PARAM_PAYLOAD = 'p';
 
 export const SearchPage: React.FC = () => {
     const [serverType, setServerType] = useRouteServerType();
+    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
 
     const [visible, setVisible] = React.useState<boolean>(true);
     const { i18n } = useLingui();
@@ -42,29 +45,39 @@ export const SearchPage: React.FC = () => {
 
     const [timestamp, setTimestamp] = React.useState<number>(undefined);
 
-    // const handleSearch = (payload: API.ServiceSearchPayload) => {
-    //     // Reset timestamp to force re-render
-    //     setTimestamp(undefined);
-    //     setParams({
-    //         [PARAM_PAYLOAD]: API.serializeServiceSearchPayload(payload),
-    //     });
-    // };
+    const handleSearch = (query: API.ServiceGetSearchQuery) => {
+        // Reset timestamp to force re-render
+        setTimestamp(undefined);
+
+
+        useServiceSearchQuery(serviceGetSearchQuery);
+        const listings = useSelector(ServiceSelectors.getListings)
+    };
+
+    const serviceGetSearchQuery: API.ServiceGetSearchQuery = {
+        serverType,
+        title: '',
+        tags: 0,
+        deleted: false,
+        limit: 50
+    };
+
 
     return (
         <React.Fragment>            
-            {/* <SearchFilter // TODO: Implement this mostly working setup for using shared interfaces.
-                payload={payload}
+            <SearchFilter // TODO: Implement this mostly working setup for using shared interfaces.
+                query={serviceGetSearchQuery}
                 onSearch={handleSearch}
             />
-            {serializedPayload?.length > 0 && (
+            {/* {serializedPayload?.length > 0 && (
                 <Search
-                    serializedPayload={serializedPayload}
+                    query={serviceGetSearchQuery}
                     timestamp={timestamp}
                     onTimestampChange={setTimestamp}
                 />
             )} */}
 
-            <Card sx={{ p: 2, pt: 0 }}>
+            {/* <Card sx={{ p: 2, pt: 0 }}>
                 <Collapse in={visible}>
                     <Box pt={2}>
                         <Grid container spacing={1} alignItems='center' justifyContent='space-around'>
@@ -161,7 +174,7 @@ export const SearchPage: React.FC = () => {
 -Kill everything easy for you to follow and loot. Sell when full
 -Cool Lvling with T100, sure you will find upgrade after runs
 -Drop your btag and chill with me '
-            />
+            /> */}
         </React.Fragment>
     );
 };

@@ -44,57 +44,6 @@ export const Search: React.FC<SearchResultsProps> = ({
     const [cache, setCache] = React.useState<Record<string, API.ServiceGetSearchResponse>>({});
     const [fetch, query] = Redux.useLazyServiceSearchQuery();
 
-    const next = React.useCallback(async (
-        serverType: Game.ServerType,
-        payload: string,
-        page: number,
-        timestamp: number,
-    ) => {
-        const result = await fetch({ serverType, payload, page, pageSize: PAGE_SIZE, timestamp });
-        if (result.isSuccess) {
-            const cacheKey = createCacheKey(serverType, payload, result.data.timestamp);
-            setCache((cache) => {
-                const prev = cache[cacheKey]?.results || [];
-                const set = new Set(prev.map((x) => x.listing.id));
-                const next = result.data.results.filter((x) => !set.has(x.listing.id));
-                return {
-                    ...cache,
-                    [cacheKey]: {
-                        results: [...prev, ...next],
-                        hasMore: result.data.hasMore,
-                        timestamp: result.data.timestamp,
-                    },
-                };
-            });
-            return result;
-        }
-        throw new Error('Unable to fetch search results');
-    }, [fetch]);
-
-    const loader = React.useRef<InfiniteLoader>();
-    React.useLayoutEffect(() => {
-        if (!isNaN(timestamp)) {
-            return;
-        }
-        next(serverType, payload, 1, undefined)
-            .then(result => {
-                loader.current?.resetLoadMoreRowsCache(true);
-                onTimestampChange(result.data.timestamp);
-            })
-            .catch((error) => {
-                console.warn('Unable to fetch search results', error);
-            });
-    }, [next, payload, serverType, timestamp, onTimestampChange]);
-
-    const key = createCacheKey(serverType, payload, timestamp);
-    const { results, hasMore } = cache[key] ?? { results: [], hasMore: true };
-    const page = Math.floor(results.length / PAGE_SIZE);
-    const rowCount = results.length;
-
-    const handleNextPage = React.useCallback(async () => {
-        if (page === 0) return;
-        await next(serverType, payload, page + 1, timestamp);
-    }, [next, page, payload, serverType, timestamp]);
 
     const listRef = React.useRef<List>();
 
@@ -141,13 +90,6 @@ export const Search: React.FC<SearchResultsProps> = ({
 
     return (
         <Root>
-            <InfiniteLoader
-                ref={loader}
-                isRowLoaded={({ index }) => index < rowCount}
-                loadMoreRows={handleNextPage}
-                rowCount={hasMore ? rowCount + 1 : rowCount}
-                threshold={2}
-            >
                 {({ registerChild: registerChildLoader, onRowsRendered }) => (
                     <AutoSizer disableHeight>
                         {({ width }) => {
@@ -180,7 +122,6 @@ export const Search: React.FC<SearchResultsProps> = ({
                         }}
                     </AutoSizer>
                 )}
-            </InfiniteLoader>
             <Snackbar
                 open={query.isError}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

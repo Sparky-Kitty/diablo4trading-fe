@@ -15,7 +15,7 @@ export interface ServiceListing {
 export interface ServiceGetSearchQuery {
     serverType: Game.ServerType;
     title?: string;
-    tags?: number[];
+    tags?: number;
     userId?: number;
     deleted?: boolean;
     offset?: number;

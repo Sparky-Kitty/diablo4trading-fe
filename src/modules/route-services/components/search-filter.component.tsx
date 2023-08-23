@@ -6,23 +6,21 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Box, Button, Card, Collapse, Divider, Grid } from '@mui/material';
-import { API } from '../../../../../shared/src/'; // Temporarily for my usage of the correct Payload
+import { API } from './../../../abcd-shared/api'; // Temporarily for my usage of the correct Payload
 // import { API } from '@sanctuaryteam/shared'; // Commented for above reason
 import React from 'react';
-// import { SearchFilterAffix } from './search-filter-affix.component'; // TODO Replace with new SearchFilterTitle
-// import { SearchFilterItem } from './search-filter-item.component'; // TODO Replace with new SearchFilterTagsRegion
+import { SearchFilterTitle } from './search-filter-title.component';
+import { SearchFilterTags } from './search-filter-tags.component';
 
 const SEASONAL_SERVERS = [Game.ServerType.Seasonal, Game.ServerType.SeasonalHardcore];
 
-// const isSeasonalItemType = (type: Game.ItemType) => [Game.ItemType.Amulet, Game.ItemType.Ring].includes(type);
-
 interface SearchFilterProps {
-    payload: API.ServiceSearchPayload; // TODO: Replace with new ServiceSearchPayload
-    onSearch: (payload: API.ServiceSearchPayload) => void; // TODO: Replace with new ServiceSearchPayload
+    query: API.ServiceGetSearchQuery;
+    onSearch: (query: API.ServiceGetSearchQuery) => void;
 }
 
 export const SearchFilter: React.FC<SearchFilterProps> = ({
-    payload: initialPayload,
+    query: initialQuery,
     onSearch,
 }) => {
     const { i18n } = useLingui();
@@ -30,29 +28,30 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     const [serverType, setServerType] = Common.useRouteServerType();
 
     const [visible, setVisible] = React.useState<boolean>(true);
-    const [payload, setPayload] = React.useState<API.ServiceSearchPayload>(initialPayload); 
+    const [query, setQuery] = React.useState<API.ServiceGetSearchQuery>(initialQuery); 
+    const [timestamp, setTimestamp] = React.useState<number>(undefined);
 
-    const {
-        query = {},
-    } = payload;
+    // const {
+    //     query = {},
+    // } = payload;
 
-    React.useEffect(() => {
-        if (!SEASONAL_SERVERS.includes(serverType)) {
-                setPayload({
-                    ...payload,
-                    query: { ...payload.query },
-                });
-        }
-    }, [payload, serverType]);
+    // React.useEffect(() => {
+    //     if (!SEASONAL_SERVERS.includes(serverType)) {
+    //             setPayload({
+    //                 ...payload,
+    //                 query: { ...payload.query },
+    //             });
+    //     }
+    // }, [payload, serverType]);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        onSearch(payload);
+        onSearch(query);
         setVisible(false);
     };
 
     const handleClear = () => {
-        setPayload({});
+        setTimestamp(undefined);
         setVisible(true);
     };
 
@@ -65,26 +64,26 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                             <Grid item xs={12} md={6}>
                                 <Grid container item spacing={2}>
                                     <Grid item xs={12}>
-                                        {/* <SearchFilterItem // TODO: Replace with new SearchFilterTitle
-                                            value={query.item}
-                                            onChange={(item) =>
-                                                setPayload({
-                                                    ...payload,
-                                                    query: { ...query, item },
+                                        <SearchFilterTitle
+                                            value={query.title}
+                                            onChange={(title) =>
+                                                setQuery({
+                                                    ...query,
+                                                    title: title.toString(),
                                                 })}
-                                        /> */}
+                                        />
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                {/* <SearchFilterAffix
-                                    value={query.affix}
-                                    onChange={(affix) =>
-                                        setPayload({
-                                            ...payload,
-                                            query: { ...query, affix },
+                                <SearchFilterTags
+                                    value={query.tags}
+                                    onChange={(tags) =>
+                                        setQuery({
+                                            ...query,
+                                            tags: tags,
                                         })}
-                                /> */}
+                                />
                             </Grid>
                             <Grid item xs={12} sx={{ display: { md: 'none' } }}>
                                 <Divider />
