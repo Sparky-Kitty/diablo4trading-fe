@@ -1,4 +1,4 @@
-import { select, t } from '@lingui/macro';
+import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
@@ -20,8 +20,8 @@ import React from 'react';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
-import { useCreateServiceMutation } from '@modules/redux/slices';
-// import { ServicesService } from './../../../../../diablo4trading-be/src/services/services.service';
+import { AuthSelectors, useCreateServiceMutation } from '@modules/redux/slices';
+import { useSelector } from 'react-redux';
 
 interface ServiceCreateFormProps {
   onSubmit: (serviceData: ServiceData) => void;
@@ -39,6 +39,7 @@ interface ServiceData {
 }
 
 export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel }) => {
+    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
     const [createService] = useCreateServiceMutation();
     const [serverType, setServerType] = useRouteServerType();
      
@@ -46,7 +47,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
       realmType: serverType,
       title: '',
       content: '',
-      userId: 1,
+      userId,
       tags: 0,
       deleted: false,
       maxAcceptedSlots: 3,
@@ -67,8 +68,8 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
     const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
 
     const handleTagsSelection = (newTags: number[]) => {
-        setSelectedTags(newTags);
-        setServiceData({ ...serviceData, tags: selectedTags.reduce((acc, tag) => acc | tag, 0)});
+        setSelectedTags(() => newTags);
+        setServiceData({ ...serviceData, tags: newTags.reduce((acc, tag) => acc | tag, 0)});
     };
     
     const handleSubmit = async (e) => {
@@ -76,11 +77,10 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
         e.preventDefault();
 
         try {
-        await createService(serviceData);
-
-        console.log('Service created successfully!');
+            await createService(serviceData);
+            console.log('Service created successfully!');
         } catch (error) {
-        console.error('Error creating service:', error);
+            console.error('Error creating service:', error);
         }
     }
 

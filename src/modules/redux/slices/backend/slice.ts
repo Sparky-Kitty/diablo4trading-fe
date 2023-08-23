@@ -76,7 +76,7 @@ export const BackendSlice = createApi({
         softDeleteService: builder.mutation({
           query: (id) => ({
             url: `/services/${id}/soft-delete`,
-            method: 'PUT',
+            method: 'DELETE',
           }),
         }),
     }),
@@ -89,6 +89,7 @@ export const {
     useLazyTradeSearchQuery,
     // service-search
     useLazyServiceSearchQuery,
+    useServiceSearchQuery,
     // service-create
     useCreateServiceMutation,
     // service-bump

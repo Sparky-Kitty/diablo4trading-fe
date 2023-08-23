@@ -1,51 +1,78 @@
 // import { API_ENDPOINT } from '@config';
-import { Game } from '@diablosnaps/common';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-// import { BaseQueryFn, createApi, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-// import { API } from './../../../../abcd-shared/api'; // Temporarily for my usage of the correct Payload
+import { createSlice } from '@reduxjs/toolkit';
+import { API } from './../../../../abcd-shared/api'; // Temporarily for my usage of the correct Payload
 // import { API } from '@sanctuaryteam/shared'; // Commented for above reason
-// import { AuthSelectors } from '../auth/selectors';
-// import { AuthSlice } from '../auth/slice';
-// import { RootState } from '../root';
+import { BackendSlice } from './../backend/slice';
 
 interface ServiceState {
-    realmType: Game.ServerType;
-    title: string;
-    content: string;
-    userId: number;
-    tags: number;
-    bumpedAt: Date;
-    deleted: boolean;
+    listings: API.ServiceListing[]
 }
 
 export const SERVICE_STATE_INITIAL : ServiceState = {
-    realmType: Game.ServerType.Seasonal,
-    title: '',
-    content: '',
-    userId: null,
-    tags: 0,
-    bumpedAt: null,
-    deleted: false,
+    listings: []
 };
 
 export const ServiceSlice = createSlice({
     name: 'service',
     initialState: SERVICE_STATE_INITIAL,
     reducers: {
-        setTitle: (state, action: PayloadAction<string>) => {
-            state.title = action.payload
-        },
-        setContent: (state, action: PayloadAction<string>) => {
-            state.content = action.payload
-        },
-        setTags: (state, action: PayloadAction<number>) => {
-            state.tags = action.payload
-        },
-        setBumpedAt: (state, action: PayloadAction<Date>) => {
-            state.bumpedAt = action.payload
-        },
-        setDeleted: (state, action: PayloadAction<boolean>) => {
-            state.deleted = action.payload
-        },
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(
+            BackendSlice.endpoints.serviceSearch.matchFulfilled,
+            (state, action) => {
+                state.listings = state.listings.map(listing => {
+                    const updatedResult = action.payload.find(result => result.id === listing.id);
+                    return updatedResult ? updatedResult : listing;
+                });
+        
+                // Now, append any new results that are not already in the listings.
+                action.payload.forEach(result => {
+                    if (!state.listings.find(listing => listing.id === result.id)) {
+                        state.listings.push(result);
+                    }
+                });
+            },
+        )
+        .addMatcher(
+            BackendSlice.endpoints.createService.matchFulfilled,
+            (state, action) => {
+                state.listings = state.listings.map(listing => {
+                    const updatedResult = action.payload.find(result => result.id === listing.id);
+                    return updatedResult ? updatedResult : listing;
+                });
+        
+                // Now, append any new results that are not already in the listings.
+                action.payload.forEach(result => {
+                    if (!state.listings.find(listing => listing.id === result.id)) {
+                        state.listings.push(result);
+                    }
+                });
+            },
+        )
+        .addMatcher(
+            BackendSlice.endpoints.bumpService.matchFulfilled,
+            (state, action) => {
+                state.listings = state.listings.map(listing => {
+                    const updatedResult = action.payload.find(result => result.id === listing.id);
+                    return updatedResult ? updatedResult : listing;
+                });
+            },
+        )
+        .addMatcher(
+            BackendSlice.endpoints.softDeleteService.matchFulfilled,
+            (state, action) => {
+                state.listings = state.listings.map((listing, index) => {
+                    const updatedResult = action.payload.find(result => result.id === listing.id);
+                    // Check if the listing has been deleted by the request.
+                    if (listing.deleted === true) {
+                        // Remove the listing from the store.
+                        return state.listings.splice(index, 1)
+                    } else {
+                        return updatedResult ? updatedResult : listing;
+                    }
+                });
+            },
+        )
     },
 });

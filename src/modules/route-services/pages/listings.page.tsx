@@ -6,10 +6,10 @@ import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
 
 export const ListingsPage: React.FC = () => {
     
-    const handleSubmit = () => {
+    const handleCreate = () => {
         setTimeout(() => {
-            window.location.reload
-        }, 1000 * 5);
+            window.location.reload()
+        }, 1500);
         
     };
 
@@ -23,8 +23,8 @@ export const ListingsPage: React.FC = () => {
                     <Grid container spacing={1}>
                         <Grid item xs={12} alignContent={'center'}>
                             <ServiceCreate
-                            onSubmit={handleSubmit}
-                            onCancel={window.location.reload} />
+                            onSubmit={handleCreate}
+                            onCancel={handleCreate} />
                         </Grid>
                     </Grid>
                     <Grid container spacing={1}>

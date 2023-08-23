@@ -1,10 +1,12 @@
 import { createRootSelector } from '../root.selector';
+import { AuthSelectors } from '../auth';
 
-export const ServiceSelectors = {
-    getTitle: createRootSelector((state) => state.service.title),
-    getContent: createRootSelector((state) => state.service.content),
-    getTags: createRootSelector((state) => state.service.tags),
-    getUserId: createRootSelector((state) => state.service.userId),
-    getBumpedAt: createRootSelector((state) => state.service.bumpedAt),
-    getDeleted: createRootSelector((state) => state.service.deleted),
+export const ServiceSelectors = {   
+    getListings: createRootSelector((state) => state.service.listings),
+    getUserListings: createRootSelector((state) => {
+        const userId = AuthSelectors.getUser(state).id;
+        const listings = ServiceSelectors.getListings(state);
+
+        return listings.filter(listing => listing.userId === userId);
+    }),
 };
