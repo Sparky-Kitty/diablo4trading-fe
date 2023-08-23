@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react';
 import { ToggleButton, ToggleButtonGroup, useMediaQuery } from '@mui/material';
 import React from 'react';
 
-const TAGS = {
+export const TAGS = {
     POWERLEVELING: 1 << 0,
     BOSS_HELP: 1 << 1,
     UBER_LILITH: 1 << 2,

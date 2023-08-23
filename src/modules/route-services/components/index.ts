@@ -1,5 +1,5 @@
-export * from './search.component'
 export * from './nav.component';
+export * from './search.component';
 export * from './service-tags.component';
 export * from './search-filter.component';
 export * from './search-result.component';

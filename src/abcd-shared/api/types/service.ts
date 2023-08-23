@@ -1,12 +1,14 @@
 import { Game } from '@diablosnaps/common';
+import { AuthUser } from './'
 
 export interface ServiceListing {
     id: string;
     realmType?: string;
     title?: string;
     content?: string;
+    user?: AuthUser;
     userId?: number;
-    tags?: number[];
+    tags?: number;
     maxAcceptedSlots?: number;
     updatedAt?: Date;
     deleted?: boolean;

@@ -12,37 +12,20 @@ import React from 'react';
 import { SearchFilterTitle } from './search-filter-title.component';
 import { SearchFilterTags } from './search-filter-tags.component';
 
-const SEASONAL_SERVERS = [Game.ServerType.Seasonal, Game.ServerType.SeasonalHardcore];
-
 interface SearchFilterProps {
-    query: API.ServiceGetSearchQuery;
     onSearch: (query: API.ServiceGetSearchQuery) => void;
 }
 
 export const SearchFilter: React.FC<SearchFilterProps> = ({
-    query: initialQuery,
     onSearch,
 }) => {
     const { i18n } = useLingui();
-
     const [serverType, setServerType] = Common.useRouteServerType();
-
     const [visible, setVisible] = React.useState<boolean>(true);
-    const [query, setQuery] = React.useState<API.ServiceGetSearchQuery>(initialQuery); 
-    const [timestamp, setTimestamp] = React.useState<number>(undefined);
-
-    // const {
-    //     query = {},
-    // } = payload;
-
-    // React.useEffect(() => {
-    //     if (!SEASONAL_SERVERS.includes(serverType)) {
-    //             setPayload({
-    //                 ...payload,
-    //                 query: { ...payload.query },
-    //             });
-    //     }
-    // }, [payload, serverType]);
+    const [query, setQuery] = React.useState<API.ServiceGetSearchQuery>({
+        serverType,
+        deleted: false
+    });
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -51,9 +34,9 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     };
 
     const handleClear = () => {
-        setTimestamp(undefined);
         setVisible(true);
     };
+
 
     return (
         <form onSubmit={handleSubmit}>
