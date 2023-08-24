@@ -23,14 +23,10 @@ export const ServiceTitleInput: React.FC<ServiceTitleProps> = ({
         setTextValue(value);
     }, [value]);
 
-    const setValue = (next: string) => {
-        if (next === value) {
-            setTextValue(value);
-            return;
-        }
-        onChange(next);
+    const setValue = () => {
+        onChange(textValue);
     };
-
+    
     return (
         <TextField
             value={textValue}
@@ -38,12 +34,7 @@ export const ServiceTitleInput: React.FC<ServiceTitleProps> = ({
             helperText={helperText}
             onChange={(e) => setTextValue(e.target.value)}
             onBlur={() => {
-                const numericValue = parseInt(textValue);
-                if (isNaN(numericValue)) {
-                    setValue(undefined);
-                    return;
-                }
-                setValue(numericValue.toString());
+                setValue();
             }}
             disabled={disabled}
         />

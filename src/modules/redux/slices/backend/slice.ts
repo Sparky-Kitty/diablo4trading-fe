@@ -79,21 +79,27 @@ export const BackendSlice = createApi({
             method: 'DELETE',
           }),
         }),
+        // service-buy
+        buyService: builder.mutation({
+          query: ({id, userId}) => ({
+            url: `/services/${id}/claim-slot/${userId}`,
+            method: 'POST',
+          }),
+        }),
     }),
 });
 
 export const {
     // auth
     useAuthDiscordCallbackQuery,
-    // trade-search
+    // trade
+    useTradeSearchQuery,
     useLazyTradeSearchQuery,
-    // service-search
-    useLazyServiceSearchQuery,
+    // service
     useServiceSearchQuery,
-    // service-create
-    useCreateServiceMutation,
-    // service-bump
+    useBuyServiceMutation,
     useBumpServiceMutation,
-    // service-delete
+    useCreateServiceMutation,
+    useLazyServiceSearchQuery,
     useSoftDeleteServiceMutation,
 } = BackendSlice;

@@ -24,6 +24,8 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     const [visible, setVisible] = React.useState<boolean>(true);
     const [query, setQuery] = React.useState<API.ServiceGetSearchQuery>({
         serverType,
+        title: "",
+        tags: 0,
         deleted: false
     });
 
@@ -52,7 +54,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                                             onChange={(title) =>
                                                 setQuery({
                                                     ...query,
-                                                    title: title.toString(),
+                                                    title: title,
                                                 })}
                                         />
                                     </Grid>

@@ -21,10 +21,7 @@ export const ServiceSlice = createSlice({
         builder.addMatcher(
             BackendSlice.endpoints.serviceSearch.matchFulfilled,
             (state, action) => {
-                state.listings = state.listings.map(listing => {
-                    const updatedResult = action.payload.find(result => result.id === listing.id);
-                    return updatedResult ? updatedResult : listing;
-                });
+                state.listings = [];
         
                 // Now, append any new results that are not already in the listings.
                 action.payload.forEach(result => {
@@ -52,6 +49,15 @@ export const ServiceSlice = createSlice({
         )
         .addMatcher(
             BackendSlice.endpoints.bumpService.matchFulfilled,
+            (state, action) => {
+                state.listings = state.listings.map(listing => {
+                    const updatedResult = action.payload.find(result => result.id === listing.id);
+                    return updatedResult ? updatedResult : listing;
+                });
+            },
+        )
+        .addMatcher(
+            BackendSlice.endpoints.buyService.matchFulfilled,
             (state, action) => {
                 state.listings = state.listings.map(listing => {
                     const updatedResult = action.payload.find(result => result.id === listing.id);

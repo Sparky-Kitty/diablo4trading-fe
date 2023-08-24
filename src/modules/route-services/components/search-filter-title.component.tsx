@@ -17,6 +17,11 @@ export const SearchFilterTitle: React.FC<SearchFilterTitleProps> = ({
     disabled,
 }) => {
     const { i18n } = useLingui();
+
+    const handleChange = (title: string) => {
+        
+        onChange(value = title);
+    }
     return (
         <Grid container spacing={1}>
             <Grid item xs={12}>
@@ -29,7 +34,7 @@ export const SearchFilterTitle: React.FC<SearchFilterTitleProps> = ({
                 <ServiceTitleInput
                     value={value}
                     label={'Keywords'}
-                    onChange={(value) => value}
+                    onChange={handleChange}
                     disabled={disabled}
                 />
             </Grid>

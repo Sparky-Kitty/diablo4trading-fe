@@ -21,11 +21,11 @@ export const numberToTags = (numberValue: number): string[] => {
 
 export const ServiceListings: React.FC = () => {
     const [serverType] = useRouteServerType();
-    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
+    const userId = useSelector(AuthSelectors.getUser)?? null;
 
     const serviceGetSearchQuery: API.ServiceGetSearchQuery = {
         serverType,
-        userId,
+        userId: parseInt(userId?.id)?? null,
         deleted: false,
         limit: 3
     };
@@ -36,9 +36,9 @@ export const ServiceListings: React.FC = () => {
     return (
         <Grid item xs={12} md={12} sx={{}}>
             {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
-            {listings.map(listing =>
+            {listings ? listings.map(listing =>
                 <ServiceListing
-                    key={listing.id}
+                    key={listing?.id}
                     user={listing?.user.battleNetTag}
                     id={listing?.id}
                     // lastUpdated={'Today at 9:21 pm'}
@@ -47,7 +47,7 @@ export const ServiceListings: React.FC = () => {
                     content={listing?.content}
                     tags={numberToTags(listing?.tags)}
                 />
-            )}
+            ) : <></>}
         </Grid>
     );
 };

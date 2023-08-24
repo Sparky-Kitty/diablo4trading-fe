@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import React from 'react';
 import 'react-virtualized/styles.css';
 import { ServiceGetSearchQuery } from '../../../abcd-shared/api/types';
-import { ServiceListing, numberToTags } from '.';
+import { ServiceListing, numberToTags, SearchResult } from '.';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
 
@@ -24,7 +24,7 @@ export const Search: React.FC<SearchResultsProps> = ({
 }) => {
     const { i18n } = useLingui();
 
-    const { data, isLoading, isError, error, currentData } = Redux.useServiceSearchQuery(params);
+    const { isLoading, isError } = Redux.useServiceSearchQuery(params);
     const listings = useSelector(ServiceSelectors.getListings)
 
 
@@ -32,7 +32,7 @@ export const Search: React.FC<SearchResultsProps> = ({
         <Root>
             {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
             {listings.map(listing => // This breaks with an error about data being undefined.
-            <ServiceListing 
+            <SearchResult 
                 key={listing?.id}
                 user={listing?.user?.battleNetTag}
                 id={listing?.id}
@@ -40,7 +40,7 @@ export const Search: React.FC<SearchResultsProps> = ({
                 title={listing?.title}
                 content={listing?.content}
                 tags={numberToTags(listing?.tags)}
-            ></ServiceListing>)
+            ></SearchResult>)
             }
             <Snackbar
                 open={isError}
