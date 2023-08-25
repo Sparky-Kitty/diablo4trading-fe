@@ -1,7 +1,7 @@
-import { createRootSelector } from '../root.selector';
 import { AuthSelectors } from '../auth';
+import { createRootSelector } from '../root.selector';
 
-export const ServiceSelectors = {   
+export const ServiceSelectors = {
     getListings: createRootSelector((state) => state.service.listings),
     getUserListings: createRootSelector((state) => {
         const userId = AuthSelectors.getUser(state).id;

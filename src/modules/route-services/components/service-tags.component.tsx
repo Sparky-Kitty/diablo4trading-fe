@@ -26,7 +26,7 @@ export const ServiceTags: React.FC<ServiceTagsProps> = ({ selectedTags, onSelect
         <React.Fragment>
             <ToggleButtonGroup
                 value={selectedTags}
-                onChange={(_, newTags: number[]) => onSelectTags(newTags)} 
+                onChange={(_, newTags: number[]) => onSelectTags(newTags)}
                 aria-label={t(i18n)`Service Types`}
                 orientation={`${matches ? `horizontal` : `vertical`}`}
             >

@@ -17,7 +17,7 @@ export const SearchFilterTags: React.FC<SearchFilterTagsProps> = ({
     disabled,
 }) => {
     const { i18n } = useLingui();
-    
+
     const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
 
     const handleTagsSelection = (newTags: number[]) => {

@@ -5,10 +5,10 @@ import { Alert, Snackbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import 'react-virtualized/styles.css';
-import { ServiceGetSearchQuery, numberToTags } from '../../../abcd-shared/api/types';
-import { SearchResult } from '.';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
+import { numberToTags, ServiceGetSearchQuery } from '../../../abcd-shared/api/types';
+import { SearchResult } from '.';
 
 const Root = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(2),
@@ -16,32 +16,32 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 interface SearchResultsProps {
-    params: ServiceGetSearchQuery
+    params: ServiceGetSearchQuery;
 }
 
 export const Search: React.FC<SearchResultsProps> = ({
-    params
+    params,
 }) => {
     const { i18n } = useLingui();
 
     const { isLoading, isError } = Redux.useServiceSearchQuery(params);
-    const listings = useSelector(ServiceSelectors.getListings)
-
+    const listings = useSelector(ServiceSelectors.getListings);
 
     return (
         <Root>
             {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
-            {listings.map(listing =>
-            <SearchResult 
-                key={listing?.id}
-                user={listing?.user?.battleNetTag}
-                id={listing?.id}
-                lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
-                title={listing?.title}
-                content={listing?.content}
-                tags={numberToTags(listing?.tags)}
-            ></SearchResult>)
-            }
+            {listings.map(listing => (
+                <SearchResult
+                    key={listing?.id}
+                    user={listing?.user?.battleNetTag}
+                    id={listing?.id}
+                    lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
+                    title={listing?.title}
+                    content={listing?.content}
+                    tags={numberToTags(listing?.tags)}
+                >
+                </SearchResult>
+            ))}
             <Snackbar
                 open={isError}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

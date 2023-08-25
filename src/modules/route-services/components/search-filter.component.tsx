@@ -8,8 +8,8 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import { Box, Button, Card, Collapse, Divider, Grid } from '@mui/material';
 import { API } from '@sanctuaryteam/shared'; // Commented for above reason
 import React from 'react';
-import { SearchFilterTitle } from './search-filter-title.component';
 import { SearchFilterTags } from './search-filter-tags.component';
+import { SearchFilterTitle } from './search-filter-title.component';
 
 interface SearchFilterProps {
     onSearch: (query: API.ServiceGetSearchQuery) => void;
@@ -23,9 +23,9 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     const [visible, setVisible] = React.useState<boolean>(true);
     const [query, setQuery] = React.useState<API.ServiceGetSearchQuery>({
         serverType,
-        title: "",
+        title: '',
         tags: 0,
-        deleted: false
+        deleted: false,
     });
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -37,7 +37,6 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     const handleClear = () => {
         setVisible(true);
     };
-
 
     return (
         <form onSubmit={handleSubmit}>

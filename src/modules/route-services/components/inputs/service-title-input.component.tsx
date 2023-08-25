@@ -24,7 +24,7 @@ export const ServiceTitleInput: React.FC<ServiceTitleProps> = ({
     const setValue = () => {
         onChange(textValue);
     };
-    
+
     return (
         <TextField
             value={textValue}

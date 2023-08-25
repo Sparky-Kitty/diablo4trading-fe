@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Common } from '@modules/common';
+import { useBumpServiceMutation, useSoftDeleteServiceMutation } from '@modules/redux/slices';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useBumpServiceMutation, useSoftDeleteServiceMutation } from '@modules/redux/slices';
 import { Avatar, Box, Button, Card, Chip, Collapse, Divider, Grid, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 
@@ -24,27 +24,27 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
     lastUpdated,
     title,
     content,
-    tags
+    tags,
 }) => {
     const { i18n } = useLingui();
     const matches = useMediaQuery('(min-width:600px)');
     const [visible, setVisible] = React.useState<boolean>(false);
-    const [bumpService] = useBumpServiceMutation();   
-    const [softDeleteService] = useSoftDeleteServiceMutation();   
+    const [bumpService] = useBumpServiceMutation();
+    const [softDeleteService] = useSoftDeleteServiceMutation();
 
-   function handleBump() {
-        bumpService(id)
+    function handleBump() {
+        bumpService(id);
         setTimeout(() => {
             return window.location.reload();
         }, 1500);
-   } 
+    }
 
-   function handleSoftDelete() {
-        softDeleteService(id)
+    function handleSoftDelete() {
+        softDeleteService(id);
         setTimeout(() => {
             return window.location.reload();
         }, 1500);
-   }
+    }
 
     if (user && id && title && content) {
         return (
@@ -71,7 +71,7 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
                             {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
                         </Button>
                     </Box>
-                    <Collapse in={visible}>                        
+                    <Collapse in={visible}>
                         {tags.map(t => <Chip label={t} key={t} sx={{ mr: 1 }}></Chip>)}
                         <Typography variant='body1' sx={{ mt: 1, display: matches ? 'flex' : 'block' }} component='pre'>
                             {content}

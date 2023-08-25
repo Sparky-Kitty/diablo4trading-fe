@@ -59,32 +59,32 @@ export const BackendSlice = createApi({
         }),
         // service-create
         createService: builder.mutation({
-          query: (serviceData) => ({
-            url: '/services',
-            method: 'POST',
-            body: serviceData,
-          }),
+            query: (serviceData) => ({
+                url: '/services',
+                method: 'POST',
+                body: serviceData,
+            }),
         }),
         // service-bump
         bumpService: builder.mutation({
-          query: (id) => ({
-            url: `/services/${id}/bump`,
-            method: 'POST',
-          }),
+            query: (id) => ({
+                url: `/services/${id}/bump`,
+                method: 'POST',
+            }),
         }),
         // service-delete
         softDeleteService: builder.mutation({
-          query: (id) => ({
-            url: `/services/${id}/soft-delete`,
-            method: 'DELETE',
-          }),
+            query: (id) => ({
+                url: `/services/${id}/soft-delete`,
+                method: 'DELETE',
+            }),
         }),
         // service-buy
         buyService: builder.mutation({
-          query: ({id, userId}) => ({
-            url: `/services/${id}/claim-slot/${userId}`,
-            method: 'POST',
-          }),
+            query: ({ id, userId }) => ({
+                url: `/services/${id}/claim-slot/${userId}`,
+                method: 'POST',
+            }),
         }),
     }),
 });

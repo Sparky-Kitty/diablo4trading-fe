@@ -26,28 +26,28 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     lastUpdated,
     title,
     content,
-    tags
+    tags,
 }) => {
     const { i18n } = useLingui();
     const matches = useMediaQuery('(min-width:600px)');
     const [visible, setVisible] = React.useState<boolean>(false);
-    const [bumpService] = useBumpServiceMutation();    
-    const [buyService] = useBuyServiceMutation();   
-    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10); 
+    const [bumpService] = useBumpServiceMutation();
+    const [buyService] = useBuyServiceMutation();
+    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
 
-   function handleBump() {
-        bumpService(id)
+    function handleBump() {
+        bumpService(id);
         setTimeout(() => {
             return window.location.reload();
         }, 1500);
-   } 
+    }
 
-   function handleBuy() {
-        buyService({id, userId})
+    function handleBuy() {
+        buyService({ id, userId });
         // setTimeout(() => {
         //     return window.location.reload();
         // }, 1500);
-   } 
+    }
 
     return (
         <Card sx={{ p: 2, mt: 2, display: 'flex' }}>
@@ -62,23 +62,25 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                     }}
                 >
                     {matches // Browser View
-                        ? <Grid container>
-                            <Grid item xs={9} alignContent='flex-start' justifyContent='flex-start'>
-                                <Typography variant='h6' fontWeight='bold'>
-                                    {title}
-                                </Typography>
+                        ? (
+                            <Grid container>
+                                <Grid item xs={9} alignContent='flex-start' justifyContent='flex-start'>
+                                    <Typography variant='h6' fontWeight='bold'>
+                                        {title}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={3} alignContent='flex-end' justifyContent='flex-end'>
+                                    <Button
+                                        variant='outlined'
+                                        color='secondary'
+                                        onClick={() => setVisible(!visible)}
+                                        endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                                    >
+                                        {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={3} alignContent='flex-end' justifyContent='flex-end'>
-                                <Button
-                                    variant='outlined'
-                                    color='secondary'
-                                    onClick={() => setVisible(!visible)}
-                                    endIcon={visible ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                                >
-                                    {visible ? t(i18n)`Collapse` : t(i18n)`Expand`}
-                                </Button>
-                            </Grid>
-                        </Grid>
+                        )
                         : ( // Mobile View
                             <Grid container spacing={1}>
                                 <Grid item xs={6}>
@@ -100,7 +102,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                         )}
                 </Box>
                 <Collapse in={visible}>
-                        {tags.map(t => <Chip label={t} key={t} sx={{ mr: 1 }}></Chip>)}
+                    {tags.map(t => <Chip label={t} key={t} sx={{ mr: 1 }}></Chip>)}
                     <Typography variant='body1' sx={{ mt: 1 }} component='pre'>
                         {content}
                     </Typography>

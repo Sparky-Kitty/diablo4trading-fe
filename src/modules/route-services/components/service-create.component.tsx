@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
+import { AuthSelectors, useCreateServiceMutation } from '@modules/redux/slices';
 import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
@@ -17,40 +18,39 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
-import { AuthSelectors, useCreateServiceMutation } from '@modules/redux/slices';
-import { useSelector } from 'react-redux';
 
 interface ServiceCreateFormProps {
-  onSubmit: (serviceData: ServiceData) => void;
-  onCancel: () => void;
+    onSubmit: (serviceData: ServiceData) => void;
+    onCancel: () => void;
 }
 
 interface ServiceData {
-  realmType: string;
-  title: string;
-  content: string;
-  userId: number;
-  tags: number;
-  deleted: boolean;
-  maxAcceptedSlots: number;
+    realmType: string;
+    title: string;
+    content: string;
+    userId: number;
+    tags: number;
+    deleted: boolean;
+    maxAcceptedSlots: number;
 }
 
 export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel }) => {
     const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
     const [createService] = useCreateServiceMutation();
     const [serverType, setServerType] = useRouteServerType();
-     
+
     const [serviceData, setServiceData] = React.useState<ServiceData>({
-      realmType: serverType,
-      title: '',
-      content: '',
-      userId,
-      tags: 0,
-      deleted: false,
-      maxAcceptedSlots: 3,
+        realmType: serverType,
+        title: '',
+        content: '',
+        userId,
+        tags: 0,
+        deleted: false,
+        maxAcceptedSlots: 3,
     });
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,18 +62,18 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
     };
 
     const handleSlotsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setServiceData({ ...serviceData, maxAcceptedSlots: parseInt(event.target.value)});
+        setServiceData({ ...serviceData, maxAcceptedSlots: parseInt(event.target.value) });
     };
-    
+
     const [selectedTags, setSelectedTags] = React.useState<number[]>([]);
 
     const handleTagsSelection = (newTags: number[]) => {
         setSelectedTags(() => newTags);
-        setServiceData({ ...serviceData, tags: newTags.reduce((acc, tag) => acc | tag, 0)});
+        setServiceData({ ...serviceData, tags: newTags.reduce((acc, tag) => acc | tag, 0) });
     };
-    
+
     const handleSubmit = async (e) => {
-        onSubmit(serviceData)
+        onSubmit(serviceData);
         e.preventDefault();
 
         try {
@@ -82,7 +82,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
         } catch (error) {
             console.error('Error creating service:', error);
         }
-    }
+    };
 
     const { i18n } = useLingui();
     const matches = useMediaQuery('(min-width:600px)');
@@ -107,7 +107,13 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField id='title-text-field' label='Title' variant='outlined' sx={{ pt: 2 }} onChange={handleTitleChange} />
+                            <TextField
+                                id='title-text-field'
+                                label='Title'
+                                variant='outlined'
+                                sx={{ pt: 2 }}
+                                onChange={handleTitleChange}
+                            />
                             <FormHelperText>{t(i18n)`Please include price/rate in Title.`}</FormHelperText>
                         </Grid>
                         <Grid item xs={12}>
