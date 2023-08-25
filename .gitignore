@@ -31,3 +31,6 @@ coverage
 
 # Shared symlink
 shared
+
+# Shared generated tsconfig json
+tsconfig.shared.json
