@@ -6,8 +6,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RestoreIcon from '@mui/icons-material/Restore';
 import { Box, Button, Card, Collapse, Divider, Grid } from '@mui/material';
-import { API } from './../../../abcd-shared/api'; // Temporarily for my usage of the correct Payload
-// import { API } from '@sanctuaryteam/shared'; // Commented for above reason
+import { API } from '@sanctuaryteam/shared'; // Commented for above reason
 import React from 'react';
 import { SearchFilterTitle } from './search-filter-title.component';
 import { SearchFilterTags } from './search-filter-tags.component';

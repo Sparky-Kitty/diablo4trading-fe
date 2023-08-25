@@ -1,8 +1,6 @@
 import { TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 
-const toString = (value: string) => (value === undefined ? '' : value.toString());
-
 interface ServiceTitleProps {
     value: string;
     onChange: (value: string) => void;

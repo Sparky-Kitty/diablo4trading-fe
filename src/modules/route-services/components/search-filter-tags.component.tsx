@@ -1,10 +1,8 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Divider, Grid, Typography } from '@mui/material';
-// import { API } from './../../../abcd-shared/api';
 // import { API } from '@sanctuaryteam/shared';
 import React from 'react';
-// import { ServiceTitleInput } from './inputs';
 import { ServiceTags } from './service-tags.component';
 
 interface SearchFilterTagsProps {

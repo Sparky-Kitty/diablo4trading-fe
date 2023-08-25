@@ -1,7 +1,7 @@
 // import { API_ENDPOINT } from '@config';
 import { createSlice } from '@reduxjs/toolkit';
-import { API } from './../../../../abcd-shared/api'; // Temporarily for my usage of the correct Payload
-// import { API } from '@sanctuaryteam/shared'; // Commented for above reason
+// import { API } from './../../../../abcd-shared/api'; // Temporarily for my usage of the correct Payload
+import { API } from '@sanctuaryteam/shared'; // Commented for above reason
 import { BackendSlice } from './../backend/slice';
 
 interface ServiceState {

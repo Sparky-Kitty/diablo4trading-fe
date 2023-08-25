@@ -5,8 +5,8 @@ import { Alert, Snackbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import 'react-virtualized/styles.css';
-import { ServiceGetSearchQuery } from '../../../abcd-shared/api/types';
-import { ServiceListing, numberToTags, SearchResult } from '.';
+import { ServiceGetSearchQuery, numberToTags } from '../../../abcd-shared/api/types';
+import { SearchResult } from '.';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
 
@@ -31,7 +31,7 @@ export const Search: React.FC<SearchResultsProps> = ({
     return (
         <Root>
             {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
-            {listings.map(listing => // This breaks with an error about data being undefined.
+            {listings.map(listing =>
             <SearchResult 
                 key={listing?.id}
                 user={listing?.user?.battleNetTag}
