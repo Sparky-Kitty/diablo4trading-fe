@@ -1,9 +1,9 @@
 import React from 'react';
-import { ServiceGetSearchQuery } from '../../../abcd-shared/api/types';
+import { API } from '@sanctuaryteam/shared'
 import { Search, SearchFilter } from '../components';
 
 export const SearchPage: React.FC = () => {
-    const [params, setParams] = React.useState<ServiceGetSearchQuery>(null);
+    const [params, setParams] = React.useState<API.ServiceGetSearchQuery>(null);
 
     return (
         <React.Fragment>

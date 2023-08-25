@@ -7,7 +7,7 @@ import React from 'react';
 import 'react-virtualized/styles.css';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
-import { numberToTags, ServiceGetSearchQuery } from '../../../abcd-shared/api/types';
+import { API } from '@sanctuaryteam/shared';
 import { SearchResult } from '.';
 
 const Root = styled('div')(({ theme }) => ({
@@ -16,7 +16,7 @@ const Root = styled('div')(({ theme }) => ({
 }));
 
 interface SearchResultsProps {
-    params: ServiceGetSearchQuery;
+    params: API.ServiceGetSearchQuery;
 }
 
 export const Search: React.FC<SearchResultsProps> = ({
@@ -38,7 +38,7 @@ export const Search: React.FC<SearchResultsProps> = ({
                     lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
                     title={listing?.title}
                     content={listing?.content}
-                    tags={numberToTags(listing?.tags)}
+                    tags={API.numberToTags(listing?.tags)}
                 >
                 </SearchResult>
             ))}

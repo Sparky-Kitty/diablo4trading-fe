@@ -44,9 +44,9 @@ export const SearchResult: React.FC<SearchResultProps> = ({
 
     function handleBuy() {
         buyService({ id, userId });
-        // setTimeout(() => {
-        //     return window.location.reload();
-        // }, 1500);
+        setTimeout(() => {
+            return window.location.reload();
+        }, 1500);
     }
 
     return (

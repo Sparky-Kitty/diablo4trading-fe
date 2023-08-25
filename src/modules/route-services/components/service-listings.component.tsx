@@ -1,23 +1,11 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { API } from './../../../abcd-shared/api';
-// import { API } from '@sanctuaryteam/shared'
+import { API } from '@sanctuaryteam/shared'
 import { useRouteServerType } from '@modules/common/providers';
 import { AuthSelectors, useServiceSearchQuery } from '@modules/redux/slices';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
-import { ServiceListing, TAGS } from '../components';
-
-export const numberToTags = (numberValue: number): string[] => {
-    const selectedTags: string[] = [];
-
-    for (const tag in TAGS) {
-        if ((numberValue & TAGS[tag]) !== 0) {
-            selectedTags.push(tag.replace('_', ' '));
-        }
-    }
-    return selectedTags;
-};
+import { ServiceListing } from '../components';
 
 export const ServiceListings: React.FC = () => {
     const [serverType] = useRouteServerType();
@@ -46,7 +34,7 @@ export const ServiceListings: React.FC = () => {
                         lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
                         title={listing?.title}
                         content={listing?.content}
-                        tags={numberToTags(listing?.tags)}
+                        tags={API.numberToTags(listing?.tags)}
                     />
                 ))
                 : <></>}
