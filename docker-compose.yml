@@ -23,7 +23,7 @@ services:
             - |
                 node tsconfig.merged.cjs
                 if [ "$$SHARED_LINK" = "true" ]; then
-                    cd $$SHARED_PATH
+                    cd /app/shared
                     yarn install
                     yarn build
                     yarn link
