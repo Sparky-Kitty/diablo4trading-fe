@@ -11,8 +11,8 @@ import svgr from 'vite-plugin-svgr';
 // eslint-disable-next-line import/no-default-export
 
 const sharedLink = process.env.SHARED_LINK === 'true';
-const sharedAlias: {} = sharedLink ? {'@sanctuaryteam/shared': path.resolve(__dirname, './shared/src')} : {};
-const sharedOptimizeDeps = sharedLink ? ['@sanctuaryteam/shared'] : []
+const sharedAlias: {} = sharedLink ? { '@sanctuaryteam/shared': path.resolve(__dirname, './shared/src') } : {};
+const sharedOptimizeDeps = sharedLink ? ['@sanctuaryteam/shared'] : [];
 
 export default defineConfig({
     resolve: {
@@ -22,7 +22,7 @@ export default defineConfig({
             '@modules': path.resolve(__dirname, './src/modules'),
             ...sharedAlias,
         },
-        preserveSymlinks: true
+        preserveSymlinks: true,
     },
     plugins: [
         react({
