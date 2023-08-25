@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { API } from '@sanctuaryteam/shared';
-import { API } from './../../../../abcd-shared/api';
+import { API } from '@sanctuaryteam/shared';
 import { BackendSlice } from './../backend/slice';
 
 interface AuthState {

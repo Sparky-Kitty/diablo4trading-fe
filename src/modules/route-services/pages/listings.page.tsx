@@ -1,5 +1,3 @@
-// import { t } from '@lingui/macro';
-// import { useLingui } from '@lingui/react';
 import { Grid } from '@mui/material';
 import React from 'react';
 import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
