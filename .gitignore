@@ -33,4 +33,4 @@ coverage
 shared
 
 # Shared generated tsconfig json
-tsconfig.shared.json
+tsconfig.merged.json

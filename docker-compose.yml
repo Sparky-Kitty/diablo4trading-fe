@@ -21,7 +21,7 @@ services:
             - sh
             - -c
             - |
-                node tsconfig.shared.cjs
+                node tsconfig.merged.cjs
                 if [ "$$SHARED_LINK" = "true" ]; then
                     cd $$SHARED_PATH
                     yarn install
