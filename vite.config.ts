@@ -9,13 +9,18 @@ import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 // eslint-disable-next-line import/no-default-export
+
+const sharedLink = process.env.SHARED_LINK === 'true';
+const sharedAlias: {} = sharedLink ? {'@sanctuaryteam/shared': path.resolve(__dirname, './shared/src')} : {};
+const sharedOptimizeDeps = sharedLink ? ['@sanctuaryteam/shared'] : []
+
 export default defineConfig({
     resolve: {
         alias: {
             '@assets': path.resolve(__dirname, './src/assets'),
             '@config': path.resolve(__dirname, './src/config.ts'),
             '@modules': path.resolve(__dirname, './src/modules'),
-            '@sanctuaryteam/shared': path.resolve(__dirname, './shared/src'),
+            ...sharedAlias,
         },
         preserveSymlinks: true
     },
@@ -30,7 +35,7 @@ export default defineConfig({
         reactVirtualized(),
     ],
     optimizeDeps: {
-        exclude: ['@sanctuaryteam/shared'],
+        exclude: [...sharedOptimizeDeps],
     },
 });
 
