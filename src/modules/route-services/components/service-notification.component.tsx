@@ -1,34 +1,31 @@
 import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Button, Card, Grid, Typography } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 
 interface ServiceOfferProps {
-    service: string;
-    buyer: string;
-    score: number;
+    slot: API.ServiceSlot;
+    buyer: API.AuthUser;
+    rating: number;
 }
 
 export const ServiceOffer: React.FC<ServiceOfferProps> = ({
-    service,
+    slot,
     buyer,
-    score,
+    rating,
 }) => {
-    if (service && buyer) {
+    if (slot.state == API.SERVICE_SLOT_STATES.PENDING && buyer.battleNetTag) {
         return (
             <Card sx={{ p: 2, mt: 2, display: 'flex' }}>
-                <Box flex='1'>
-                    <Box
-                        sx={{
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Typography variant='subtitle1' fontWeight='bold'>
-                            User with a rating of {score} would like to purchase {service}.
+                <Grid container columnSpacing={1} sx={{ alignContent: 'center' }}>
+                    <Grid xs={12}>
+                        <Typography variant='subtitle2' fontWeight='bold'>  {/* TODO: Replace with user.rating when available */}
+                            {buyer?.battleNetTag.split("#")[0]}, with a rating of {rating}, would like to purchase
+                            {slot?.service?.title}.
                         </Typography>
+                    </Grid>
+                    <Grid xs={6} sx={{ alignSelf: 'flex-start' }}>
                         <Button
                             color='success'
                             variant='outlined'
@@ -36,6 +33,8 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
                             sx={{ ml: 1 }}
                         >
                         </Button>
+                    </Grid>
+                    <Grid xs={6} sx={{ alignSelf: 'flex-end' }}>
                         <Button
                             color='error'
                             variant='outlined'
@@ -43,8 +42,8 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
                             sx={{ ml: 1 }}
                         >
                         </Button>
-                    </Box>
-                </Box>
+                    </Grid>
+                </Grid>
             </Card>
         );
     }

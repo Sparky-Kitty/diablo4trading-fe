@@ -1,13 +1,13 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Common } from '@modules/common';
-import { AuthSelectors, useBumpServiceMutation, useBuyServiceMutation } from '@modules/redux/slices';
+import { Redux } from '@modules/redux';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import TollIcon from '@mui/icons-material/Toll';
-import { Avatar, Box, Button, Card, Chip, Collapse, Divider, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Alert, Avatar, Box, Button, Card, Chip, Collapse, Divider, Grid, Snackbar, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
@@ -31,22 +31,46 @@ export const SearchResult: React.FC<SearchResultProps> = ({
     const { i18n } = useLingui();
     const matches = useMediaQuery('(min-width:600px)');
     const [visible, setVisible] = React.useState<boolean>(false);
-    const [bumpService] = useBumpServiceMutation();
-    const [buyService] = useBuyServiceMutation();
-    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
+    const [isError, setIsError] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string>('');
+    const [bumpService] = Redux.useBumpServiceMutation();
+    const [buyService] = Redux.useBuyServiceMutation();
+    const userId = parseInt(useSelector(Redux.AuthSelectors.getUser).id, 10);
 
-    function handleBump() {
-        bumpService(id);
-        setTimeout(() => {
-            return window.location.reload();
-        }, 1500);
+    async function handleBump() {
+        await bumpService(id).unwrap()
+        .then(payload => {
+            console.log('Service bumped successfully!');
+            console.log("Fulfilled: " + JSON.stringify(payload))
+        })
+        .catch(error => {  
+            setError(error.data.message);
+            setIsError(true);
+            setTimeout(() => {
+                setIsError(false);
+            }, 5000);
+        });
+        // setTimeout(() => {
+        //     return window.location.reload();
+        // }, 1500);
     }
 
-    function handleBuy() {
-        buyService({ id, userId });
-        setTimeout(() => {
-            return window.location.reload();
-        }, 1500);
+    async function handleBuy() {
+        buyService({ id, userId }).unwrap()
+        .then(payload => {
+            console.log('Service purchased successfully!');
+            console.log("Fulfilled: " + JSON.stringify(payload))
+        })
+        .catch(error => {  
+            setError(error.data.message);
+            setIsError(true);
+            setTimeout(() => {
+                setIsError(false);
+            }, 5000);
+        });
+        // setTimeout(() => {
+        //     return window.location.reload();
+        // }, 1500);
     }
 
     return (
@@ -166,6 +190,14 @@ export const SearchResult: React.FC<SearchResultProps> = ({
                     </Box>
                 </Box>
             </Box>
+            <Snackbar
+                open={isError}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert severity='error'>
+                    {error}
+                </Alert>
+            </Snackbar>
         </Card>
     );
 };

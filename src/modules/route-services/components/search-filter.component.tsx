@@ -20,6 +20,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
     const { i18n } = useLingui();
     const [serverType, setServerType] = Common.useRouteServerType();
     const [visible, setVisible] = React.useState<boolean>(true);
+    const [disabled, setDisabled] = React.useState(false);
     const [query, setQuery] = React.useState<API.ServiceGetSearchQuery>({
         serverType,
         title: '',
@@ -31,6 +32,10 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
         event.preventDefault();
         onSearch(query);
         setVisible(false);
+        setDisabled(true);
+
+        // **** here's the timeout ****
+        setTimeout(() => setDisabled(false), 5000);
     };
 
     const handleClear = () => {
@@ -86,6 +91,7 @@ export const SearchFilter: React.FC<SearchFilterProps> = ({
                             <Button
                                 variant='outlined'
                                 fullWidth
+                                disabled={disabled}
                                 onClick={handleSubmit}
                             >
                                 {t(i18n)`Search`}

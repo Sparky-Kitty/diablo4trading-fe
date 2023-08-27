@@ -6,7 +6,7 @@ import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Avatar, Box, Button, Card, Chip, Collapse, Divider, Grid, Typography, useMediaQuery } from '@mui/material';
+import { Alert, Avatar, Box, Button, Card, Chip, Collapse, Divider, Grid, Snackbar, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
 
 interface ServiceListingProps {
@@ -29,21 +29,45 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
     const { i18n } = useLingui();
     const matches = useMediaQuery('(min-width:600px)');
     const [visible, setVisible] = React.useState<boolean>(false);
+    const [isError, setIsError] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string>('');
     const [bumpService] = useBumpServiceMutation();
     const [softDeleteService] = useSoftDeleteServiceMutation();
 
-    function handleBump() {
-        bumpService(id);
-        setTimeout(() => {
-            return window.location.reload();
-        }, 1500);
+    async function handleBump() {
+        await bumpService(id).unwrap()
+        .then(payload => {
+            console.log('Service bumped successfully!');
+            console.log("Fulfilled: " + JSON.stringify(payload))
+        })
+        .catch(error => {  
+            setError(error.data.message);
+            setIsError(true);
+            setTimeout(() => {
+                setIsError(false);
+            }, 5000);
+        });
+        // setTimeout(() => {
+        //     return window.location.reload();
+        // }, 1500);
     }
 
-    function handleSoftDelete() {
-        softDeleteService(id);
-        setTimeout(() => {
-            return window.location.reload();
-        }, 1500);
+    async function handleSoftDelete() {
+            await softDeleteService(id).unwrap()
+            .then(payload => {
+                console.log('Service deleted successfully!');
+                console.log("Fulfilled: " + JSON.stringify(payload))
+            })
+            .catch(error => {  
+                setError(error.data.message);
+                setIsError(true);
+                setTimeout(() => {
+                    setIsError(false);
+                }, 5000);
+            });
+        // setTimeout(() => {
+        //     return window.location.reload();
+        // }, 1500);
     }
 
     if (user && id && title && content) {
@@ -170,6 +194,14 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
                     >
                     </Box>
                 </Box>
+                <Snackbar
+                    open={isError}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert severity='error'>
+                        {error}
+                    </Alert>
+                </Snackbar>
             </Card>
         );
     }

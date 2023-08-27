@@ -1,9 +1,10 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { AuthSelectors, useCreateServiceMutation } from '@modules/redux/slices';
+import { Redux } from '@modules/redux';
 import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
+    Alert,
     Box,
     Button,
     Card,
@@ -13,6 +14,7 @@ import {
     Grid,
     MenuItem,
     Select,
+    Snackbar,
     TextField,
     Typography,
     useMediaQuery,
@@ -39,15 +41,17 @@ interface ServiceData {
 }
 
 export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel }) => {
-    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
-    const [createService] = useCreateServiceMutation();
+    const [isError, setIsError] = React.useState<boolean>(false);
+    const [error, setError] = React.useState<string>('');
+    const user = useSelector(Redux.AuthSelectors.getUser);
+    const [createService] = Redux.useCreateServiceMutation();
     const [serverType, setServerType] = useRouteServerType();
 
     const [serviceData, setServiceData] = React.useState<ServiceData>({
         realmType: serverType,
         title: '',
         content: '',
-        userId,
+        userId: parseInt(user.id),
         tags: 0,
         deleted: false,
         maxAcceptedSlots: 3,
@@ -76,12 +80,18 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
         onSubmit(serviceData);
         e.preventDefault();
 
-        try {
-            await createService(serviceData);
+        await createService(serviceData).unwrap()
+        .then(payload => {
+            console.log("Fulfilled: " + JSON.stringify(payload));
             console.log('Service created successfully!');
-        } catch (error) {
-            console.error('Error creating service:', error);
-        }
+        })
+        .catch(error => {
+            setError(error.data.message);
+            setIsError(true);
+            setTimeout(() => {
+                setIsError(false);
+            }, 5000);
+        });
     };
 
     const { i18n } = useLingui();
@@ -165,6 +175,14 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
                     </Grid>
                 </FormControl>
             </Box>
+            <Snackbar
+                open={isError}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <Alert severity='error'>
+                    {error}
+                </Alert>
+            </Snackbar>
         </Card>
     );
 };

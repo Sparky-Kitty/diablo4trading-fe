@@ -4,9 +4,9 @@ import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
 
 export const ListingsPage: React.FC = () => {
     const handleCreate = () => {
-        setTimeout(() => {
-            window.location.reload();
-        }, 1500);
+        // setTimeout(() => {
+        //     window.location.reload();
+        // }, 1500);
     };
 
     return (

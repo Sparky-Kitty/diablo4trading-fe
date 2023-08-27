@@ -2,14 +2,13 @@ import { Grid } from '@mui/material';
 import React from 'react';
 import { API } from '@sanctuaryteam/shared'
 import { useRouteServerType } from '@modules/common/providers';
-import { AuthSelectors, useServiceSearchQuery } from '@modules/redux/slices';
-import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
 import { ServiceListing } from '../components';
+import { Redux } from '@modules/redux';
 
 export const ServiceListings: React.FC = () => {
     const [serverType] = useRouteServerType();
-    const userId = useSelector(AuthSelectors.getUser) ?? null;
+    const userId = useSelector(Redux.AuthSelectors.getUser) ?? null;
 
     const serviceGetSearchQuery: API.ServiceGetSearchQuery = {
         serverType,
@@ -18,14 +17,13 @@ export const ServiceListings: React.FC = () => {
         limit: 3,
     };
 
-    useServiceSearchQuery(serviceGetSearchQuery);
-    const listings = useSelector(ServiceSelectors.getUserListings);
+    Redux.useServiceSearchQuery(serviceGetSearchQuery);
+    const listings = useSelector(Redux.ServiceSelectors.getUserListings);
 
     return (
         <Grid item xs={12} md={12} sx={{}}>
             {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
-            {listings
-                ? listings.map(listing => (
+            {listings ? listings.map(listing => (
                     <ServiceListing
                         key={listing?.id}
                         user={listing?.user.battleNetTag}

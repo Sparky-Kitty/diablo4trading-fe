@@ -1,11 +1,10 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Redux } from '@modules/redux';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Snackbar, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import 'react-virtualized/styles.css';
-import { ServiceSelectors } from '@modules/redux/slices';
 import { useSelector } from 'react-redux';
 import { API } from '@sanctuaryteam/shared';
 import { SearchResult } from '.';
@@ -25,12 +24,12 @@ export const Search: React.FC<SearchResultsProps> = ({
     const { i18n } = useLingui();
 
     const { isLoading, isError } = Redux.useServiceSearchQuery(params);
-    const listings = useSelector(ServiceSelectors.getListings);
+    const listings = useSelector(Redux.ServiceSelectors.getListings);
 
     return (
         <Root> {/* TODO: Insert Loading module */}
             {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
-            {listings.map(listing => (
+            {!isLoading ? listings.map(listing => (
                 <SearchResult
                     key={listing?.id}
                     user={listing?.user?.battleNetTag}
@@ -39,9 +38,9 @@ export const Search: React.FC<SearchResultsProps> = ({
                     title={listing?.title}
                     content={listing?.content}
                     tags={API.numberToTags(listing?.tags)}
-                >
-                </SearchResult>
-            ))}
+                 />
+            )) :
+            <Typography>Loading results...</Typography>}
             <Snackbar
                 open={isError}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
