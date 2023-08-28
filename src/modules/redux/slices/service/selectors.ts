@@ -5,10 +5,8 @@ export const ServiceSelectors = {
     getListings: createRootSelector((state) => state.service.listings),
     getSlots: createRootSelector((state) => state.service.slots),
     getUserListings: createRootSelector((state) => {
-        const userId = AuthSelectors.getUser(state).id;
-        const listings = ServiceSelectors.getListings(state);
-
-        return listings.filter(listing => listing.userId === userId);
+        const userId = parseInt(AuthSelectors.getUser(state).id, 10);
+        return state.service.listings.filter(listing => listing.userId === userId);
     }),
     getUserSlots: createRootSelector((state) => {
         const userId = AuthSelectors.getUser(state).id;

@@ -7,6 +7,7 @@ import React from 'react';
 import 'react-virtualized/styles.css';
 import { useSelector } from 'react-redux';
 import { API } from '@sanctuaryteam/shared';
+import { useSelector } from 'react-redux';
 import { SearchResult } from '.';
 
 const Root = styled('div')(({ theme }) => ({
@@ -22,7 +23,6 @@ export const Search: React.FC<SearchResultsProps> = ({
     params,
 }) => {
     const { i18n } = useLingui();
-
     const { isLoading, isError } = Redux.useServiceSearchQuery(params);
     const listings = useSelector(Redux.ServiceSelectors.getListings);
 

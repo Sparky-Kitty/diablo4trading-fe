@@ -18,11 +18,10 @@ export const ServiceSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addMatcher(
-            BackendSlice.endpoints.serviceSearch.matchFulfilled,
-            (state, action) => {
-                state.listings = [];
-
+            .addMatcher(
+                BackendSlice.endpoints.serviceSearch.matchFulfilled,
+                (state, action) => {
+                    state.listings = [];
                 // Now, append any new results that are not already in the listings.
                 action.payload.forEach(result => {
                     if (!state.listings.find(listing => listing.id === result.id)) {
