@@ -1,19 +1,10 @@
-import logo from '@assets/logo.webp';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Common } from '@modules/common';
 import { PosNegRatingInput } from '@modules/common/components/posneg-rating.component';
 import { StarRatingInput } from '@modules/common/components/star-rating.component';
-import { Avatar, Box, Button, Card, Grid, styled, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, Grid, TextField, Typography } from '@mui/material';
 import React from 'react';
-
-const Logo = styled('img')(() => ({
-    width: 50,
-    height: 'auto',
-}));
-Logo.defaultProps = {
-    src: logo,
-};
 
 interface VouchData {
     starRating: number;
