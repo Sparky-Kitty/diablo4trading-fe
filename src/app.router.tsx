@@ -3,9 +3,9 @@ import { RouteAuth } from '@modules/route-auth';
 import { RouteGlobal } from '@modules/route-global';
 import { RouteServices } from '@modules/route-services';
 import { RouteTrade } from '@modules/route-trade';
+import { RouteVouch } from '@modules/route-vouch';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { MasterLayout } from './app.master.layout';
-import { RouteVouch } from '@modules/route-vouch';
 
 export const router = createBrowserRouter([
     {
