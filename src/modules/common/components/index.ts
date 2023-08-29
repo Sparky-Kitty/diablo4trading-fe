@@ -11,3 +11,5 @@ export * from './spinner.component';
 export * from './theme.component';
 export * from './timer.component';
 export * from './user-rating.component';
+export * from './posneg-rating.component';
+export * from './star-rating.component';

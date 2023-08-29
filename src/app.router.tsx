@@ -5,6 +5,7 @@ import { RouteServices } from '@modules/route-services';
 import { RouteTrade } from '@modules/route-trade';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
 import { MasterLayout } from './app.master.layout';
+import { RouteVouch } from '@modules/route-vouch';
 
 export const router = createBrowserRouter([
     {
@@ -47,6 +48,7 @@ export const router = createBrowserRouter([
             { index: true, element: <Navigate to='trade' replace /> },
             { path: 'services/*', element: <RouteServices.Element /> },
             { path: 'trade/*', element: <RouteTrade.Element /> },
+            { path: 'vouch/*', element: <RouteVouch.Element /> },
             { path: '*', element: <Common.NotFoundPage /> },
         ],
     },
