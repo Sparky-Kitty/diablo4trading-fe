@@ -96,12 +96,16 @@ export const VouchPage: React.FC = () => {
                                     <Typography variant='h6'>
                                     {t(i18n)`Please rate the product/service.`}
                                     </Typography>
-                                    <StarRatingInput value={vouchData.starRating} onChange={handleRatingChange} />
                                 </Grid>
                                 <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
                                     <Typography variant='h6' pt={1}>
                                     {t(i18n)`Is this a positive or negative review?`}
                                     </Typography>
+                                </Grid>
+                                <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
+                                    <StarRatingInput value={vouchData.starRating} onChange={handleRatingChange} />
+                                </Grid>
+                                <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
                                     <PosNegRatingInput value={vouchData.goodRating} onChange={handleThumbChange} />
                                 </Grid>
                                 <Grid xs={12} m={3} display={'flex'} justifyContent={'center'} alignContent={'center'}>
