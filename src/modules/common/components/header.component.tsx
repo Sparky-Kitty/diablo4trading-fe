@@ -20,6 +20,7 @@ import { matchPath, useMatches, useNavigate, useResolvedPath } from 'react-route
 import { APP_NAME } from '../constants';
 import { HeaderLanguage } from './header-language.component';
 import { HeaderUser } from './header-user.component';
+import { HeaderEnglishLanguage } from '.';
 
 const Tab = styled(MuiTab)(({ theme }) => ({
     ...theme.typography.body1,
@@ -37,10 +38,12 @@ Logo.defaultProps = {
 export const HEADER_HEIGHT = 48;
 
 interface HeaderProps {
+    global?: boolean;
     hideNavigation?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
+    global,
     hideNavigation,
 }) => {
     const { i18n } = useLingui();
@@ -53,12 +56,14 @@ export const Header: React.FC<HeaderProps> = ({
     const servicesPath = useResolvedPath('services');
     const feedbackPath = useResolvedPath('./feedback');
     const faqPath = useResolvedPath('./faq');
+    const rulesPath = useResolvedPath('./../global/rules');
 
     const items = [
         { ...tradePath, label: t(i18n)`Trade` },
         { ...servicesPath, label: t(i18n)`Services` },
         { ...feedbackPath, label: t(i18n)`Feedback` },
         { ...faqPath, label: t(i18n)`FAQ` },
+        { ...rulesPath, label: t(i18n)`Rules` },
     ];
 
     const handleRootRedirect = () => {
@@ -134,7 +139,7 @@ export const Header: React.FC<HeaderProps> = ({
                         {!hideNavigation && (
                             <Stack direction='row' gap={1}>
                                 <HeaderUser />
-                                <HeaderLanguage />
+                                {!global ? <HeaderLanguage /> : <HeaderEnglishLanguage />}
                             </Stack>
                         )}
                     </Toolbar>
