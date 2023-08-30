@@ -1,9 +1,9 @@
 import { Redux } from '@modules/redux';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import { Avatar, Box, Card, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Card, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Common } from '..';
+import { UserRating } from '.';
 
 export const HeaderNotifications: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -16,7 +16,7 @@ export const HeaderNotifications: React.FC = () => {
         setAnchorEl(null);
     };
 
-    const user = useSelector(Redux.AuthSelectors.getUser);
+    const user = useSelector(Redux.AuthSelectors.getUser) ?? null;
     if (user) {
         return (
             <React.Fragment>
@@ -45,47 +45,7 @@ export const HeaderNotifications: React.FC = () => {
                                 alignItems={'center'}
                             >
                                 <Grid xs={6} display={'flex'} justifyContent={'flex-start'} alignItems={'flex-start'}>
-                                    <Box
-                                        sx={{
-                                            display: 'flex',
-                                            mt: 2,
-                                            justifyContent: 'space-between',
-                                            alignItems: 'flex-end',
-                                        }}
-                                    >
-                                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                                            <Box>
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                                    <Grid container spacing={1}>
-                                                        <Grid
-                                                            item
-                                                            xs={12}
-                                                            md={6}
-                                                            display={'flex'}
-                                                            justifyContent={'flex-start'}
-                                                            alignItems={'flex-start'}
-                                                        >
-                                                            <Avatar
-                                                                src='https://placekitten.com/40/40'
-                                                                sx={{ pr: -20 }}
-                                                            />
-                                                        </Grid>
-                                                        <Grid item xs={12} md={6}>
-                                                            <Box ml={-3}>
-                                                                <Typography
-                                                                    variant='subtitle1'
-                                                                    fontWeight='bold'
-                                                                >
-                                                                    {'SparkyOnyx#1187'}
-                                                                </Typography>
-                                                                <Common.UserRating rating={6} score={456} />
-                                                            </Box>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Box>
-                                            </Box>
-                                        </Box>
-                                    </Box>
+                                    <UserRating rating={6} score={200} />
                                 </Grid>
                                 <Grid xs={6} display={'flex'} justifyContent={'flex-end'} alignItems={'flex-end'}>
                                     <Typography
