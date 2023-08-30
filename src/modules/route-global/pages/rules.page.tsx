@@ -20,7 +20,7 @@ export const RulesPage: React.FC = () => {
                                 sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                             >
                                 <Typography variant='h4' fontWeight='bold'>
-                                    {'Sanctuary Site Rules'}
+                                    {'Sanctuary Rules'}
                                 </Typography>
                             </Grid>
                             <Grid
