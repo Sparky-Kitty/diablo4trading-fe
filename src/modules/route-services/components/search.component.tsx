@@ -7,7 +7,6 @@ import React from 'react';
 import 'react-virtualized/styles.css';
 import { useSelector } from 'react-redux';
 import { API } from '@sanctuaryteam/shared';
-import { useSelector } from 'react-redux';
 import { SearchResult } from '.';
 
 const Root = styled('div')(({ theme }) => ({

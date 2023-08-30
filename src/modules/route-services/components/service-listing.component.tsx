@@ -41,15 +41,12 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
             console.log("Fulfilled: " + JSON.stringify(payload))
         })
         .catch(error => {  
-            setError(error.data.message);
+            setError(error.data?.message ? error.data?.message : error.data?.message?.message);
             setIsError(true);
             setTimeout(() => {
                 setIsError(false);
             }, 5000);
         });
-        // setTimeout(() => {
-        //     return window.location.reload();
-        // }, 1500);
     }
 
     async function handleSoftDelete() {
@@ -59,15 +56,12 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
                 console.log("Fulfilled: " + JSON.stringify(payload))
             })
             .catch(error => {  
-                setError(error.data.message);
+                setError(error.data?.message ? error.data?.message : error.data?.message?.message);
                 setIsError(true);
                 setTimeout(() => {
                     setIsError(false);
                 }, 5000);
             });
-        // setTimeout(() => {
-        //     return window.location.reload();
-        // }, 1500);
     }
 
     if (user && id && title && content) {
@@ -162,6 +156,14 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
                         </Box>
                     </Box>
                 </Box>
+                <Snackbar
+                    open={isError}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                >
+                    <Alert severity='error'>
+                        {error}
+                    </Alert>
+                </Snackbar>
             </Card>
         );
     } else {

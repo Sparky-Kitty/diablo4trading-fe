@@ -7,17 +7,23 @@ import { ServiceOffer } from '../components';
 import { Redux } from '@modules/redux';
 import { useSelector } from 'react-redux';
 
-export const ServiceOffers: React.FC = () => {
+interface ServiceOffersProps {
+    user: API.AuthUser;
+}
+
+export const ServiceOffers: React.FC<ServiceOffersProps> = ({
+    user,
+}) => {
     const { i18n } = useLingui();
 
     const serviceSlotGetSearchQuery: API.ServiceSlotGetSearchQuery = {
-        ownerId: 1,
+        ownerId: parseInt(user.id),
         state: API.SERVICE_SLOT_STATES.PENDING,
         limit: 5       
     };
 
     Redux.useServiceSlotsSearchQuery(serviceSlotGetSearchQuery)
-    const slots = useSelector(Redux.ServiceSelectors.getUserSlots);
+    const slots: API.ServiceSlot[] = useSelector(Redux.ServiceSelectors.getUserSlots);
 
     return (
         <Card sx={{ p: 2, pt: 0 }}>
@@ -26,7 +32,6 @@ export const ServiceOffers: React.FC = () => {
                     {t(i18n)`Notifications`}
                 </Typography>
                 <Divider />
-                {/* @ts-ignore */} {/* To disregard error that map does not exist on unknown "listings" */}
                 {slots ? slots.map(slot => (
                     <ServiceOffer
                         key={slot?.id}

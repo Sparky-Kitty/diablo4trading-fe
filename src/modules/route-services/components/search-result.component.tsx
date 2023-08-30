@@ -44,15 +44,12 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             console.log("Fulfilled: " + JSON.stringify(payload))
         })
         .catch(error => {  
-            setError(error.data.message);
+            setError(error ? error.data?.message : error.data?.message?.message);
             setIsError(true);
             setTimeout(() => {
                 setIsError(false);
             }, 5000);
         });
-        // setTimeout(() => {
-        //     return window.location.reload();
-        // }, 1500);
     }
 
     async function handleBuy() {
@@ -62,15 +59,12 @@ export const SearchResult: React.FC<SearchResultProps> = ({
             console.log("Fulfilled: " + JSON.stringify(payload))
         })
         .catch(error => {  
-            setError(error.data.message);
+            setError(error.data?.message ? error.data?.message : error.data?.message?.message);
             setIsError(true);
             setTimeout(() => {
                 setIsError(false);
             }, 5000);
         });
-        // setTimeout(() => {
-        //     return window.location.reload();
-        // }, 1500);
     }
 
     return (

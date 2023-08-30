@@ -20,12 +20,13 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
+import { API } from '@sanctuaryteam/shared';
 
 interface ServiceCreateFormProps {
+    user: API.AuthUser;
     onSubmit: (serviceData: ServiceData) => void;
     onCancel: () => void;
 }
@@ -40,10 +41,9 @@ interface ServiceData {
     maxAcceptedSlots: number;
 }
 
-export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel }) => {
+export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ user, onSubmit, onCancel }) => {
     const [isError, setIsError] = React.useState<boolean>(false);
     const [error, setError] = React.useState<string>('');
-    const user = useSelector(Redux.AuthSelectors.getUser);
     const [createService] = Redux.useCreateServiceMutation();
     const [serverType, setServerType] = useRouteServerType();
 
@@ -86,7 +86,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
             console.log('Service created successfully!');
         })
         .catch(error => {
-            setError(error.data.message);
+            setError(error.data?.message ? error.data?.message : error.data?.message?.message);
             setIsError(true);
             setTimeout(() => {
                 setIsError(false);
