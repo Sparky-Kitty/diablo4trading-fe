@@ -19,7 +19,6 @@ import React from 'react';
 import { matchPath, useMatches, useNavigate, useResolvedPath } from 'react-router-dom';
 import { APP_NAME } from '../constants';
 import { HeaderLanguage } from './header-language.component';
-import { HeaderNotifications } from './header-notifications.component';
 import { HeaderUser } from './header-user.component';
 
 const Tab = styled(MuiTab)(({ theme }) => ({
@@ -134,7 +133,6 @@ export const Header: React.FC<HeaderProps> = ({
                         <Box flexGrow={1} />
                         {!hideNavigation && (
                             <Stack direction='row' gap={1}>
-                                <HeaderNotifications />
                                 <HeaderUser />
                                 <HeaderLanguage />
                             </Stack>
