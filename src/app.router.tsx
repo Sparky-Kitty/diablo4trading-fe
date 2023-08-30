@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
     {
         path: 'global/*',
         element: (
-            <MasterLayout global>
+            <MasterLayout hideNavigation>
                 <RouteGlobal.Element />
             </MasterLayout>
         ),

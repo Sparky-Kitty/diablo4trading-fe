@@ -18,7 +18,6 @@ import { styled } from '@mui/material/styles';
 import React from 'react';
 import { matchPath, useMatches, useNavigate, useResolvedPath } from 'react-router-dom';
 import { APP_NAME } from '../constants';
-import { HeaderEnglishLanguage } from '.';
 import { HeaderLanguage } from './header-language.component';
 import { HeaderUser } from './header-user.component';
 
@@ -38,12 +37,10 @@ Logo.defaultProps = {
 export const HEADER_HEIGHT = 48;
 
 interface HeaderProps {
-    global?: boolean;
     hideNavigation?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
-    global,
     hideNavigation,
 }) => {
     const { i18n } = useLingui();
@@ -139,7 +136,7 @@ export const Header: React.FC<HeaderProps> = ({
                         {!hideNavigation && (
                             <Stack direction='row' gap={1}>
                                 <HeaderUser />
-                                {!global ? <HeaderLanguage /> : <HeaderEnglishLanguage />}
+                                <HeaderLanguage />
                             </Stack>
                         )}
                     </Toolbar>
