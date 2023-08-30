@@ -1,4 +1,3 @@
-import { Redux } from '@modules/redux';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Button } from '@mui/material';
 import React from 'react';
