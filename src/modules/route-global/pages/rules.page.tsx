@@ -31,13 +31,6 @@ export const RulesPage: React.FC = () => {
                                 <Card
                                     sx={{ outlineColor: 'error', width: '100%', boxShadow: '0 0 10px #d32f2f' }}
                                 >
-                                    <Grid container display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                                        <Grid xs={12} display={'flex'} justifyContent={'center'} alignItems={'center'}>
-                                            <Typography variant='h6' fontWeight='bold'>
-                                                {'The following apply to Services and Trades'}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
                                     <Grid
                                         container
                                         display={'flex'}
