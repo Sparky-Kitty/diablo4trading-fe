@@ -1,5 +1,6 @@
 export * from './floating-panel.component';
 export * from './footer.component';
+export * from './header-notifications.component';
 export * from './header.component';
 export * from './item-tooltip.component';
 export * from './language-switch.component';
