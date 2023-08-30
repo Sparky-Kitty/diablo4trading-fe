@@ -55,7 +55,7 @@ export const Header: React.FC<HeaderProps> = ({
     const tradePath = useResolvedPath('trade');
     const servicesPath = useResolvedPath('services');
     const feedbackPath = useResolvedPath('./feedback');
-    const faqPath = useResolvedPath('./faq');
+    const faqPath = useResolvedPath('./../global/faq');
     const rulesPath = useResolvedPath('./../global/rules');
 
     const items = [
