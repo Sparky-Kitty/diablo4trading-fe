@@ -18,9 +18,9 @@ import { styled } from '@mui/material/styles';
 import React from 'react';
 import { matchPath, useMatches, useNavigate, useResolvedPath } from 'react-router-dom';
 import { APP_NAME } from '../constants';
+import { HeaderEnglishLanguage } from '.';
 import { HeaderLanguage } from './header-language.component';
 import { HeaderUser } from './header-user.component';
-import { HeaderEnglishLanguage } from '.';
 
 const Tab = styled(MuiTab)(({ theme }) => ({
     ...theme.typography.body1,
