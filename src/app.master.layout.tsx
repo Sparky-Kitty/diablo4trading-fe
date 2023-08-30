@@ -14,17 +14,19 @@ const Main = styled('main')(() => ({
 }));
 
 interface MasterLayoutProps {
+    global?: boolean;
     hideNavigation?: boolean;
     children?: React.ReactNode;
 }
 
 export const MasterLayout: React.FC<MasterLayoutProps> = ({
+    global,
     hideNavigation,
     children,
 }) => {
     return (
         <React.Fragment>
-            {<Common.Header hideNavigation={hideNavigation} />}
+            {<Common.Header hideNavigation={hideNavigation} global={global} />}
             <Main
                 sx={{
                     minHeight: `calc(100vh - ${Common.HEADER_HEIGHT}px - ${Common.FOOTER_HEIGHT}px)`,
