@@ -44,10 +44,16 @@ export const HeaderNotifications: React.FC = () => {
                                 justifyContent={'center'}
                                 alignItems={'center'}
                             >
-                                <Grid xs={6} display={'flex'} justifyContent={'flex-start'} alignItems={'flex-start'}>
+                                <Grid
+                                    item
+                                    xs={6}
+                                    display={'flex'}
+                                    justifyContent={'flex-start'}
+                                    alignItems={'flex-start'}
+                                >
                                     <UserRating rating={6} score={200} />
                                 </Grid>
-                                <Grid xs={6} display={'flex'} justifyContent={'flex-end'} alignItems={'flex-end'}>
+                                <Grid item xs={6} display={'flex'} justifyContent={'flex-end'} alignItems={'flex-end'}>
                                     <Typography
                                         variant='body2'
                                         sx={{ ml: 5 }}
