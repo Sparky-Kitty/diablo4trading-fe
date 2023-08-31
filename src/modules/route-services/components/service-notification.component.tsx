@@ -20,8 +20,8 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
             <Card sx={{ p: 2, mt: 2, display: 'flex' }}>
                 <Grid container columnSpacing={1} sx={{ alignContent: 'center' }}>
                     <Grid item xs={12}>
-                        <Typography variant='subtitle2' fontWeight='bold'>  {/* TODO: Replace with user.rating when available */}
-                            {buyer?.battleNetTag.split("#")[0]}, with a rating of {rating}, would like to purchase
+                        <Typography variant='subtitle2' fontWeight='bold'>
+                            {buyer?.battleNetTag.split('#')[0]}, with a rating of {rating}, would like to purchase
                             {slot?.service?.title}.
                         </Typography>
                     </Grid>

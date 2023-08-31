@@ -1,11 +1,11 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { Box, Card, Divider, Typography } from '@mui/material';
-import React from 'react';
-import { API } from '@sanctuaryteam/shared';
-import { ServiceOffer } from '../components';
 import { Redux } from '@modules/redux';
+import { Box, Card, Divider, Typography } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
+import React from 'react';
 import { useSelector } from 'react-redux';
+import { ServiceOffer } from '../components';
 
 interface ServiceOffersProps {
     user: API.AuthUser;
@@ -19,10 +19,10 @@ export const ServiceOffers: React.FC<ServiceOffersProps> = ({
     const serviceSlotGetSearchQuery: API.ServiceSlotGetSearchQuery = {
         ownerId: parseInt(user.id),
         state: API.SERVICE_SLOT_STATES.PENDING,
-        limit: 5       
+        limit: 5,
     };
 
-    Redux.useServiceSlotsSearchQuery(serviceSlotGetSearchQuery)
+    Redux.useServiceSlotsSearchQuery(serviceSlotGetSearchQuery);
     const slots: API.ServiceSlot[] = useSelector(Redux.ServiceSelectors.getUserSlots);
 
     return (
@@ -32,15 +32,16 @@ export const ServiceOffers: React.FC<ServiceOffersProps> = ({
                     {t(i18n)`Notifications`}
                 </Typography>
                 <Divider />
-                {slots ? slots.map(slot => (
-                    <ServiceOffer
-                        key={slot?.id}
-                        rating={4.3}
-                        buyer={slot?.client}
-                        slot={slot}
-                    />
-                ))
-            : <></>}
+                {slots
+                    ? slots.map(slot => (
+                        <ServiceOffer
+                            key={slot?.id}
+                            rating={4.3}
+                            buyer={slot?.client}
+                            slot={slot}
+                        />
+                    ))
+                    : <></>}
             </Box>
         </Card>
     );

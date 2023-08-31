@@ -1,9 +1,9 @@
-import { Grid, Typography } from '@mui/material';
-import React from 'react';
-import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
-import { useSelector } from 'react-redux';
 import { Redux } from '@modules/redux';
+import { Grid, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { ServiceCreate, ServiceListings, ServiceOffers } from '../components';
 
 export const ListingsPage: React.FC = () => {
     const user: API.AuthUser = useSelector(Redux.AuthSelectors.getUser) ?? null;
@@ -53,5 +53,4 @@ export const ListingsPage: React.FC = () => {
             </React.Fragment>
         );
     }
-
 };

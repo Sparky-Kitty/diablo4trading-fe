@@ -110,5 +110,5 @@ export const {
     useLazyServiceSearchQuery,
     useSoftDeleteServiceMutation,
     useServiceSlotsSearchQuery,
-    useLazyServiceSlotsSearchQuery
+    useLazyServiceSlotsSearchQuery,
 } = BackendSlice;

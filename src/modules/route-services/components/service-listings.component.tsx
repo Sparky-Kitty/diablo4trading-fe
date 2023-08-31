@@ -1,7 +1,9 @@
 import { useRouteServerType } from '@modules/common/providers';
+import { Redux } from '@modules/redux';
+import { Grid } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
 import { useSelector } from 'react-redux';
 import { ServiceListing } from '../components';
-import { Redux } from '@modules/redux';
 
 interface ServiceListingsProps {
     user: API.AuthUser;
@@ -24,7 +26,8 @@ export const ServiceListings: React.FC<ServiceListingsProps> = ({
 
     return (
         <Grid item xs={12} md={12} sx={{}}>
-            {listings ? listings.map(listing => (
+            {listings
+                ? listings.map(listing => (
                     <ServiceListing
                         key={listing?.id}
                         user={user?.battleNetTag}

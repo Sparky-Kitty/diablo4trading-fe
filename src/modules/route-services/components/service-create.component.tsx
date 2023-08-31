@@ -19,11 +19,11 @@ import {
     Typography,
     useMediaQuery,
 } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
-import { API } from '@sanctuaryteam/shared';
 
 interface ServiceCreateFormProps {
     user: API.AuthUser;
@@ -81,17 +81,17 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ user, onSubmit
         e.preventDefault();
 
         await createService(serviceData).unwrap()
-        .then(payload => {
-            console.log("Fulfilled: " + JSON.stringify(payload));
-            console.log('Service created successfully!');
-        })
-        .catch(error => {
-            setError(error.data?.message ? error.data?.message : error.data?.message?.message);
-            setIsError(true);
-            setTimeout(() => {
-                setIsError(false);
-            }, 5000);
-        });
+            .then(payload => {
+                console.log('Fulfilled: ' + JSON.stringify(payload));
+                console.log('Service created successfully!');
+            })
+            .catch(error => {
+                setError(error.data?.message ? error.data?.message : error.data?.message?.message);
+                setIsError(true);
+                setTimeout(() => {
+                    setIsError(false);
+                }, 5000);
+            });
     };
 
     const { i18n } = useLingui();
