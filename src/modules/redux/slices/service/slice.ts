@@ -76,6 +76,6 @@ export const ServiceSlice = createSlice({
                         return updatedResult ? updatedResult : listing;
                     });
                 },
-            )
+            );
     },
 });
