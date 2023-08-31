@@ -1,6 +1,6 @@
 import { Common } from '@modules/common';
 import { RouteAuth } from '@modules/route-auth';
-import { RouteGlobal } from '@modules/route-global';
+import { RoutePages } from '@modules/route-pages';
 import { RouteServices } from '@modules/route-services';
 import { RouteTrade } from '@modules/route-trade';
 import { RouteVouch } from '@modules/route-vouch';
@@ -13,14 +13,6 @@ export const router = createBrowserRouter([
         element: (
             <MasterLayout hideNavigation>
                 <RouteAuth.Element />
-            </MasterLayout>
-        ),
-    },
-    {
-        path: 'global/*',
-        element: (
-            <MasterLayout hideNavigation>
-                <RouteGlobal.Element />
             </MasterLayout>
         ),
     },
@@ -49,6 +41,7 @@ export const router = createBrowserRouter([
             { path: 'services/*', element: <RouteServices.Element /> },
             { path: 'trade/*', element: <RouteTrade.Element /> },
             { path: 'vouch/*', element: <RouteVouch.Element /> },
+            { path: 'pages/*', element: <RoutePages.Element /> },
             { path: '*', element: <Common.NotFoundPage /> },
         ],
     },
