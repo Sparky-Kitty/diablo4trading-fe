@@ -21,7 +21,7 @@ export const HeaderNotifications: React.FC = () => {
         return (
             <React.Fragment>
                 <IconButton
-                    onMouseEnter={handleOpenMenu}
+                    onClick={handleOpenMenu}
                 >
                     <NotificationsActiveIcon />
                 </IconButton>
@@ -51,7 +51,7 @@ export const HeaderNotifications: React.FC = () => {
                                     justifyContent={'flex-start'}
                                     alignItems={'flex-start'}
                                 >
-                                    <UserRating rating={6} score={200} />
+                                    <UserRating user={user?.battleNetTag} rating={6} score={200} />
                                 </Grid>
                                 <Grid item xs={6} display={'flex'} justifyContent={'flex-end'} alignItems={'flex-end'}>
                                     <Typography
