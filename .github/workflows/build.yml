@@ -22,8 +22,7 @@ jobs:
         node-version: 16
         
     - name: Set up .env
-      run: echo "SANCTUARYTEAM_AUTH_TOKEN=${{ secrets.SANCTUARYTEAM_AUTH_TOKEN }}" >> .env
-      run: cp .env.example .env
+      run: echo "SANCTUARYTEAM_AUTH_TOKEN=${{ secrets.SANCTUARYTEAM_AUTH_TOKEN }}" >> .env | cp .env.example .env
 
     - name: Install TypeScript and Yarn
       run: |
