@@ -32,12 +32,12 @@ export const HeaderNotifications: React.FC = () => {
                 >
                     <Card
                         elevation={2}
-                        sx={{ outlineColor: 'error', boxShadow: '0 0 10px #d32f2f' }}
+                        sx={{ outlineColor: 'error' }}
                     >
                         <MenuItem
                             onClick={handleCloseMenu}
                         >
-                            <Grid
+                            {/* <Grid
                                 container
                                 spacing={1}
                                 display={'flex'}
@@ -61,7 +61,7 @@ export const HeaderNotifications: React.FC = () => {
                                         Has bought your service
                                     </Typography>
                                 </Grid>
-                            </Grid>
+                            </Grid> */}
                         </MenuItem>
                     </Card>
                 </Menu>
