@@ -27,15 +27,11 @@ jobs:
     - name: Set up .env
       run: |
         if [ ! -f .env ]; then
-          echo "SANCTUARYTEAM_AUTH_TOKEN=${{ secrets.SANCTUARYTEAM_AUTH_TOKEN }}" > .env
+          echo "SANCTUARYTEAM_AUTH_TOKEN=${SANCTUARYTEAM_AUTH_TOKEN}" > .env
         else
-          echo "SANCTUARYTEAM_AUTH_TOKEN=${{ secrets.SANCTUARYTEAM_AUTH_TOKEN }}" >> .env
+          echo "SANCTUARYTEAM_AUTH_TOKEN=${SANCTUARYTEAM_AUTH_TOKEN}" >> .env
         fi
-
-
-        
-    - name: Set up .env
-      run: echo "SANCTUARYTEAM_AUTH_TOKEN=${{ secrets.SANCTUARYTEAM_AUTH_TOKEN }}" >> .env | cp .env.example .env
+      shell: bash
 
     - name: Install TypeScript and Yarn
       run: |
