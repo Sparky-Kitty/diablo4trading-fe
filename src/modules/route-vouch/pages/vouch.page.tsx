@@ -87,7 +87,7 @@ export const VouchPage: React.FC = () => {
                                                                         >
                                                                             {'SparkyOnyx#1187'}
                                                                         </Typography>
-                                                                        <Common.UserRating rating={6} score={456} />
+                                                                        <Common.UserRating user={'SparkyOnyx#1187'} rating={6} score={456} />
                                                                     </Box>
                                                                 </Grid>
                                                             </Grid>
