@@ -1,9 +1,8 @@
 import { Redux } from '@modules/redux';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import { Card, Grid, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Card, IconButton, Menu, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { UserRating } from '.';
 
 export const HeaderNotifications: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState(null);
