@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { AuthSelectors, useCreateServiceMutation } from '@modules/redux/slices';
+import { useCreateServiceMutation } from '@modules/redux/slices';
 import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
@@ -17,8 +17,8 @@ import {
     Typography,
     useMediaQuery,
 } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
@@ -26,6 +26,7 @@ import { ServiceTags } from '../components';
 interface ServiceCreateFormProps {
     onSubmit: (serviceData: ServiceData) => void;
     onCancel: () => void;
+    user: API.AuthUser;
 }
 
 interface ServiceData {
@@ -38,8 +39,7 @@ interface ServiceData {
     maxAcceptedSlots: number;
 }
 
-export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel }) => {
-    const userId = parseInt(useSelector(AuthSelectors.getUser).id, 10);
+export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel, user }) => {
     const [createService] = useCreateServiceMutation();
     const [serverType, setServerType] = useRouteServerType();
 
@@ -47,7 +47,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
         realmType: serverType,
         title: '',
         content: '',
-        userId,
+        userId: parseInt(user.id, 10),
         tags: 0,
         deleted: false,
         maxAcceptedSlots: 3,
@@ -78,7 +78,6 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
 
         try {
             await createService(serviceData);
-            console.log('Service created successfully!');
         } catch (error) {
             console.error('Error creating service:', error);
         }
@@ -96,7 +95,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
                     </Typography>
                     <Divider />
 
-                    <Grid container spacing={1} sx={{ pt: 2 }}>
+                    <Grid container spacing={1} pt={2}>
                         <Grid item xs={6} md={9}>
                             <ServiceTags selectedTags={selectedTags} onSelectTags={handleTagsSelection} />
                         </Grid>
@@ -141,14 +140,13 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
                             </Select>
                             <FormHelperText># of slots (max 3)</FormHelperText>
                         </Grid>
-                        <Grid item xs={3} sx={{ mt: 2 }}>
+                        <Grid item xs={3} mt={2} display='flex' alignItems='flex-end'>
                             <Button
                                 color='success'
                                 variant='outlined'
                                 startIcon={<PlaylistAddOutlinedIcon />}
-                                sx={{ ml: matches ? 0 : -2 }}
+                                sx={{ ml: matches ? 10 : -2 }}
                                 onClick={handleSubmit}
-                                // onClick={servicesService.createService()}
                             >
                                 {t(i18n)`Create`}
                             </Button>
