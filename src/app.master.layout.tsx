@@ -1,8 +1,10 @@
 import background from '@assets/background.webp';
 import { Common } from '@modules/common';
-import { Container } from '@mui/material';
+import { Redux } from '@modules/redux';
+import { Alert, Container, Snackbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Main = styled('main')(() => ({
     display: 'flex',
@@ -22,6 +24,11 @@ export const MasterLayout: React.FC<MasterLayoutProps> = ({
     hideNavigation,
     children,
 }) => {
+    const error = useSelector(Redux.SnackbarSelectors.getError);
+    // const active = useSelector(Redux.SnackbarSelectors.getActive);
+    const message = useSelector(Redux.SnackbarSelectors.getMessage);
+        
+        // Redux.SNACKBAR_STATE_INITAL;
     return (
         <React.Fragment>
             {<Common.Header hideNavigation={hideNavigation} />}
@@ -34,7 +41,16 @@ export const MasterLayout: React.FC<MasterLayoutProps> = ({
                     maxWidth='xl'
                     sx={{ pt: 2, pb: 2 }}
                 >
+                    {error.toString()}
                     {children}
+                    <Snackbar
+                        open={true}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                    >
+                        <Alert severity={error ? 'error' : 'success'}>
+                            {message}
+                        </Alert>
+                    </Snackbar>
                 </Container>
             </Main>
             <Common.Footer />

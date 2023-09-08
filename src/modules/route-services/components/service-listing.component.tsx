@@ -34,16 +34,16 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
 
     function handleBump() {
         bumpService(id);
-        setTimeout(() => {
-            return window.location.reload();
-        }, 1500);
+        // setTimeout(() => {
+        //     return window.location.reload();
+        // }, 1500);
     }
 
     function handleSoftDelete() {
         softDeleteService(id);
-        setTimeout(() => {
-            return window.location.reload();
-        }, 1500);
+        // setTimeout(() => {
+        //     return window.location.reload();
+        // }, 1500);
     }
 
     if (user && id && title && content) {

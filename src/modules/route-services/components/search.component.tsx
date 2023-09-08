@@ -1,7 +1,4 @@
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
 import { Redux } from '@modules/redux';
-import { Alert, Snackbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import 'react-virtualized/styles.css';
@@ -22,33 +19,22 @@ interface SearchResultsProps {
 export const Search: React.FC<SearchResultsProps> = ({
     params,
 }) => {
-    const { i18n } = useLingui();
-
-    const { isError } = Redux.useServiceSearchQuery(params);
+    Redux.useServiceSearchQuery(params);
     const listings = useSelector(ServiceSelectors.getListings);
 
     return (
         <Root>
-            {/* TODO: Insert Loading module */}
-            {listings.map(listing => (
-                <SearchResult
-                    key={listing?.id}
-                    user={listing?.user?.battleNetTag}
-                    id={listing?.id}
-                    lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
-                    title={listing?.title}
-                    content={listing?.content}
-                    tags={API.numberToTags(listing?.tags)}
-                />
-            ))}
-            <Snackbar
-                open={isError}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            >
-                <Alert severity='error'>
-                    {t(i18n)`Unable to fetch search results.`}
-                </Alert>
-            </Snackbar>
+        {listings.map(listing => (
+            <SearchResult
+                key={listing?.id}
+                user={listing?.user?.battleNetTag}
+                id={listing?.id}
+                lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
+                title={listing?.title}
+                content={listing?.content}
+                tags={API.numberToTags(listing?.tags)}
+            />
+        ))}
         </Root>
     );
 };
