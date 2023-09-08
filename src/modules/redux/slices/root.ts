@@ -4,7 +4,7 @@ import { AUTH_STATE_INITIAL, AuthSlice } from './auth/slice';
 import { BackendSlice } from './backend/slice';
 import { SERVICE_STATE_INITIAL, ServiceSlice } from './service/slice';
 import { USER_STATE_INITIAL, UserSlice } from './user/slice';
-import { SNACKBAR_STATE_INITAL, SnackbarSlice } from './snackbar/slice';
+import { SNACKBAR_STATE_INITIAL, SnackbarSlice } from './snackbar/slice';
 
 export const rootReducer = combineReducers({
     [AuthSlice.name]: AuthSlice.reducer,
@@ -21,5 +21,5 @@ export const ROOT_STATE_INITIAL: Partial<RootState> = {
     auth: AUTH_STATE_INITIAL,
     user: USER_STATE_INITIAL,
     service: SERVICE_STATE_INITIAL,
-    snackbar: SNACKBAR_STATE_INITAL,
+    snackbar: SNACKBAR_STATE_INITIAL,
 };

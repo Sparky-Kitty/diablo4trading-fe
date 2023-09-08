@@ -25,7 +25,7 @@ export const MasterLayout: React.FC<MasterLayoutProps> = ({
     children,
 }) => {
     const error = useSelector(Redux.SnackbarSelectors.getError);
-    // const active = useSelector(Redux.SnackbarSelectors.getActive);
+    const active = useSelector(Redux.SnackbarSelectors.getActive);
     const message = useSelector(Redux.SnackbarSelectors.getMessage);
         
         // Redux.SNACKBAR_STATE_INITAL;
@@ -44,7 +44,7 @@ export const MasterLayout: React.FC<MasterLayoutProps> = ({
                     {error.toString()}
                     {children}
                     <Snackbar
-                        open={true}
+                        open={active}
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
                     >
                         <Alert severity={error ? 'error' : 'success'}>
