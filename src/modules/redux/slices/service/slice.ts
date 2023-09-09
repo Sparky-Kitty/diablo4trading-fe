@@ -125,3 +125,5 @@ export const ServiceSlice = createSlice({
             );
     },
 });
+
+export default ServiceSlice.reducer;

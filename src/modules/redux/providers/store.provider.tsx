@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
 import { Provider } from 'react-redux';
+import { handleSnackbarTimeout, isRejectedActionWithMessage } from '../slices';
 import { BackendSlice } from '../slices/backend/slice';
 import { ROOT_STATE_INITIAL, rootReducer } from '../slices/root';
 import { retrieveLanguageFromNavigator, UserLanguage } from '../slices/user';
@@ -9,6 +10,13 @@ import { STORAGE } from '../utils';
 interface StoreProviderProps {
     children: React.ReactNode;
 }
+
+const rejectedActionMiddleware = (store) => (next) => (action) => {
+    if (isRejectedActionWithMessage(action)) {
+        store.dispatch(handleSnackbarTimeout());
+    }
+    return next(action);
+};
 
 export const StoreProvider: React.FC<StoreProviderProps> = ({
     children,
@@ -28,10 +36,10 @@ export const StoreProvider: React.FC<StoreProviderProps> = ({
         if (!preloadedState.user.language) {
             preloadedState.user.language = retrieveLanguageFromNavigator(UserLanguage.English);
         }
-
         const store = configureStore({
             reducer: rootReducer,
-            middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(BackendSlice.middleware),
+            middleware: (getDefaultMiddleware) =>
+                getDefaultMiddleware().concat(BackendSlice.middleware, rejectedActionMiddleware),
             preloadedState,
         });
         let next = { ...store.getState() };
