@@ -1,4 +1,3 @@
-import { useRouteServerType } from '@modules/common/providers';
 import { useServiceSearchQuery } from '@modules/redux/slices';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { Grid } from '@mui/material';
@@ -12,11 +11,8 @@ interface ServiceListingsProps {
 }
 
 export const ServiceListings: React.FC<ServiceListingsProps> = ({ user }) => {
-    const [serverType] = useRouteServerType();
-
     const serviceGetSearchQuery: API.ServiceGetSearchQuery = {
-        serverType,
-        userId: parseInt(user.id, 10),
+        userId: user.id,
         deleted: false,
         limit: 3,
     };
@@ -30,7 +26,8 @@ export const ServiceListings: React.FC<ServiceListingsProps> = ({ user }) => {
                 ? listings.map(listing => (
                     <ServiceListing
                         key={listing?.id}
-                        user={listing?.user?.battleNetTag}
+                        battleNetTag={listing?.user?.battleNetTag}
+                        userId={listing?.userId}
                         id={listing?.id}
                         lastUpdated={new Date(listing?.updatedAt).toLocaleString()}
                         title={listing?.title}
