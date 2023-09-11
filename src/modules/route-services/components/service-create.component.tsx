@@ -18,7 +18,6 @@ import {
     Typography,
     useMediaQuery,
 } from '@mui/material';
-import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
