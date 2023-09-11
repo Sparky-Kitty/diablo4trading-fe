@@ -1,15 +1,20 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
+import { AuthSelectors, ServiceSelectors, useServiceSlotSearchQuery } from '@modules/redux/slices';
 import { Box, Card, Divider, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { ServiceOffer } from './service-notification.component';
 
-interface ServiceOfferProps {
-    user: API.AuthUser;
-}
-
-export const ServiceOffers: React.FC<ServiceOfferProps> = () => {
+export const ServiceOffers: React.FC = () => {
     const { i18n } = useLingui();
+    const serviceSlotGetSearchQuery: API.ServiceSlotGetSearchQuery = {
+        ownerId: parseInt(useSelector(AuthSelectors.getUserId), 10),
+    };
+
+    useServiceSlotSearchQuery(serviceSlotGetSearchQuery);
+    const slots = useSelector(ServiceSelectors.getUserSlots);
 
     return (
         <Card sx={{ p: 2, pt: 0 }}>
@@ -18,13 +23,17 @@ export const ServiceOffers: React.FC<ServiceOfferProps> = () => {
                     {t(i18n)`Notifications`}
                 </Typography>
                 <Divider />
-                {
-                    /* <ServiceOffer
-                    score={4.3}
-                    buyer={user.battleNetTag}
-                    service={'T4 Capstone Dungeon'}
-                /> */
-                }
+                {slots
+                    ? slots.map(slot => (
+                        <ServiceOffer
+                        key={slot?.id}
+                        slot={slot}
+                        service={slot?.service}
+                        score={4.3}
+                        buyer={slot?.client?.battleNetTag}
+                    />
+                    ))
+                    : <></>}
             </Box>
         </Card>
     );

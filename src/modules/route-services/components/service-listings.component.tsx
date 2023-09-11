@@ -1,4 +1,4 @@
-import { useServiceSearchQuery } from '@modules/redux/slices';
+import { AuthSelectors, useServiceSearchQuery } from '@modules/redux/slices';
 import { ServiceSelectors } from '@modules/redux/slices';
 import { Grid } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
@@ -6,13 +6,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ServiceListing } from '../components';
 
-interface ServiceListingsProps {
-    user: API.AuthUser;
-}
-
-export const ServiceListings: React.FC<ServiceListingsProps> = ({ user }) => {
+export const ServiceListings: React.FC = () => {
     const serviceGetSearchQuery: API.ServiceGetSearchQuery = {
-        userId: user.id,
+        userId: useSelector(AuthSelectors.getUserId),
         deleted: false,
         limit: 3,
     };

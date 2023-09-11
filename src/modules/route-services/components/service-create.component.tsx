@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
-import { useCreateServiceMutation } from '@modules/redux/slices';
+import { AuthSelectors, useCreateServiceMutation } from '@modules/redux/slices';
 import PlaylistAddOutlinedIcon from '@mui/icons-material/PlaylistAddOutlined';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
@@ -23,11 +23,11 @@ import React from 'react';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
+import { useSelector } from 'react-redux';
 
 interface ServiceCreateFormProps {
     onSubmit: (serviceData: ServiceData) => void;
     onCancel: () => void;
-    user: API.AuthUser;
 }
 
 interface ServiceData {
@@ -40,7 +40,7 @@ interface ServiceData {
     maxAcceptedSlots: number;
 }
 
-export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel, user }) => {
+export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCancel }) => {
     const [createService] = useCreateServiceMutation();
     const [serverType, setServerType] = useRouteServerType();
 
@@ -48,7 +48,7 @@ export const ServiceCreate: React.FC<ServiceCreateFormProps> = ({ onSubmit, onCa
         realmType: serverType,
         title: '',
         content: '',
-        userId: user.id,
+        userId: useSelector(AuthSelectors.getUserId),
         tags: 0,
         deleted: false,
         maxAcceptedSlots: 3,

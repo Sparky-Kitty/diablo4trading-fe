@@ -56,6 +56,14 @@ export const BackendSlice = createApi({
                 params,
             }),
         }),
+        // service-search
+        serviceSlotSearch: builder.query<API.ServiceSlotGetSearchResponse, API.ServiceSlotGetSearchQuery>({
+            query: params => ({
+                url: '/service-slots',
+                method: 'GET',
+                params,
+            }),
+        }),
         // service-create
         createService: builder.mutation({
             query: (serviceData) => ({
@@ -88,6 +96,14 @@ export const BackendSlice = createApi({
                 body: { id },
             }),
         }),
+        // service-slot-state
+        editSlotState: builder.mutation({
+            query: ({ id, state }: { id: string, state: API.ServiceSlotStates }) => ({
+                url: `/service-slots/${id}/state/${state}`,
+                method: 'PUT',
+                body: { id, state },
+            }),
+        }),
     }),
 });
 
@@ -99,9 +115,12 @@ export const {
     useLazyTradeSearchQuery,
     // service
     useServiceSearchQuery,
+    useServiceSlotSearchQuery,
     useBuyServiceMutation,
     useBumpServiceMutation,
+    useEditSlotStateMutation,
     useCreateServiceMutation,
     useLazyServiceSearchQuery,
+    useLazyServiceSlotSearchQuery,
     useSoftDeleteServiceMutation,
 } = BackendSlice;

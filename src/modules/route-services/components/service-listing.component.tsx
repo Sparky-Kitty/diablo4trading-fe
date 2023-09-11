@@ -104,7 +104,7 @@ export const ServiceListing: React.FC<ServiceListingProps> = ({
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                {!isServiceOwner
+                                {isServiceOwner
                                     ? (
                                         <Button
                                             color='success'

@@ -4,10 +4,12 @@ import { BackendSlice } from './../backend/slice';
 
 interface ServiceState {
     listings: API.ServiceListing[];
+    slots: API.ServiceSlot[];
 }
 
 export const SERVICE_STATE_INITIAL: ServiceState = {
     listings: [],
+    slots: [],
 };
 
 export const ServiceSlice = createSlice({
@@ -49,22 +51,44 @@ export const ServiceSlice = createSlice({
                 },
             )
             .addMatcher(
-                BackendSlice.endpoints.buyService.matchFulfilled,
-                (state, action) => {
-                    state.listings.map((listing, index) => {
-                        if (listing.id == action.payload.id) {
-                            return state.listings[index] = action.payload;
-                        }
-                    });
-                },
-            )
-            .addMatcher(
                 BackendSlice.endpoints.softDeleteService.matchFulfilled,
                 (state, action) => {
                     const { id: serviceId } = action.meta.arg.originalArgs;
                     state.listings.map((listing, index) => {
                         if (listing.id === serviceId) {
                             return state.listings.splice(index, 1);
+                        }
+                    });
+                },
+            )
+            .addMatcher(
+                BackendSlice.endpoints.buyService.matchFulfilled,
+                (state, action) => {
+                    state.slots.push(action.payload);
+                },
+            )
+            .addMatcher(
+                BackendSlice.endpoints.editSlotState.matchFulfilled,
+                (state, action) => {
+                    const { id: slotId, state: newState } = action.meta.arg.originalArgs;
+                    state.slots.map((slot, index) => {
+                        if (slot.id === slotId) {
+                            return state.slots[index].state = newState;
+                        }
+                    })
+                },
+            )
+            .addMatcher(
+                BackendSlice.endpoints.serviceSlotSearch.matchFulfilled,
+                (state, action) => {
+                    state.slots = state.slots.map(slot => {
+                        const updatedResult = action.payload.find(result => result.id === slot.id);
+                        return updatedResult ? updatedResult : slot;
+                    });
+
+                    action.payload.forEach(result => {
+                        if (!state.slots.find(slot => slot.id === result.id)) {
+                            state.slots.push(result);
                         }
                     });
                 },

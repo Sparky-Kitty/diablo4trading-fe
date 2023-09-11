@@ -16,13 +16,12 @@ export const ListingsPage: React.FC = () => {
             <React.Fragment>
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={3} alignContent={'flex-start'}>
-                        <ServiceOffers user={user} />
+                        <ServiceOffers />
                     </Grid>
                     <Grid item xs={12} md={9} alignContent={'flex-end'}>
                         <Grid container spacing={1}>
                             <Grid item xs={12} alignContent={'center'}>
                                 <ServiceCreate
-                                    user={user}
                                     onSubmit={handleCreate}
                                     onCancel={handleCreate}
                                 />
@@ -30,7 +29,7 @@ export const ListingsPage: React.FC = () => {
                         </Grid>
                         <Grid container spacing={1}>
                             <Grid item xs={12} alignContent={'center'}>
-                                <ServiceListings user={user} />
+                                <ServiceListings />
                             </Grid>
                         </Grid>
                     </Grid>
