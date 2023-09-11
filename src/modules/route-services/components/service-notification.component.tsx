@@ -27,28 +27,29 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
 
     React.useEffect(() => {
         switch (slot.state) {
-            case API.ServiceSlotStates.Pending:  
+            case API.ServiceSlotStates.Pending:
                 setNotification(`User with a score of (${score}) would like to purchase your service.`);
                 setYes(API.ServiceSlotStates.Accepted);
                 setNo(API.ServiceSlotStates.Rejected);
                 break;
-            case API.ServiceSlotStates.Accepted:     
-                setNotification(`Has the service ended?`)   
+            case API.ServiceSlotStates.Accepted:
+                setNotification(`Has the service ended?`);
                 setYes(API.ServiceSlotStates.Ended);
-                setNo(null)
+                setNo(null);
                 break;
             case API.ServiceSlotStates.Rejected:
-                setNotification(null); 
-                setYes(null);  
+                setNotification(null);
+                setYes(null);
                 setNo(null);
                 break;
-            case API.ServiceSlotStates.Ended:   
-                setNotification(`Please rate the service with a vouch.`);   
-                setYes(null);  
+            case API.ServiceSlotStates.Ended:
+                setNotification(`Please rate the service with a vouch.`);
+                setYes(null);
                 setNo(null);
                 break;
-        
-            default: API.ServiceSlotStates.Pending 
+
+            default:
+                API.ServiceSlotStates.Pending;
                 setNotification(`User with a score of (${score}) would like to purchase ${service.title}.`);
                 setYes(API.ServiceSlotStates.Accepted);
                 setNo(API.ServiceSlotStates.Rejected);
@@ -78,22 +79,30 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} display='flex' justifyContent='flex-end'>
-                                {yes ? <Button
-                                    color='success'
-                                    variant='outlined'
-                                    startIcon={<ThumbUpOutlinedIcon />}
-                                    onClick={() => handleEdit(yes)}
-                                    sx={{ ml: 1 }}
-                                >
-                                </Button> : <></> }
-                                {no ? <Button
-                                    color='error'
-                                    variant='outlined'
-                                    startIcon={<ThumbDownOutlinedIcon />}
-                                    onClick={() => handleEdit(no)}
-                                    sx={{ ml: 1 }}
-                                >
-                                </Button> : <></> }
+                                {yes
+                                    ? (
+                                        <Button
+                                            color='success'
+                                            variant='outlined'
+                                            startIcon={<ThumbUpOutlinedIcon />}
+                                            onClick={() => handleEdit(yes)}
+                                            sx={{ ml: 1 }}
+                                        >
+                                        </Button>
+                                    )
+                                    : <></>}
+                                {no
+                                    ? (
+                                        <Button
+                                            color='error'
+                                            variant='outlined'
+                                            startIcon={<ThumbDownOutlinedIcon />}
+                                            onClick={() => handleEdit(no)}
+                                            sx={{ ml: 1 }}
+                                        >
+                                        </Button>
+                                    )
+                                    : <></>}
                             </Grid>
                         </Grid>
                     </Box>

@@ -19,7 +19,7 @@ export const ServiceSelectors = {
         AuthSelectors.getUserId,
         getSlots,
         (userId, slots) => {
-            console.log(userId, slots)
+            console.log(userId, slots);
             return slots.filter(slot => slot.serviceOwnerUserId === parseInt(userId, 10));
         },
     ),

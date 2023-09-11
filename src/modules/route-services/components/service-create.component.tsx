@@ -19,10 +19,10 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { ServerTypeInput } from '../../common/components';
 import { useRouteServerType } from '../../common/providers';
 import { ServiceTags } from '../components';
-import { useSelector } from 'react-redux';
 
 interface ServiceCreateFormProps {
     onSubmit: (serviceData: ServiceData) => void;

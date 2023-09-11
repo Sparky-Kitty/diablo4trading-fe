@@ -26,12 +26,12 @@ export const ServiceOffers: React.FC = () => {
                 {slots
                     ? slots.map(slot => (
                         <ServiceOffer
-                        key={slot?.id}
-                        slot={slot}
-                        service={slot?.service}
-                        score={4.3}
-                        buyer={slot?.client?.battleNetTag}
-                    />
+                            key={slot?.id}
+                            slot={slot}
+                            service={slot?.service}
+                            score={4.3}
+                            buyer={slot?.client?.battleNetTag}
+                        />
                     ))
                     : <></>}
             </Box>

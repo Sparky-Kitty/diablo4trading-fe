@@ -75,7 +75,7 @@ export const ServiceSlice = createSlice({
                         if (slot.id === slotId) {
                             return state.slots[index].state = newState;
                         }
-                    })
+                    });
                 },
             )
             .addMatcher(
@@ -92,7 +92,7 @@ export const ServiceSlice = createSlice({
                         }
                     });
                 },
-            )
+            );
     },
 });
 

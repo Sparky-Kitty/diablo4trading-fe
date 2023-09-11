@@ -98,7 +98,7 @@ export const BackendSlice = createApi({
         }),
         // service-slot-state
         editSlotState: builder.mutation({
-            query: ({ id, state }: { id: string, state: API.ServiceSlotStates }) => ({
+            query: ({ id, state }: { id: string; state: API.ServiceSlotStates }) => ({
                 url: `/service-slots/${id}/state/${state}`,
                 method: 'PUT',
                 body: { id, state },
