@@ -1,5 +1,5 @@
-import * as enEs from '@assets/faq.page.enEs.md';
-import * as enUs from '@assets/faq.page.enUs.md';
+import * as enEs from '@assets/faq.page.enEs.md?raw';
+import * as enUs from '@assets/faq.page.enUs.md?raw';
 import { Redux } from '@modules/redux';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
@@ -20,22 +20,14 @@ export const FaqPage: React.FC = () => {
 
     React.useEffect(() => {
         const loadMarkdown = async () => {
-            let contentPath = '';
             switch (language) {
                 case Redux.UserLanguage.English:
                 default:
-                    contentPath = enUs.default + '?raw';
+                    setContent(enUs.default);
                     break;
                 case Redux.UserLanguage.Spanish:
-                    contentPath = enEs.default + '?raw';
+                    setContent(enEs.default);
                     break;
-            }
-
-            try {
-                const markdownModule = await import(contentPath);
-                setContent(markdownModule.default);
-            } catch (error) {
-                console.log('Failed to load markdown:', error);
             }
         };
 

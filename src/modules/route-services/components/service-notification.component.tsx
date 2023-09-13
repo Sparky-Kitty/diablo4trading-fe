@@ -5,14 +5,14 @@ import { Box, Button, Card, Grid, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 
-interface ServiceOfferProps {
+interface ServiceNotificationProps {
     slot: API.ServiceSlot;
     service: API.ServiceListing;
     buyer: string;
     score: number;
 }
 
-export const ServiceOffer: React.FC<ServiceOfferProps> = ({
+export const ServiceNotification: React.FC<ServiceNotificationProps> = ({
     slot,
     service,
     buyer,
@@ -57,57 +57,59 @@ export const ServiceOffer: React.FC<ServiceOfferProps> = ({
         }
     });
 
-    if (service && buyer && slot.state != API.ServiceSlotStates.Rejected) {
-        return (
-            <Card sx={{ p: 2, mt: 2, display: 'flex' }}>
-                <Box flex='1'>
-                    <Box
-                        sx={{
-                            cursor: 'pointer',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <Typography variant='h5' fontWeight='bold'>
-                                    {service.title}
-                                </Typography>
-                                <Typography variant='subtitle1' fontWeight='bold'>
-                                    {notification}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} display='flex' justifyContent='flex-end'>
-                                {yes
-                                    ? (
-                                        <Button
-                                            color='success'
-                                            variant='outlined'
-                                            startIcon={<ThumbUpOutlinedIcon />}
-                                            onClick={() => handleEdit(yes)}
-                                            sx={{ ml: 1 }}
-                                        >
-                                        </Button>
-                                    )
-                                    : <></>}
-                                {no
-                                    ? (
-                                        <Button
-                                            color='error'
-                                            variant='outlined'
-                                            startIcon={<ThumbDownOutlinedIcon />}
-                                            onClick={() => handleEdit(no)}
-                                            sx={{ ml: 1 }}
-                                        >
-                                        </Button>
-                                    )
-                                    : <></>}
-                            </Grid>
-                        </Grid>
-                    </Box>
-                </Box>
-            </Card>
-        );
+    if (!service || !buyer || !slot || slot.state == API.ServiceSlotStates.Rejected) {
+        return null;
     }
+
+    return (
+        <Card sx={{ p: 2, mt: 2, display: 'flex' }}>
+            <Box flex='1'>
+                <Box
+                    sx={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Typography variant='h5' fontWeight='bold'>
+                                {service.title}
+                            </Typography>
+                            <Typography variant='subtitle1' fontWeight='bold'>
+                                {notification}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12} display='flex' justifyContent='flex-end'>
+                            {yes
+                                ? (
+                                    <Button
+                                        color='success'
+                                        variant='outlined'
+                                        startIcon={<ThumbUpOutlinedIcon />}
+                                        onClick={() => handleEdit(yes)}
+                                        sx={{ ml: 1 }}
+                                    >
+                                    </Button>
+                                )
+                                : <></>}
+                            {no
+                                ? (
+                                    <Button
+                                        color='error'
+                                        variant='outlined'
+                                        startIcon={<ThumbDownOutlinedIcon />}
+                                        onClick={() => handleEdit(no)}
+                                        sx={{ ml: 1 }}
+                                    >
+                                    </Button>
+                                )
+                                : <></>}
+                        </Grid>
+                    </Grid>
+                </Box>
+            </Box>
+        </Card>
+    );
 };

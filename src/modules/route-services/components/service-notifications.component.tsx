@@ -5,9 +5,9 @@ import { Box, Card, Divider, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ServiceOffer } from './service-notification.component';
+import { ServiceNotification } from './service-notification.component';
 
-export const ServiceOffers: React.FC = () => {
+export const ServiceNotifications: React.FC = () => {
     const { i18n } = useLingui();
     const serviceSlotGetSearchQuery: API.ServiceSlotGetSearchQuery = {
         ownerId: parseInt(useSelector(AuthSelectors.getUserId), 10),
@@ -25,7 +25,7 @@ export const ServiceOffers: React.FC = () => {
                 <Divider />
                 {slots
                     ? slots.map(slot => (
-                        <ServiceOffer
+                        <ServiceNotification
                             key={slot?.id}
                             slot={slot}
                             service={slot?.service}
