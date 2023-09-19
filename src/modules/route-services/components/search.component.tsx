@@ -19,8 +19,10 @@ interface SearchResultsProps {
 export const Search: React.FC<SearchResultsProps> = ({
     params,
 }) => {
-    Redux.useServiceSearchQuery(params);
-    const listings = useSelector(ServiceSelectors.getListings);
+    Redux.useServiceSearchQuery({
+        params,
+    });
+    const listings = useSelector(ServiceSelectors.getSearchListings);
 
     return (
         <Root>
