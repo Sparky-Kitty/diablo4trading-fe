@@ -3,9 +3,9 @@ import { API } from '@sanctuaryteam/shared'; // Commented for above reason
 import { BackendSlice } from './../backend/slice';
 
 interface ServiceState {
-    searchListings: API.ServiceListing[];
-    userListings: API.ServiceListing[];
-    slots: API.ServiceSlot[];
+    searchListings: API.ServiceDto[];
+    userListings: API.ServiceDto[];
+    slots: API.ServiceSlotDto[];
 }
 
 export const SERVICE_STATE_INITIAL: ServiceState = {

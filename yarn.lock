@@ -1410,10 +1410,10 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@sanctuaryteam/shared@^0.2.6":
-  version "0.2.6"
-  resolved "https://npm.pkg.github.com/download/@sanctuaryteam/shared/0.2.6/1661fc8edfd3ef9a2d161c6c413829fd50d889cb#1661fc8edfd3ef9a2d161c6c413829fd50d889cb"
-  integrity sha512-/1izopcPvF31Dut3LFevzhDb+ihCZX43geCL8PENI414cW+31TcqR4v3qznDefrU/g6TWdRrd4PsEQSODJn7+A==
+"@sanctuaryteam/shared@^0.2.9":
+  version "0.2.9"
+  resolved "https://npm.pkg.github.com/download/@sanctuaryteam/shared/0.2.9/5fe1e1e42bdb6ddb37cabd8ec5acf42007c1681b#5fe1e1e42bdb6ddb37cabd8ec5acf42007c1681b"
+  integrity sha512-AIg58sSHxfdZr9rgDiXTi0sWYYYLkKt8EqAMMMklGvrX9gb65ztzz3Y2q1tTPQcLLQyWjxvWhhcFRGXc09oYYw==
   dependencies:
     "@diablosnaps/common" "^0.2.5"
     lz-string "^1.5.0"
