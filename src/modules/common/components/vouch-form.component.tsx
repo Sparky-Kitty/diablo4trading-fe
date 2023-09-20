@@ -4,18 +4,25 @@ import { Common } from '@modules/common';
 import { PosNegRatingInput } from '@modules/common/components/posneg-rating.component';
 import { StarRatingInput } from '@modules/common/components/star-rating.component';
 import { Button, Card, Grid, TextField, Typography } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 
-interface VouchData {
+interface VouchFormData {
     starRating: number;
     goodRating: boolean;
     notes: string;
 }
 
-export const VouchPage: React.FC = () => {
+interface VouchFormProps {
+    entity: API.ServiceSlotDto;
+}
+
+export const VouchForm: React.FC<VouchFormProps> = ({
+    entity,
+}) => {
     const { i18n } = useLingui();
 
-    const [vouchData, setVouchData] = React.useState<VouchData>({
+    const [vouchData, setVouchData] = React.useState<VouchFormData>({
         starRating: 3,
         goodRating: true,
         notes: '',
@@ -54,14 +61,18 @@ export const VouchPage: React.FC = () => {
                                             sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
                                             <Typography variant='h6' fontWeight='bold'>
-                                                {'⭐WTS T100⭐GLYPH XP UNIQUE⭐SPEEDRUNS⭐5m/RUN'}
+                                                {entity?.service?.title}
                                             </Typography>
                                         </Grid>
                                         <Grid
                                             xs={12}
                                             sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
-                                            <Common.UserRating user={'SparkyOnyx#1187'} rating={6} score={456} />
+                                            <Common.UserRating
+                                                user={entity?.client?.battleNetTag}
+                                                rating={entity?.client?.vouchRating}
+                                                score={entity?.client?.vouchScore}
+                                            />
                                         </Grid>
                                     </Grid>
                                 </Card>
