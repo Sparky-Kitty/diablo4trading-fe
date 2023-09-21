@@ -1,8 +1,9 @@
 import { useEditSlotStateMutation } from '@modules/redux/slices';
-import { Box, Button, Card, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, Dialog, DialogActions, DialogContent, Grid, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
 import React from 'react';
 import { Common } from '..';
+import { VouchForm } from './vouch-form.component';
 
 interface NotificationCardProps {
     recipient: API.UserDto;
@@ -17,13 +18,26 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
 }) => {
     const [editSlotState] = useEditSlotStateMutation();
     const handleEdit = (newState: API.ServiceSlotStates) => editSlotState({ id: entity.id, state: newState });
+    const handleOpenVouch = () => setOpenVouch(true);
+    const handleCloseVouch = () => setOpenVouch(false);
 
     const [yes, setYes] = React.useState<API.ServiceSlotStates>(null);
     const [yesText, setYesText] = React.useState<string>('Yes');
     const [no, setNo] = React.useState<API.ServiceSlotStates>(null);
     const [noText, setNoText] = React.useState<string>('No');
+    const [openVouch, setOpenVouch] = React.useState(false);
+    const [recip, setRecip] = React.useState<API.UserDto>(null);
+    const [description, setDescription] = React.useState<string>(null);
 
     React.useEffect(() => {
+        if (recipient.id === entity?.serviceOwnerUserId) {
+            setRecip(entity?.client);
+            setDescription("client");
+        } else if (recipient.id === entity?.clientUserId) {
+            setDescription("service");
+            setRecip(entity?.serviceOwner);
+        }
+
         switch (entity.state) {
             case API.ServiceSlotStates.Accepted:
                 setYes(API.ServiceSlotStates.Ended);
@@ -32,10 +46,14 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                 setNo(null);
                 break;
             case API.ServiceSlotStates.Rejected:
+                setYesText(null);
+                setNoText(null);
                 setYes(null);
                 setNo(null);
                 break;
             case API.ServiceSlotStates.Ended:
+                setYesText('Vouch');
+                setNoText(null);
                 setYes(null);
                 setNo(null);
                 break;
@@ -55,8 +73,16 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     }
 
     return (
-        <Card sx={{ p: 2, mt: 2, display: 'flex' }}>
+        <Card sx={{ p: 2, mt: 2, display: 'flex' }} elevation={3}>
             <Box flex='1'>
+                <Dialog open={openVouch} onClose={handleCloseVouch} maxWidth={'md'}>
+                    <DialogContent>
+                        <VouchForm entity={entity?.service} recipient={recip} description={description} />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleCloseVouch}>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
                 <Box
                     sx={{
                         cursor: 'pointer',
@@ -73,9 +99,9 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                         </Grid>
                         <Grid item xs={12}>
                             <Common.UserRating
-                                user={entity?.client?.battleNetTag}
-                                rating={entity?.client?.vouchRating}
-                                score={entity?.client?.vouchScore}
+                                user={recip?.battleNetTag}
+                                rating={recip?.vouchRating}
+                                score={recip?.vouchScore}
                             />
                             <Typography variant='subtitle1' fontWeight='bold'>
                                 {message}
@@ -93,7 +119,16 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                         {yesText}
                                     </Button>
                                 )
-                                : <></>}
+                                : (
+                                    <Button
+                                        color='success'
+                                        variant='outlined'
+                                        onClick={handleOpenVouch}
+                                        sx={{ ml: 1 }}
+                                    >
+                                        {yesText}
+                                    </Button>
+                                )}
                             {no
                                 ? (
                                     <Button

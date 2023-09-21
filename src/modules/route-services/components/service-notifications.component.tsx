@@ -18,7 +18,7 @@ export const ServiceNotifications: React.FC = () => {
     const notifications = useSelector(AuthSelectors.getNotifications);
 
     return (
-        <Card sx={{ p: 2, pt: 0 }}>
+        <Card sx={{ p: 2, pt: 0, borderColor: 'white', borderWidth: '2px', borderStyle: 'solid' }}>
             <Box pt={2}>
                 <Typography variant='subtitle2' color='text.secondary'>
                     {t(i18n)`Notifications`}

@@ -31,17 +31,17 @@ export const HeaderNotifications: React.FC = () => {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleCloseMenu}
+                    sx={{ maxWidth: '25%'}}
                 >
                     <Card
                         elevation={2}
-                        sx={{ outlineColor: 'error' }}
+                        sx={{ outlineColor: 'error', borderColor: 'white', borderWidth: '2px', borderStyle: 'solid' }}
                     >
                         {notifications
                             ? notifications.map(notification => (
                                 <MenuItem
                                     key={'navbar-notification-' + notification?.entity?.id + '-'
                                         + notification?.recipient?.id}
-                                    onClick={handleCloseMenu}
                                 >
                                     <Common.NotificationCard
                                         entity={notification?.entity}

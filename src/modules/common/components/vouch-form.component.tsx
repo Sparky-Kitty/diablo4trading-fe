@@ -14,11 +14,15 @@ interface VouchFormData {
 }
 
 interface VouchFormProps {
-    entity: API.ServiceSlotDto;
+    entity: API.ServiceDto;
+    recipient: API.UserDto;
+    description: string;
 }
 
 export const VouchForm: React.FC<VouchFormProps> = ({
     entity,
+    recipient,
+    description,
 }) => {
     const { i18n } = useLingui();
 
@@ -61,7 +65,7 @@ export const VouchForm: React.FC<VouchFormProps> = ({
                                             sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
                                             <Typography variant='h6' fontWeight='bold'>
-                                                {entity?.service?.title}
+                                                {entity?.title}
                                             </Typography>
                                         </Grid>
                                         <Grid
@@ -69,9 +73,9 @@ export const VouchForm: React.FC<VouchFormProps> = ({
                                             sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                         >
                                             <Common.UserRating
-                                                user={entity?.client?.battleNetTag}
-                                                rating={entity?.client?.vouchRating}
-                                                score={entity?.client?.vouchScore}
+                                                user={recipient?.battleNetTag}
+                                                rating={recipient?.vouchRating}
+                                                score={recipient?.vouchScore}
                                             />
                                         </Grid>
                                     </Grid>
@@ -79,11 +83,11 @@ export const VouchForm: React.FC<VouchFormProps> = ({
                             </Grid>
                             <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
                                 <Typography variant='h6'>
-                                    {t(i18n)`Please rate the product/service.`}
+                                    {t(i18n)`Please rate the ${description}.`}
                                 </Typography>
                             </Grid>
                             <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
-                                <Typography variant='h6' pt={1}>
+                                <Typography variant='h6' pt={1} mt={-1}>
                                     {t(i18n)`Is this a positive or negative review?`}
                                 </Typography>
                             </Grid>
