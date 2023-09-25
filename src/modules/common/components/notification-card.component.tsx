@@ -18,10 +18,10 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     const [editSlotState] = useEditSlotStateMutation();
     const handleEdit = (newState: API.ServiceSlotStates) => editSlotState({ id: entity.id, state: newState });
 
-    const [yes, setYes] = React.useState<API.ServiceSlotStates>(null);
-    const [yesText, setYesText] = React.useState<string>('Yes');
-    const [no, setNo] = React.useState<API.ServiceSlotStates>(null);
-    const [noText, setNoText] = React.useState<string>('No');
+    const [yes, setYes] = React.useState<API.ServiceSlotStates | null>(null);
+    const [yesText, setYesText] = React.useState<string | null>('Yes');
+    const [no, setNo] = React.useState<API.ServiceSlotStates | null>(null);
+    const [noText, setNoText] = React.useState<string | null>('No');
 
     React.useEffect(() => {
         switch (entity.state) {
@@ -83,7 +83,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                         </Grid>
                         <Grid item xs={12} display='flex' justifyContent='flex-end'>
                             {yes
-                                ? (
+                                && (
                                     <Button
                                         color='success'
                                         variant='outlined'
@@ -92,10 +92,9 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                     >
                                         {yesText}
                                     </Button>
-                                )
-                                : <></>}
+                                )}
                             {no
-                                ? (
+                                && (
                                     <Button
                                         color='error'
                                         variant='outlined'
@@ -104,8 +103,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                     >
                                         {noText}
                                     </Button>
-                                )
-                                : <></>}
+                                )}
                         </Grid>
                     </Grid>
                 </Box>

@@ -2,6 +2,7 @@ import { Game } from '@diablosnaps/common';
 import { t } from '@lingui/macro';
 import { useLingui } from '@lingui/react';
 import { Common } from '@modules/common';
+import { useRouteServerType } from '@modules/common/providers';
 import { Box, Button, Stack } from '@mui/material';
 import React from 'react';
 import { ListingNewImport } from './listing-new-1_import.component';
@@ -42,10 +43,11 @@ export const ListingNew: React.FC<ListingNewProps> = ({
 
     const [step, setStep] = React.useState(Step.Import);
     const [loading, setLoading] = React.useState(false);
+    const [serverType] = useRouteServerType();
 
     const [image, setImage] = React.useState('');
 
-    const [paramsForm, setParamsForm] = React.useState<ListingNewParamsFormValue>({});
+    const [paramsForm, setParamsForm] = React.useState<ListingNewParamsFormValue>({ serverType });
     const [itemForm, setItemForm] = React.useState<ListingNewItemFormValue>({});
 
     const handleImageImport = (image: string) => {
@@ -57,7 +59,7 @@ export const ListingNew: React.FC<ListingNewProps> = ({
     const handleItemImport = (image: string, item: Game.Item) => {
         setImage(image);
         // TODO: could set server type based on last context
-        setParamsForm({ language: item.language });
+        setParamsForm({ language: item.language, serverType });
         setItemForm({
             variant: item.variant,
             quality: item.quality,

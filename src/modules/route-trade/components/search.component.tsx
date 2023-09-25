@@ -76,7 +76,7 @@ export const Search: React.FC<SearchResultsProps> = ({
         if (!isNaN(timestamp)) {
             return;
         }
-        next(serverType, payload, 1, undefined)
+        next(serverType, payload, 1, NaN)
             .then(result => {
                 loader.current?.resetLoadMoreRowsCache(true);
                 onTimestampChange(result.data.timestamp);
@@ -141,7 +141,7 @@ export const Search: React.FC<SearchResultsProps> = ({
     return (
         <Root>
             <InfiniteLoader
-                ref={loader}
+                ref={loader as React.RefObject<InfiniteLoader>}
                 isRowLoaded={({ index }) => index < rowCount}
                 loadMoreRows={handleNextPage}
                 rowCount={hasMore ? rowCount + 1 : rowCount}

@@ -1,12 +1,13 @@
 import { Game } from '@diablosnaps/common';
 
 export function isSeasonal(
-    serverType: Game.ServerType,
-    itemType: Game.ItemType,
+    serverType?: Game.ServerType,
+    itemType?: Game.ItemType,
 ) {
     if (
-        itemType !== Game.ItemType.Amulet
-        && itemType !== Game.ItemType.Ring
+        !serverType || !itemType
+        || itemType !== Game.ItemType.Amulet
+            && itemType !== Game.ItemType.Ring
     ) {
         return false;
     }
