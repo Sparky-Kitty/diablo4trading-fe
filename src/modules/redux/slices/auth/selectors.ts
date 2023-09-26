@@ -1,7 +1,7 @@
 import { createRootSelector } from '../root.selector';
 
 // Custom comparison function to sort by the nested date
-function orderByUpdatedAt(a, b) {
+function orderByUpdatedAt(a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) {
     const dateA = new Date(a.createdAt);
     const dateB = new Date(b.createdAt);
 

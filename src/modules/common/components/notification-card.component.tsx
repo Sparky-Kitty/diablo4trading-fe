@@ -26,16 +26,20 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     const [no, setNo] = React.useState<API.ServiceSlotStates | null>(null);
     const [noText, setNoText] = React.useState<string | null>('No');
     const [openVouch, setOpenVouch] = React.useState(false);
-    const [recip, setRecip] = React.useState<API.UserDto>(null);
-    const [description, setDescription] = React.useState<string>(null);
+    const [recip, setRecip] = React.useState<API.UserDto>(recipient);
+    const [description, setDescription] = React.useState<string>('');
 
+    // Define a type guard function to check if an object is of type ServiceSlotDto
+    function isServiceDto(obj: any): obj is API.ServiceDto {
+        return obj && 'userId' in obj;
+    }
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isServiceSlotDto(obj: any): obj is API.ServiceSlotDto {
         return obj && 'clientUserId' in obj;
     }
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isUserVouchDto(obj: any): obj is API.UserVouchDto {
-        return obj && 'clientUserId' in obj;
+        return obj && 'recipientId' in obj;
     }
 
     React.useEffect(() => {
@@ -69,7 +73,14 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                     setNoText('Reject');
                     break;
             }
-        } else if (isUserVouchDto(entity)) {
+        } else if (isUserVouchDto(entity) && isServiceDto(entity.reference)) {
+            if (recipient.id === entity?.reference.userId) {
+                setRecip(entity?.recipient);
+                setDescription('client');
+            } else {
+                setRecip(entity?.recipient);
+                setDescription('client');
+            }
             setYesText('Vouch');
             setNoText(null);
             setYes(null);
