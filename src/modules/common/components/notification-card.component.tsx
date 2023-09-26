@@ -31,15 +31,18 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
 
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isServiceDto(obj: any): obj is API.ServiceDto {
-        return obj && 'userId' in obj;
+        console.log(obj)
+        return obj && obj.user;
     }
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isServiceSlotDto(obj: any): obj is API.ServiceSlotDto {
-        return obj && 'clientUserId' in obj;
+        console.log(obj)
+        return obj && obj.client;
     }
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isUserVouchDto(obj: any): obj is API.UserVouchDto {
-        return obj && 'recipientId' in obj;
+        console.log(obj)
+        return obj && obj.recipient;
     }
 
     React.useEffect(() => {
@@ -79,7 +82,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                 setDescription('client');
             } else {
                 setRecip(entity?.recipient);
-                setDescription('client');
+                setDescription('item');
             }
             setYesText('Vouch');
             setNoText(null);
@@ -95,10 +98,10 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     return (
         <Card sx={{ p: 2, mt: 2, display: 'flex' }} elevation={3}>
             <Box flex='1'>
-                {isServiceSlotDto(entity) && (
+                {isUserVouchDto(entity) && (
                     <Dialog open={openVouch} onClose={handleCloseVouch} maxWidth={'md'}>
                         <DialogContent>
-                            <VouchForm entity={entity?.service} recipient={recip} description={description} />
+                            <VouchForm entity={entity.reference} recipient={recip} description={description} />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseVouch}>Cancel</Button>
@@ -114,13 +117,20 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                     }}
                 >
                     <Grid container spacing={1}>
-                        {isServiceSlotDto(entity) && (
+                        {isUserVouchDto(entity) ? (
                             <Grid item xs={12}>
                                 <Typography variant='h5' fontWeight='bold'>
-                                    {entity?.service?.title}
+                                    {entity.reference?.title}
                                 </Typography>
                             </Grid>
-                        )}
+                        )
+                        :
+                            <Grid item xs={12}>
+                                <Typography variant='h5' fontWeight='bold'>
+                                    {entity.service?.title}
+                                </Typography>
+                            </Grid>
+                        }
                         <Grid item xs={12}>
                             <Common.UserRating
                                 user={recip?.battleNetTag}

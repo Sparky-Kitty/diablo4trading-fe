@@ -1,5 +1,5 @@
 import { Redux } from '@modules/redux';
-import { AuthSelectors } from '@modules/redux/slices';
+import { AuthSelectors, useSearchNotificationsQuery } from '@modules/redux/slices';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Card, IconButton, Menu, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
@@ -16,9 +16,11 @@ export const HeaderNotifications: React.FC = () => {
     const handleCloseMenu = () => {
         setAnchorEl(null);
     };
-
+    
     const user = useSelector(Redux.AuthSelectors.getUser) ?? null;
+    user && useSearchNotificationsQuery({ recipientId: user.id });    
     const notifications = useSelector(AuthSelectors.getNotifications);
+
     if (user) {
         return (
             <React.Fragment>
@@ -40,13 +42,13 @@ export const HeaderNotifications: React.FC = () => {
                         {notifications
                             ? notifications.map(notification => (
                                 <MenuItem
-                                    key={'navbar-notification-' + notification?.reference?.id + '-'
-                                        + notification?.recipient?.id}
+                                    key={'navbar-notification-' + notification.reference?.id + '-'
+                                        + notification.recipient?.id}
                                 >
                                     <Common.NotificationCard
-                                        entity={notification?.reference}
-                                        message={notification?.message}
-                                        recipient={notification?.recipient}
+                                        entity={notification.reference}
+                                        message={notification.message}
+                                        recipient={notification.recipient}
                                     />
                                 </MenuItem>
                             ))

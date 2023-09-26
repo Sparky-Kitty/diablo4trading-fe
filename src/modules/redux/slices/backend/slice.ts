@@ -108,11 +108,12 @@ export const BackendSlice = createApi({
             }),
         }),
         // user-notifications search
-        searchNotifications: builder.mutation({
-            query: ({ recipientId }: { recipientId: string }) => ({
-                url: `/users/user_notifications`,
+        
+        searchNotifications: builder.query<API.UserNotificationDto[], { recipientId: string }>({
+            query: params => ({
+                url: '/users/notifications',
                 method: 'GET',
-                body: { recipientId },
+                params,
             }),
         }),
     }),
@@ -121,7 +122,8 @@ export const BackendSlice = createApi({
 export const {
     // auth
     useAuthDiscordCallbackQuery,
-    useSearchNotificationsMutation,
+    useLazySearchNotificationsQuery,
+    useSearchNotificationsQuery,
     // trade
     useTradeSearchQuery,
     useLazyTradeSearchQuery,
