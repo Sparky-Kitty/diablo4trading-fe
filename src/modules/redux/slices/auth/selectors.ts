@@ -1,6 +1,5 @@
-import { createRootSelector } from '../root.selector';
 import { createSelector as createReselector } from 'reselect';
-
+import { createRootSelector } from '../root.selector';
 
 // Custom comparison function to sort by the nested date
 // function orderByUpdatedAt(a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) {
@@ -15,7 +14,6 @@ import { createSelector as createReselector } from 'reselect';
 //     }
 //     return 0;
 // }
-
 
 // const getSearchListings = createRootSelector((state) => state.service.searchListings);
 // const getUserListings = createRootSelector((state) => state.service.userListings);
@@ -38,10 +36,10 @@ const getToken = createRootSelector((state) => state.auth.token);
 const getUser = createRootSelector((state) => state.auth.user);
 const getNotifications = createRootSelector((state) => state.auth.notifications);
 
-export const AuthSelectors = {   
+export const AuthSelectors = {
     getToken,
     getUser,
-    getNotifications, 
+    getNotifications,
     getUserNotifications: createReselector(
         getNotifications,
         (notifications) => {

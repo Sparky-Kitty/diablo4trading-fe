@@ -45,9 +45,8 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     React.useEffect(() => {
         switch (entity != undefined) {
             case isServiceSlotDto(entity):
-                
                 break;
-        
+
             default:
                 break;
         }
@@ -124,27 +123,32 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                     }}
                 >
                     <Grid container spacing={1}>
-                        {isUserVouchDto(entity) ? (
-                            <Grid item xs={12}>
-                                <Typography variant='h5' fontWeight='bold'>
-                                    {entity.reference?.title}
-                                </Typography>
-                            </Grid>
-                        )
-                        :
-                            <Grid item xs={12}>
-                                <Typography variant='h5' fontWeight='bold'>
-                                    {entity.service?.title}
-                                </Typography>
-                            </Grid>
-                        }
-                        <Grid item xs={12} sx={{ wordBreak: "break-word" }}>
+                        {isUserVouchDto(entity)
+                            ? (
+                                <Grid item xs={12}>
+                                    <Typography variant='h5' fontWeight='bold'>
+                                        {entity.reference?.title}
+                                    </Typography>
+                                </Grid>
+                            )
+                            : (
+                                <Grid item xs={12}>
+                                    <Typography variant='h5' fontWeight='bold'>
+                                        {entity.service?.title}
+                                    </Typography>
+                                </Grid>
+                            )}
+                        <Grid item xs={12} sx={{ wordBreak: 'break-word' }}>
                             <Common.UserRating
                                 user={recip?.battleNetTag}
                                 rating={recip?.vouchRating}
                                 score={recip?.vouchScore}
                             />
-                            <Typography variant='subtitle2' fontWeight='bold' sx={{ wordWrap: "break-word", display: "inline-block", whiteSpace: "pre-line" }}>
+                            <Typography
+                                variant='subtitle2'
+                                fontWeight='bold'
+                                sx={{ wordWrap: 'break-word', display: 'inline-block', whiteSpace: 'pre-line' }}
+                            >
                                 {message}
                             </Typography>
                         </Grid>

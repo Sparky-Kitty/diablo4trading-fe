@@ -16,9 +16,9 @@ export const HeaderNotifications: React.FC = () => {
     const handleCloseMenu = () => {
         setAnchorEl(null);
     };
-    
+
     const user = useSelector(Redux.AuthSelectors.getUser) ?? null;
-    user && useSearchNotificationsQuery({ recipientId: user.id });    
+    user && useSearchNotificationsQuery({ recipientId: user.id });
     const notifications = useSelector(AuthSelectors.getUserNotifications);
 
     if (user) {

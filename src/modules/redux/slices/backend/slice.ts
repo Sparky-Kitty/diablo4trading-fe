@@ -107,7 +107,7 @@ export const BackendSlice = createApi({
                 body: { id, state },
             }),
         }),
-        // user-notifications search        
+        // user-notifications search
         searchNotifications: builder.query<API.UserNotificationDto[], { recipientId: string }>({
             query: params => ({
                 url: '/users/notifications',
@@ -116,30 +116,31 @@ export const BackendSlice = createApi({
             }),
         }),
 
-        
-    // @IsInt()
-    // id: number;
+        // @IsInt()
+        // id: number;
 
-    // @IsInt()
-    // @Min(0)
-    // @Max(10)
-    // rating: number;
+        // @IsInt()
+        // @Min(0)
+        // @Max(10)
+        // rating: number;
 
-    // @IsBoolean()
-    // isPositive: boolean;
+        // @IsBoolean()
+        // isPositive: boolean;
 
-    // @IsString()
-    // description: string;
-
+        // @IsString()
+        // description: string;
 
         // Close vouch
-        closeVouch: builder.query<API.UserVouchDto, {id: number, rating: number, isPositive: boolean, description: string}>({
+        closeVouch: builder.query<
+            API.UserVouchDto,
+            { id: number; rating: number; isPositive: boolean; description: string }
+        >({
             query: params => ({
                 url: '/user/vouch',
                 method: 'POST',
                 params,
             }),
-        })
+        }),
     }),
 });
 

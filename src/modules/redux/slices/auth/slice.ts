@@ -4,13 +4,13 @@ import { BackendSlice } from './../backend/slice';
 
 interface AuthState {
     token: string;
-    user: API.UserDto | null;
+    user?: API.UserDto;
     notifications: API.UserNotificationDto[];
 }
 
 export const AUTH_STATE_INITIAL: AuthState = {
     token: '',
-    user: null,
+    user: undefined,
     notifications: [],
 };
 
@@ -20,7 +20,7 @@ export const AuthSlice = createSlice({
     reducers: {
         logout: (state) => {
             state.token = '';
-            state.user = null;
+            state.user = undefined;
         },
     },
     extraReducers: (builder) => {
