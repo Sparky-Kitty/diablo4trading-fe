@@ -107,12 +107,21 @@ export const BackendSlice = createApi({
                 body: { id, state },
             }),
         }),
+        // user-notifications search
+        searchNotifications: builder.mutation({
+            query: ({ recipientId }: { recipientId: string }) => ({
+                url: `/users/user_notifications`,
+                method: 'GET',
+                body: { recipientId },
+            }),
+        }),
     }),
 });
 
 export const {
     // auth
     useAuthDiscordCallbackQuery,
+    useSearchNotificationsMutation,
     // trade
     useTradeSearchQuery,
     useLazyTradeSearchQuery,

@@ -13,12 +13,17 @@ const ItemTypeIcon = styled('img')(() => ({
 }));
 
 interface ItemTypeInputProps {
-    value: Game.ItemType;
-    onChange: (value: Game.ItemType) => void;
+    value?: Game.ItemType;
+    onChange: (value?: Game.ItemType) => void;
     label?: string;
     required?: boolean;
     disabled?: boolean;
     language?: Game.Language;
+}
+
+interface ItemTypeOptions {
+    id?: Game.ItemType;
+    label: string;
 }
 
 export const ItemTypeInput: React.FC<ItemTypeInputProps> = ({
@@ -33,20 +38,14 @@ export const ItemTypeInput: React.FC<ItemTypeInputProps> = ({
     const { language: assetsLanguage, translations } = Common.useAssets();
     const language = formLanguage ?? assetsLanguage;
 
-    const options = Object
+    const options: ItemTypeOptions[] = Object
         .values(Game.ItemType)
-        .map((type) => ({
+        .map<ItemTypeOptions>((type) => ({
             id: type,
             label: Game.getItemTypeText(type, language, translations),
         }));
-    let selected = value === undefined ? null : options.find((x) => x.id === value);
-    if (selected === undefined) {
-        options.push({
-            id: value,
-            label: t(i18n)`Unknown: ${value}`,
-        });
-        selected = options[options.length - 1];
-    }
+
+    const selected = options.find((o) => o.id === value) ?? undefined;
 
     return (
         <Autocomplete
@@ -60,14 +59,16 @@ export const ItemTypeInput: React.FC<ItemTypeInputProps> = ({
                     : options}
             onChange={(_, option) => onChange(option?.id)}
             renderOption={(props, option) => (
-                <li {...props}>
-                    <ItemTypeIcon
-                        src={Common.GAME_ITEM_TYPE_TOOLTIP_ICONS[option.id]}
-                        alt={t(i18n)`${Game.getItemTypeText(option.id, language, translations)}'s icon`}
-                    />
-                    &nbsp;
-                    {option.label}
-                </li>
+                option.id && (
+                    <li {...props}>
+                        <ItemTypeIcon
+                            src={Common.GAME_ITEM_TYPE_TOOLTIP_ICONS[option.id]}
+                            alt={t(i18n)`${Game.getItemTypeText(option.id, language, translations)}'s icon`}
+                        />
+                        &nbsp;
+                        {option.label}
+                    </li>
+                )
             )}
             renderInput={(params) => (
                 <TextField
@@ -76,7 +77,7 @@ export const ItemTypeInput: React.FC<ItemTypeInputProps> = ({
                     required={required}
                     InputProps={{
                         ...params.InputProps,
-                        startAdornment: Common.GAME_ITEM_TYPE_TOOLTIP_ICONS[value]
+                        startAdornment: value && Common.GAME_ITEM_TYPE_TOOLTIP_ICONS[value]
                             ? (
                                 <ItemTypeIcon
                                     src={Common.GAME_ITEM_TYPE_TOOLTIP_ICONS[value]}

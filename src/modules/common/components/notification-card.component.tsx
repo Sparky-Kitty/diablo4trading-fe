@@ -7,7 +7,7 @@ import { VouchForm } from './vouch-form.component';
 
 interface NotificationCardProps {
     recipient: API.UserDto;
-    entity: API.ServiceSlotDto; // || API.TradeBidDto || API.VouchDto ? (when we start refactoring to include trades/vouches)
+    entity: API.ServiceSlotDto | API.UserVouchDto; // || API.TradeBidDto || API.VouchDto ? (when we start refactoring to include trades/vouches)
     message: string;
 }
 
@@ -21,50 +21,59 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     const handleOpenVouch = () => setOpenVouch(true);
     const handleCloseVouch = () => setOpenVouch(false);
 
-    const [yes, setYes] = React.useState<API.ServiceSlotStates>(null);
-    const [yesText, setYesText] = React.useState<string>('Yes');
-    const [no, setNo] = React.useState<API.ServiceSlotStates>(null);
-    const [noText, setNoText] = React.useState<string>('No');
+    const [yes, setYes] = React.useState<API.ServiceSlotStates | null>(null);
+    const [yesText, setYesText] = React.useState<string | null>('Yes');
+    const [no, setNo] = React.useState<API.ServiceSlotStates | null>(null);
+    const [noText, setNoText] = React.useState<string | null>('No');
     const [openVouch, setOpenVouch] = React.useState(false);
     const [recip, setRecip] = React.useState<API.UserDto>(null);
     const [description, setDescription] = React.useState<string>(null);
 
+    // Define a type guard function to check if an object is of type ServiceSlotDto
+    function isServiceSlotDto(obj: any): obj is API.ServiceSlotDto {
+        return obj && 'clientUserId' in obj;
+    }
+    // Define a type guard function to check if an object is of type ServiceSlotDto
+    function isUserVouchDto(obj: any): obj is API.UserVouchDto {
+        return obj && 'clientUserId' in obj;
+    }
+
     React.useEffect(() => {
-        if (recipient.id === entity?.serviceOwnerUserId) {
-            setRecip(entity?.client);
-            setDescription("client");
-        } else if (recipient.id === entity?.clientUserId) {
-            setDescription("service");
-            setRecip(entity?.serviceOwner);
-        }
+        if (isServiceSlotDto(entity)) {
+            if (recipient.id === entity?.serviceOwnerUserId) {
+                setRecip(entity?.client);
+                setDescription('client');
+            } else if (recipient.id === entity?.clientUserId) {
+                setDescription('service');
+                setRecip(entity?.serviceOwner);
+            }
 
-        switch (entity.state) {
-            case API.ServiceSlotStates.Accepted:
-                setYes(API.ServiceSlotStates.Ended);
-                setYesText('End');
-                setNoText(null);
-                setNo(null);
-                break;
-            case API.ServiceSlotStates.Rejected:
-                setYesText(null);
-                setNoText(null);
-                setYes(null);
-                setNo(null);
-                break;
-            case API.ServiceSlotStates.Ended:
-                setYesText('Vouch');
-                setNoText(null);
-                setYes(null);
-                setNo(null);
-                break;
-
-            default:
-                API.ServiceSlotStates.Pending;
-                setYes(API.ServiceSlotStates.Accepted);
-                setYesText('Accept');
-                setNo(API.ServiceSlotStates.Rejected);
-                setNoText('Reject');
-                break;
+            switch (entity.state) {
+                case API.ServiceSlotStates.Accepted:
+                    setYes(API.ServiceSlotStates.Ended);
+                    setYesText('End');
+                    setNoText(null);
+                    setNo(null);
+                    break;
+                case API.ServiceSlotStates.Rejected:
+                    setYesText(null);
+                    setNoText(null);
+                    setYes(null);
+                    setNo(null);
+                    break;
+                default:
+                    API.ServiceSlotStates.Pending;
+                    setYes(API.ServiceSlotStates.Accepted);
+                    setYesText('Accept');
+                    setNo(API.ServiceSlotStates.Rejected);
+                    setNoText('Reject');
+                    break;
+            }
+        } else if (isUserVouchDto(entity)) {
+            setYesText('Vouch');
+            setNoText(null);
+            setYes(null);
+            setNo(null);
         }
     });
 
@@ -75,14 +84,16 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     return (
         <Card sx={{ p: 2, mt: 2, display: 'flex' }} elevation={3}>
             <Box flex='1'>
-                <Dialog open={openVouch} onClose={handleCloseVouch} maxWidth={'md'}>
-                    <DialogContent>
-                        <VouchForm entity={entity?.service} recipient={recip} description={description} />
-                    </DialogContent>
-                    <DialogActions>
-                    <Button onClick={handleCloseVouch}>Cancel</Button>
-                    </DialogActions>
-                </Dialog>
+                {isServiceSlotDto(entity) && (
+                    <Dialog open={openVouch} onClose={handleCloseVouch} maxWidth={'md'}>
+                        <DialogContent>
+                            <VouchForm entity={entity?.service} recipient={recip} description={description} />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseVouch}>Cancel</Button>
+                        </DialogActions>
+                    </Dialog>
+                )}
                 <Box
                     sx={{
                         cursor: 'pointer',
@@ -92,11 +103,13 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                     }}
                 >
                     <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <Typography variant='h5' fontWeight='bold'>
-                                {entity?.service?.title}
-                            </Typography>
-                        </Grid>
+                        {isServiceSlotDto(entity) && (
+                            <Grid item xs={12}>
+                                <Typography variant='h5' fontWeight='bold'>
+                                    {entity?.service?.title}
+                                </Typography>
+                            </Grid>
+                        )}
                         <Grid item xs={12}>
                             <Common.UserRating
                                 user={recip?.battleNetTag}
@@ -109,7 +122,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                         </Grid>
                         <Grid item xs={12} display='flex' justifyContent='flex-end'>
                             {yes
-                                ? (
+                                && (
                                     <Button
                                         color='success'
                                         variant='outlined'
@@ -118,8 +131,9 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                     >
                                         {yesText}
                                     </Button>
-                                )
-                                : (
+                                )}
+                            {isUserVouchDto(entity)
+                                && (
                                     <Button
                                         color='success'
                                         variant='outlined'
@@ -130,7 +144,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                     </Button>
                                 )}
                             {no
-                                ? (
+                                && (
                                     <Button
                                         color='error'
                                         variant='outlined'
@@ -139,8 +153,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                     >
                                         {noText}
                                     </Button>
-                                )
-                                : <></>}
+                                )}
                         </Grid>
                     </Grid>
                 </Box>

@@ -1,6 +1,4 @@
 import { Game } from '@diablosnaps/common';
-import { t } from '@lingui/macro';
-import { useLingui } from '@lingui/react';
 import { Autocomplete, TextField } from '@mui/material';
 import { matchSorter } from 'match-sorter';
 
@@ -39,11 +37,16 @@ const formatLanguage = (language: Game.Language) => {
 };
 
 interface LanguageInputProps {
-    value: Game.Language;
+    value?: Game.Language;
     label?: string;
     disabled?: boolean;
     required?: boolean;
-    onChange: (value: Game.Language) => void;
+    onChange: (value?: Game.Language) => void;
+}
+
+interface LanguageOptions {
+    id?: Game.Language;
+    label: string;
 }
 
 export const LanguageInput: React.FC<LanguageInputProps> = ({
@@ -53,22 +56,14 @@ export const LanguageInput: React.FC<LanguageInputProps> = ({
     required,
     onChange,
 }) => {
-    const { i18n } = useLingui();
-
-    const options = Object
+    const options: LanguageOptions[] = Object
         .values(Game.Language)
         .map((language) => ({
             id: language,
             label: formatLanguage(language),
         }));
-    let selected = value === undefined ? null : options.find((x) => x.id === value);
-    if (selected === undefined) {
-        options.push({
-            id: value,
-            label: t(i18n)`Unknown: ${value}`,
-        });
-        selected = options[options.length - 1];
-    }
+
+    const selected = options.find((o) => o.id === value) ?? undefined;
 
     return (
         <Autocomplete

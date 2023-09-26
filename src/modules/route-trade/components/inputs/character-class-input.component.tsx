@@ -13,11 +13,16 @@ const ClassIcon = styled('img')(() => ({
 }));
 
 interface CharacterClassInputProps {
-    value: Game.Class;
-    onChange: (value: Game.Class) => void;
+    value?: Game.Class;
+    onChange: (value?: Game.Class) => void;
     label?: string;
     disabled?: boolean;
     language?: Game.Language;
+}
+
+interface CharacterClassOptions {
+    id?: Game.Class;
+    label: string;
 }
 
 export const CharacterClassInput: React.FC<CharacterClassInputProps> = ({
@@ -31,20 +36,14 @@ export const CharacterClassInput: React.FC<CharacterClassInputProps> = ({
     const { language: assetsLanguage, translations } = Common.useAssets();
     const language = formLanguage ?? assetsLanguage;
 
-    const options = Object
+    const options: CharacterClassOptions[] = Object
         .values(Game.Class)
-        .map((characterClass) => ({
+        .map<CharacterClassOptions>((characterClass) => ({
             id: characterClass,
             label: Game.getCharacterClassText(characterClass, language, translations),
         }));
-    let selected = value === undefined ? null : options.find((x) => x.id === value);
-    if (selected === undefined) {
-        options.push({
-            id: value,
-            label: t(i18n)`Unknown: ${value}`,
-        });
-        selected = options[options.length - 1];
-    }
+
+    const selected = options.find((o) => o.id === value) ?? undefined;
 
     return (
         <Autocomplete
@@ -58,14 +57,16 @@ export const CharacterClassInput: React.FC<CharacterClassInputProps> = ({
                     : options}
             onChange={(_, option) => onChange(option?.id)}
             renderOption={(props, option) => (
-                <li {...props}>
-                    <ClassIcon
-                        src={Common.GAME_CLASS_ICONS[option.id]}
-                        alt={t(i18n)`${Game.getCharacterClassText(option.id, language, translations)}'s icon`}
-                    />
-                    &nbsp;
-                    {option.label}
-                </li>
+                option.id && (
+                    <li {...props}>
+                        <ClassIcon
+                            src={Common.GAME_CLASS_ICONS[option.id]}
+                            alt={t(i18n)`${Game.getCharacterClassText(option.id, language, translations)}'s icon`}
+                        />
+                        &nbsp;
+                        {option.label}
+                    </li>
+                )
             )}
             renderInput={(params) => (
                 <TextField
@@ -73,14 +74,13 @@ export const CharacterClassInput: React.FC<CharacterClassInputProps> = ({
                     label={label}
                     InputProps={{
                         ...params.InputProps,
-                        startAdornment: Common.GAME_CLASS_ICONS[value]
-                            ? (
+                        startAdornment: value
+                            && (
                                 <ClassIcon
                                     src={Common.GAME_CLASS_ICONS[value]}
                                     alt={t(i18n)`${Game.getCharacterClassText(value, language, translations)}'s icon`}
                                 />
-                            )
-                            : undefined,
+                            ),
                     }}
                 />
             )}

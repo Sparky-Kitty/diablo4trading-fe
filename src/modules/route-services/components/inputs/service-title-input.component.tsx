@@ -2,8 +2,8 @@ import { TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 
 interface ServiceTitleProps {
-    value: string;
-    onChange: (value: string) => void;
+    value?: string;
+    onChange: (value?: string) => void;
     label?: string;
     helperText?: string;
     disabled?: boolean;
@@ -16,7 +16,7 @@ export const ServiceTitleInput: React.FC<ServiceTitleProps> = ({
     helperText,
     disabled,
 }) => {
-    const [textValue, setTextValue] = React.useState<string>(value);
+    const [textValue, setTextValue] = React.useState<string | undefined>(value);
     useEffect(() => {
         setTextValue(value);
     }, [value]);

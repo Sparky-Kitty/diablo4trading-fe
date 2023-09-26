@@ -31,8 +31,8 @@ interface ListingNewItemProps {
     value: ListingNewItemFormValue;
     onChange: (update: (prev: ListingNewItemFormValue) => ListingNewItemFormValue) => void;
     image: string;
-    language: Game.Language;
-    serverType: Game.ServerType;
+    language?: Game.Language;
+    serverType?: Game.ServerType;
 }
 
 export const ListingNewItem: React.FC<ListingNewItemProps> = ({
@@ -48,8 +48,10 @@ export const ListingNewItem: React.FC<ListingNewItemProps> = ({
         return onChange(prev => ({ ...prev, ...next }));
     }, [onChange]);
 
+    const isSeasonal = !Common.isSeasonal(serverType, value.type);
+
     React.useEffect(() => {
-        if (!Common.isSeasonal(serverType, value.type)) {
+        if (isSeasonal) {
             handleChange({ socketType: undefined });
         }
     }, [handleChange, serverType, value.type]);
@@ -127,7 +129,7 @@ export const ListingNewItem: React.FC<ListingNewItemProps> = ({
                             </Grid>
                         </Grid>
                     </Grid>
-                    {Common.isSeasonal(serverType, value.type) && (
+                    {isSeasonal && (
                         <Grid container spacing={1}>
                             <Grid item xs={12}>
                                 <Typography variant='subtitle2' color='text.secondary'>
@@ -157,7 +159,7 @@ export const ListingNewItem: React.FC<ListingNewItemProps> = ({
                             length: 2,
                         }).map((_, i) => {
                             const option = value.inherentAffixes?.[i] || {};
-                            const placeholder = isNaN(option.value) ? '?' : `${option.value}`;
+                            const placeholder = isNaN(option.value ?? NaN) ? '?' : `${option.value}`;
 
                             const handleOptionChange = (index: number, update: Partial<Game.ItemAffix>) => {
                                 onChange(prev => {
@@ -205,7 +207,7 @@ export const ListingNewItem: React.FC<ListingNewItemProps> = ({
                             length: 4,
                         }).map((_, i) => {
                             const option = value.affixes?.[i] || {};
-                            const placeholder = isNaN(option.value) ? '?' : `${option.value}`;
+                            const placeholder = isNaN(option.value ?? NaN) ? '?' : `${option.value}`;
 
                             const handleOptionChange = (index: number, update: Partial<Game.ItemAffix>) => {
                                 onChange(prev => {

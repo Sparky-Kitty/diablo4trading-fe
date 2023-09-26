@@ -13,9 +13,14 @@ const ServerTypeIcon = styled('img')(() => ({
     marginRight: 4,
 }));
 
+interface ServerTypeOption {
+    id: Game.ServerType;
+    label: string;
+}
+
 interface ServerTypeInputProps {
-    value: Game.ServerType;
-    onChange: (value: Game.ServerType) => void;
+    value?: Game.ServerType;
+    onChange: (value?: Game.ServerType) => void;
     label?: string;
     required?: boolean;
     disabled?: boolean;
@@ -30,21 +35,18 @@ export const ServerTypeInput: React.FC<ServerTypeInputProps> = ({
 }) => {
     const { i18n } = useLingui();
     const { language, translations } = useAssets();
-
-    const options = Object
+    const options: ServerTypeOption[] = Object
         .values(Game.ServerType)
         .map((type) => ({
             id: type,
             label: Game.getServerTypeText(type, language, translations),
         }));
-    let selected = value === undefined ? null : options.find((x) => x.id === value);
-    if (selected === undefined) {
-        options.push({
-            id: value,
-            label: t(i18n)`Unknown: ${value}`,
-        });
-        selected = options[options.length - 1];
-    }
+
+    const selected = options.find((x) => x.id === value)
+        ?? {
+            id: Game.ServerType.Seasonal,
+            label: Game.getServerTypeText(Game.ServerType.Seasonal, language, translations),
+        };
 
     return (
         <Autocomplete
@@ -75,7 +77,7 @@ export const ServerTypeInput: React.FC<ServerTypeInputProps> = ({
                     hiddenLabel={!label}
                     InputProps={{
                         ...params.InputProps,
-                        startAdornment: GAME_SERVER_TYPE_ICONS[value] && (
+                        startAdornment: value && GAME_SERVER_TYPE_ICONS[value] && (
                             <ServerTypeIcon src={GAME_SERVER_TYPE_ICONS[value]} />
                         ),
                     }}

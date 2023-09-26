@@ -133,6 +133,7 @@ export const ItemTooltip: React.FC<ItemTooltipProps> = ({
     const { language, translations, affixes } = useAssets();
 
     const label = Game.getItemTypeLine(
+        // @ts-ignore - Fix upstream
         item.variant,
         item.quality,
         item.type,
@@ -146,41 +147,51 @@ export const ItemTooltip: React.FC<ItemTooltipProps> = ({
         });
     };
 
+    const itemPowerValue = String(isNaN(item.power ?? NaN) ? 1 : item.power);
     const itemPower = replaceVariables(translations[language]['UIItemPower'], {
-        s1: `${isNaN(item.power) ? 1 : item.power}`,
+        s1: itemPowerValue,
     }).trim();
 
-    const requiredLevel = item.requiredLevel > 0
+    const requiredLevel = item.requiredLevel && item.requiredLevel > 0
         ? replaceVariables(translations[language]['RequiredLevel'], {
             value: `${item.requiredLevel}`,
         }).trim()
         : undefined;
 
-    const classRestriction = item.classRestriction?.length > 0
+    const classRestriction = item.classRestriction?.length ?? 0 > 0
+        // @ts-ignore - Fix upstream
         ? Game.getCharacterClassText(item.classRestriction, language, translations)
         : undefined;
 
     const renderAffixes = (entries: Game.ItemAffix[]) => {
         return (
             <ul>
-                {entries.map((entry, index) => (
-                    <li key={index}>
-                        {highlightNumbers(
-                            Game.getItemAffixText(
-                                entry.id,
-                                language,
-                                Game.AffixType.Basic,
-                                -1,
-                                -1,
-                                affixes,
-                                `${isNaN(entry.value) ? '?' : entry.value}`,
-                            ).replace(/\{([^}]+)\}/g, '#'),
-                        )}
-                    </li>
-                ))}
+                {entries.map((entry, index) => {
+                    const entryValue = isNaN(entry.value ?? NaN) ? '?' : `${entry.value}`;
+                    const affixText = Game.getItemAffixText(
+                        entry.id,
+                        language,
+                        Game.AffixType.Basic,
+                        -1,
+                        -1,
+                        affixes,
+                        entryValue,
+                    ).replace(/\{([^}]+)\}/g, '#');
+                    return (
+                        <li key={index}>
+                            {highlightNumbers(
+                                affixText,
+                            )}
+                        </li>
+                    );
+                })}
             </ul>
         );
     };
+
+    if (!item.type || !item.inherentAffixes || !item.affixes) {
+        return null;
+    }
 
     return (
         <Tooltip data-quality={item.quality}>
@@ -188,13 +199,13 @@ export const ItemTooltip: React.FC<ItemTooltipProps> = ({
             <TypeLine data-quality={item.quality}>{label}</TypeLine>
             <Power>{highlightNumbers(itemPower)}</Power>
             <Separator data-left />
-            {item.inherentAffixes?.length > 0 && (
+            {item.inherentAffixes.length > 0 && (
                 <>
                     {renderAffixes(item.inherentAffixes)}
                     <Separator />
                 </>
             )}
-            {item.affixes?.length > 0 && renderAffixes(item.affixes)}
+            {item.affixes.length > 0 && renderAffixes(item.affixes)}
             {(requiredLevel !== undefined || classRestriction !== undefined) && (
                 <Extras>
                     {requiredLevel !== undefined && <Number>{requiredLevel}</Number>}

@@ -111,7 +111,6 @@ export const VouchForm: React.FC<VouchFormProps> = ({
                                 <Button
                                     variant='outlined'
                                     fullWidth
-                                    onClick={null}
                                 >
                                     {t(i18n)`Submit`}
                                 </Button>

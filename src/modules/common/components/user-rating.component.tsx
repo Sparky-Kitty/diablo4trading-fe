@@ -1,7 +1,4 @@
-import StarIcon from '@mui/icons-material/Star';
-import StarHalfIcon from '@mui/icons-material/StarHalf';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Rating, Typography } from '@mui/material';
 
 interface UserRatingProps {
     user: string;
@@ -15,10 +12,6 @@ export const UserRating: React.FC<UserRatingProps> = ({
     rating,
     score,
 }) => {
-    const fullStars = Math.floor(rating / 2);
-    const hasHalfStar = rating % 2 !== 0;
-    const emptyStars = Math.max(0, 5 - Math.ceil(rating / 2));
-
     return (
         <Box
             sx={{
@@ -41,13 +34,7 @@ export const UserRating: React.FC<UserRatingProps> = ({
                                         {user}
                                     </Typography>
                                     <Box sx={{ display: 'flex' }}>
-                                        {Array.from({ length: fullStars }).map((_, index) => (
-                                            <StarIcon fontSize='small' color='secondary' key={index} />
-                                        ))}
-                                        {hasHalfStar && <StarHalfIcon fontSize='small' color='secondary' />}
-                                        {Array.from({ length: emptyStars }).map((_, index) => (
-                                            <StarOutlineIcon fontSize='small' color='secondary' key={index} />
-                                        ))}
+                                        <Rating name='read-only' value={rating} precision={0.5} readOnly />
                                         <Typography>({score})</Typography>
                                     </Box>
                                 </Box>

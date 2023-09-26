@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux';
 import { Common } from '..';
 
 export const HeaderNotifications: React.FC = () => {
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-    const handleOpenMenu = (event) => {
+    const handleOpenMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -31,7 +31,7 @@ export const HeaderNotifications: React.FC = () => {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={handleCloseMenu}
-                    sx={{ maxWidth: '25%'}}
+                    sx={{ maxWidth: '25%' }}
                 >
                     <Card
                         elevation={2}
@@ -40,11 +40,11 @@ export const HeaderNotifications: React.FC = () => {
                         {notifications
                             ? notifications.map(notification => (
                                 <MenuItem
-                                    key={'navbar-notification-' + notification?.entity?.id + '-'
+                                    key={'navbar-notification-' + notification?.reference?.id + '-'
                                         + notification?.recipient?.id}
                                 >
                                     <Common.NotificationCard
-                                        entity={notification?.entity}
+                                        entity={notification?.reference}
                                         message={notification?.message}
                                         recipient={notification?.recipient}
                                     />
