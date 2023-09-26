@@ -116,20 +116,6 @@ export const BackendSlice = createApi({
             }),
         }),
 
-        // @IsInt()
-        // id: number;
-
-        // @IsInt()
-        // @Min(0)
-        // @Max(10)
-        // rating: number;
-
-        // @IsBoolean()
-        // isPositive: boolean;
-
-        // @IsString()
-        // description: string;
-
         // Close vouch
         closeVouch: builder.query<
             API.UserVouchDto,
