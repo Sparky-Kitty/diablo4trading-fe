@@ -1,4 +1,6 @@
 import { createRootSelector } from '../root.selector';
+import { createSelector as createReselector } from 'reselect';
+
 
 // Custom comparison function to sort by the nested date
 // function orderByUpdatedAt(a: { createdAt: string | number | Date }, b: { createdAt: string | number | Date }) {
@@ -14,10 +16,38 @@ import { createRootSelector } from '../root.selector';
 //     return 0;
 // }
 
-export const AuthSelectors = {
-    getToken: createRootSelector((state) => state.auth.token),
-    getUser: createRootSelector((state) => state.auth.user),
-    // getNotifications: createRootSelector((state) => state.auth.notifications.sort(orderByUpdatedAt)),
-    getNotifications: createRootSelector((state) => state.auth.notifications),
+
+// const getSearchListings = createRootSelector((state) => state.service.searchListings);
+// const getUserListings = createRootSelector((state) => state.service.userListings);
+// const getSlots = createRootSelector((state) => state.service.slots);
+
+// export const ServiceSelectors = {
+//     getSearchListings,
+//     getUserListings,
+//     getSlots,
+//     getUserSlots: createReselector(
+//         AuthSelectors.getUserId,
+//         getSlots,
+//         (userId, slots) => {
+//             return slots.filter(slot => slot.serviceOwnerUserId === userId);
+//         },
+//     ),
+// };
+
+const getToken = createRootSelector((state) => state.auth.token);
+const getUser = createRootSelector((state) => state.auth.user);
+const getNotifications = createRootSelector((state) => state.auth.notifications);
+
+export const AuthSelectors = {   
+    getToken,
+    getUser,
+    getNotifications, 
+    getUserNotifications: createReselector(
+        getNotifications,
+        (notifications) => {
+            return notifications;
+        },
+    ),
+
     getUserId: createRootSelector((state) => state.auth.user?.id),
 };

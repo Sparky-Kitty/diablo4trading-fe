@@ -45,6 +45,16 @@ export const AuthSlice = createSlice({
                 },
             )
             // .addMatcher(
+            //     BackendSlice.endpoints.closeVouch.matchFulfilled,
+            //     (state, action) => {
+            //         const { rating, isPositive, description } = action.meta.arg.originalArgs;
+            //         const vouch = action.payload;
+
+            //         state.notifications.push(action.payload)
+
+            //     }
+            // )
+            // .addMatcher(
             //     BackendSlice.endpoints.serviceSlotSearch.matchFulfilled,
             //     (state, action) => {
             //         const { userId } = action.meta.arg.originalArgs;
@@ -110,6 +120,7 @@ export const AuthSlice = createSlice({
 
                     state.notifications.map((notification, index) => {
                         if (isServiceSlotDto(notification.reference) && notification.reference.id === serviceSlotId) {
+                            state.notifications[index].recipient.battleNetTag = action.payload.recipient.battleNetTag;
                             switch (newState) {
                                 case API.ServiceSlotStates.Accepted:
                                     if (notification.recipient.id == notification.reference.clientUserId) {
@@ -120,12 +131,7 @@ export const AuthSlice = createSlice({
                                     }
                                     return state.notifications[index].reference.state = newState;
                                 case API.ServiceSlotStates.Rejected:
-                                    if (notification.recipient.id == notification.reference.clientUserId) {
-                                        state.notifications[index].message = 'Your purhase was rejected.';
-                                        return state.notifications[index].reference.state = newState;
-                                    } else {
-                                        return state.notifications.splice(index, 1);
-                                    }
+                                    return state.notifications.splice(index, 1);
                                 case API.ServiceSlotStates.Ended:
                                     return state.notifications.splice(index, 1);
                                 default:

@@ -19,7 +19,7 @@ export const HeaderNotifications: React.FC = () => {
     
     const user = useSelector(Redux.AuthSelectors.getUser) ?? null;
     user && useSearchNotificationsQuery({ recipientId: user.id });    
-    const notifications = useSelector(AuthSelectors.getNotifications);
+    const notifications = useSelector(AuthSelectors.getUserNotifications);
 
     if (user) {
         return (

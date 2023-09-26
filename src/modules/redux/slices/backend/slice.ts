@@ -107,8 +107,7 @@ export const BackendSlice = createApi({
                 body: { id, state },
             }),
         }),
-        // user-notifications search
-        
+        // user-notifications search        
         searchNotifications: builder.query<API.UserNotificationDto[], { recipientId: string }>({
             query: params => ({
                 url: '/users/notifications',
@@ -116,6 +115,31 @@ export const BackendSlice = createApi({
                 params,
             }),
         }),
+
+        
+    // @IsInt()
+    // id: number;
+
+    // @IsInt()
+    // @Min(0)
+    // @Max(10)
+    // rating: number;
+
+    // @IsBoolean()
+    // isPositive: boolean;
+
+    // @IsString()
+    // description: string;
+
+
+        // Close vouch
+        closeVouch: builder.query<API.UserVouchDto, {id: number, rating: number, isPositive: boolean, description: string}>({
+            query: params => ({
+                url: '/user/vouch',
+                method: 'POST',
+                params,
+            }),
+        })
     }),
 });
 
@@ -124,6 +148,9 @@ export const {
     useAuthDiscordCallbackQuery,
     useLazySearchNotificationsQuery,
     useSearchNotificationsQuery,
+    // vouch
+    useCloseVouchQuery,
+    useLazyCloseVouchQuery,
     // trade
     useTradeSearchQuery,
     useLazyTradeSearchQuery,

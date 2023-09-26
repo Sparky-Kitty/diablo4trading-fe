@@ -31,21 +31,26 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
 
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isServiceDto(obj: any): obj is API.ServiceDto {
-        console.log(obj)
-        return obj && obj.user;
+        return obj && obj.tags;
     }
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isServiceSlotDto(obj: any): obj is API.ServiceSlotDto {
-        console.log(obj)
         return obj && obj.client;
     }
     // Define a type guard function to check if an object is of type ServiceSlotDto
     function isUserVouchDto(obj: any): obj is API.UserVouchDto {
-        console.log(obj)
         return obj && obj.recipient;
     }
 
     React.useEffect(() => {
+        switch (entity != undefined) {
+            case isServiceSlotDto(entity):
+                
+                break;
+        
+            default:
+                break;
+        }
         if (isServiceSlotDto(entity)) {
             if (recipient.id === entity?.serviceOwnerUserId) {
                 setRecip(entity?.client);
@@ -76,18 +81,20 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                     setNoText('Reject');
                     break;
             }
-        } else if (isUserVouchDto(entity) && isServiceDto(entity.reference)) {
-            if (recipient.id === entity?.reference.userId) {
-                setRecip(entity?.recipient);
-                setDescription('client');
-            } else {
-                setRecip(entity?.recipient);
-                setDescription('item');
+        } else if (isUserVouchDto(entity)) {
+            if (isServiceDto(entity.reference)) {
+                if (recipient.id === entity?.reference.userId) {
+                    setRecip(entity?.recipient);
+                    setDescription('client');
+                } else {
+                    setRecip(entity?.recipient);
+                    setDescription('item');
+                }
+                setYesText('Vouch');
+                setNoText(null);
+                setYes(null);
+                setNo(null);
             }
-            setYesText('Vouch');
-            setNoText(null);
-            setYes(null);
-            setNo(null);
         }
     });
 
@@ -131,13 +138,13 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                                 </Typography>
                             </Grid>
                         }
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sx={{ wordBreak: "break-word" }}>
                             <Common.UserRating
                                 user={recip?.battleNetTag}
                                 rating={recip?.vouchRating}
                                 score={recip?.vouchScore}
                             />
-                            <Typography variant='subtitle1' fontWeight='bold'>
+                            <Typography variant='subtitle2' fontWeight='bold' sx={{ wordWrap: "break-word", display: "inline-block", whiteSpace: "pre-line" }}>
                                 {message}
                             </Typography>
                         </Grid>
