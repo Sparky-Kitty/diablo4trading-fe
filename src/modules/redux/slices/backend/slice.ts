@@ -119,7 +119,7 @@ export const BackendSlice = createApi({
         // Close vouch
         closeVouch: builder.query<
             API.UserVouchDto,
-            { id: number; rating: number; isPositive: boolean; description: string }
+            { id: string; rating: number; isPositive: boolean; description: string }
         >({
             query: params => ({
                 url: '/user/vouch',

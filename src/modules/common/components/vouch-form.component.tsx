@@ -6,6 +6,7 @@ import { StarRatingInput } from '@modules/common/components/star-rating.componen
 import { Button, Card, Grid, TextField, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
 import React from 'react';
+import { useCloseVouchQuery } from '@modules/redux/slices';
 
 interface VouchFormData {
     starRating: number;
@@ -43,6 +44,15 @@ export const VouchForm: React.FC<VouchFormProps> = ({
     const handleNotesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setVouchData({ ...vouchData, notes: event.target.value });
     };
+
+    const handleSubmit = () => {
+        useCloseVouchQuery({
+            id: entity.id,
+            rating: vouchData.starRating * 2, // Precision of 1-5 to 1-10 for database
+            isPositive: vouchData.goodRating,
+            description: vouchData.notes,
+        });
+    }
 
     return (
         <React.Fragment>
@@ -111,6 +121,7 @@ export const VouchForm: React.FC<VouchFormProps> = ({
                                 <Button
                                     variant='outlined'
                                     fullWidth
+                                    onClick={handleSubmit}
                                 >
                                     {t(i18n)`Submit`}
                                 </Button>

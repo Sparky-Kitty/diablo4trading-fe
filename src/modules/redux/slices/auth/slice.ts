@@ -44,16 +44,25 @@ export const AuthSlice = createSlice({
                     });
                 },
             )
-            // .addMatcher(
-            //     BackendSlice.endpoints.closeVouch.matchFulfilled,
-            //     (state, action) => {
-            //         const { rating, isPositive, description } = action.meta.arg.originalArgs;
-            //         const vouch = action.payload;
-
-            //         state.notifications.push(action.payload)
-
-            //     }
-            // )
+            .addMatcher(
+                BackendSlice.endpoints.closeVouch.matchFulfilled,
+                (state, action) => {
+                    const { rating, isPositive, description } = action.meta.arg.originalArgs;
+                    const vouch = action.payload;
+                    if (rating === vouch.rating && isPositive === vouch.isPositive) {
+                        const notification: API.UserNotificationDto = ({
+                            id: vouch.id,
+                            recipient: vouch.recipient,
+                            reference: vouch,
+                            referenceType: 'UserVouch',
+                            message: description,
+                            createdAt: new Date(),    
+                        });
+    
+                        notification && state.notifications.push(notification);
+                    };
+                },
+            )
             // .addMatcher(
             //     BackendSlice.endpoints.serviceSlotSearch.matchFulfilled,
             //     (state, action) => {
