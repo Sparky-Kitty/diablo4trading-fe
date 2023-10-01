@@ -50,17 +50,17 @@ export const AuthSlice = createSlice({
                     const { rating, isPositive, description } = action.meta.arg.originalArgs;
                     const vouch = action.payload;
                     if (rating === vouch.rating && isPositive === vouch.isPositive) {
-                        const notification: API.UserNotificationDto = ({
+                        const notification: API.UserNotificationDto = {
                             id: vouch.id,
                             recipient: vouch.recipient,
                             reference: vouch,
                             referenceType: 'UserVouch',
                             message: description,
-                            createdAt: new Date(),    
-                        });
-    
+                            createdAt: new Date(),
+                        };
+
                         notification && state.notifications.push(notification);
-                    };
+                    }
                 },
             )
             // .addMatcher(

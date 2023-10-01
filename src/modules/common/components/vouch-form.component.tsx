@@ -3,10 +3,10 @@ import { useLingui } from '@lingui/react';
 import { Common } from '@modules/common';
 import { PosNegRatingInput } from '@modules/common/components/posneg-rating.component';
 import { StarRatingInput } from '@modules/common/components/star-rating.component';
+import { useCloseVouchQuery } from '@modules/redux/slices';
 import { Button, Card, Grid, TextField, Typography } from '@mui/material';
 import { API } from '@sanctuaryteam/shared';
 import React from 'react';
-import { useCloseVouchQuery } from '@modules/redux/slices';
 
 interface VouchFormData {
     starRating: number;
@@ -52,7 +52,7 @@ export const VouchForm: React.FC<VouchFormProps> = ({
             isPositive: vouchData.goodRating,
             description: vouchData.notes,
         });
-    }
+    };
 
     return (
         <React.Fragment>

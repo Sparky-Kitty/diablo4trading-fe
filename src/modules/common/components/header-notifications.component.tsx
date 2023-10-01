@@ -2,10 +2,10 @@ import { Redux } from '@modules/redux';
 import { AuthSelectors, useSearchNotificationsQuery } from '@modules/redux/slices';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Card, IconButton, Menu, MenuItem } from '@mui/material';
+import { API } from '@sanctuaryteam/shared';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Common } from '..';
-import { API } from '@sanctuaryteam/shared';
 
 export const HeaderNotifications: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);

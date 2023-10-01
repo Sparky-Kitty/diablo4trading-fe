@@ -27,7 +27,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     const [noText, setNoText] = React.useState<string | null>('No');
     const [openVouch, setOpenVouch] = React.useState(false);
     const userVouch = entity as API.UserVouchDto;
-    console.log("UserVouch: " + JSON.stringify(userVouch));
+    console.log('UserVouch: ' + JSON.stringify(userVouch));
     const [recip, setRecip] = React.useState<API.UserDto>(userVouch.author ? userVouch.author : userVouch.recipient);
     const [description, setDescription] = React.useState<string>('');
 
