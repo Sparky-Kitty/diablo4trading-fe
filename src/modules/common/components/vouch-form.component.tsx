@@ -93,7 +93,7 @@ export const VouchForm: React.FC<VouchFormProps> = ({
                             </Grid>
                             <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>
                                 <Typography variant='h6'>
-                                    {t(i18n)`Please rate the ${description}.`}
+                                    {description}
                                 </Typography>
                             </Grid>
                             <Grid xs={6} display={'flex'} justifyContent={'center'} alignContent={'center'}>

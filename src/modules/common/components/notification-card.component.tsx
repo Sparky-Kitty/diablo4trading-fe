@@ -7,7 +7,7 @@ import { VouchForm } from './vouch-form.component';
 
 interface NotificationCardProps {
     recipient: API.UserDto;
-    entity: API.ServiceSlotDto | API.UserVouchDto; // || API.TradeBidDto || API.VouchDto ? (when we start refactoring to include trades/vouches)
+    entity: API.ServiceSlotDto | API.UserVouchDto; // | API.ItemListingBidDto ? (when we start refactoring to include trades)
     message: string;
 }
 
@@ -26,7 +26,9 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     const [no, setNo] = React.useState<API.ServiceSlotStates | null>(null);
     const [noText, setNoText] = React.useState<string | null>('No');
     const [openVouch, setOpenVouch] = React.useState(false);
-    const [recip, setRecip] = React.useState<API.UserDto>(recipient);
+    const userVouch = entity as API.UserVouchDto;
+    console.log("UserVouch: " + JSON.stringify(userVouch));
+    const [recip, setRecip] = React.useState<API.UserDto>(userVouch.author ? userVouch.author : userVouch.recipient);
     const [description, setDescription] = React.useState<string>('');
 
     // Define a type guard function to check if an object is of type ServiceSlotDto
@@ -52,11 +54,9 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
         }
         if (isServiceSlotDto(entity)) {
             if (recipient.id === entity?.serviceOwnerUserId) {
-                setRecip(entity?.client);
-                setDescription('client');
-            } else if (recipient.id === entity?.clientUserId) {
-                setDescription('service');
-                setRecip(entity?.serviceOwner);
+                setRecip(entity.client);
+            } else if (recipient.id === entity.clientUserId) {
+                setRecip(entity.serviceOwner);
             }
 
             switch (entity.state) {
@@ -82,12 +82,10 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
             }
         } else if (isUserVouchDto(entity)) {
             if (isServiceDto(entity.reference)) {
-                if (recipient.id === entity?.reference.userId) {
-                    setRecip(entity?.recipient);
-                    setDescription('client');
+                if (recipient.id === entity.recipientId) {
+                    setDescription('Please rate the client');
                 } else {
-                    setRecip(entity?.recipient);
-                    setDescription('item');
+                    setDescription('Please rate the service');
                 }
                 setYesText('Vouch');
                 setNoText(null);
@@ -140,9 +138,9 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                             )}
                         <Grid item xs={12} sx={{ wordBreak: 'break-word' }}>
                             <Common.UserRating
-                                user={recip?.battleNetTag}
-                                rating={recip?.vouchRating}
-                                score={recip?.vouchScore}
+                                user={recip.battleNetTag}
+                                rating={recip.vouchRating}
+                                score={recip.vouchScore}
                             />
                             <Typography
                                 variant='subtitle2'

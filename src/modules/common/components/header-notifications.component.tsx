@@ -5,6 +5,7 @@ import { Card, IconButton, Menu, MenuItem } from '@mui/material';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Common } from '..';
+import { API } from '@sanctuaryteam/shared';
 
 export const HeaderNotifications: React.FC = () => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -46,7 +47,7 @@ export const HeaderNotifications: React.FC = () => {
                                         + notification.recipient?.id}
                                 >
                                     <Common.NotificationCard
-                                        entity={notification.reference}
+                                        entity={notification.reference as API.UserVouchDto}
                                         message={notification.message}
                                         recipient={notification.recipient}
                                     />
