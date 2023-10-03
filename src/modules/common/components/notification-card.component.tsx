@@ -27,8 +27,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
     const [noText, setNoText] = React.useState<string | null>('No');
     const [openVouch, setOpenVouch] = React.useState(false);
     const userVouch = entity as API.UserVouchDto;
-    console.log('UserVouch: ' + JSON.stringify(userVouch));
-    const [recip, setRecip] = React.useState<API.UserDto>(userVouch.author ? userVouch.author : userVouch.recipient);
+    const [recip, setRecip] = React.useState<API.UserDto>(userVouch.recipient ? userVouch.recipient : userVouch.author);
     const [description, setDescription] = React.useState<string>('');
 
     // Define a type guard function to check if an object is of type ServiceSlotDto
@@ -82,10 +81,10 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
             }
         } else if (isUserVouchDto(entity)) {
             if (isServiceDto(entity.reference)) {
-                if (recipient.id === entity.recipientId) {
-                    setDescription('Please rate the client');
+                if (recipient.id === entity.authorId) {
+                    setDescription('Please rate the client.');
                 } else {
-                    setDescription('Please rate the service');
+                    setDescription('Please rate the service.');
                 }
                 setYesText('Vouch');
                 setNoText(null);
@@ -105,7 +104,7 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                 {isUserVouchDto(entity) && (
                     <Dialog open={openVouch} onClose={handleCloseVouch} maxWidth={'md'}>
                         <DialogContent>
-                            <VouchForm entity={entity.reference} recipient={recip} description={description} />
+                            <VouchForm vouch={entity} entity={entity.reference} recipient={recip} description={description} />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseVouch}>Cancel</Button>

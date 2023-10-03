@@ -160,7 +160,7 @@ export const AuthSlice = createSlice({
 
 // Define a type guard function to check if an object is of type ServiceSlotDto
 function isServiceSlotDto(obj: any): obj is API.ServiceSlotDto {
-    return obj && 'clientUserId' in obj;
+    return obj && obj.client;
 }
 
 export default AuthSlice.reducer;

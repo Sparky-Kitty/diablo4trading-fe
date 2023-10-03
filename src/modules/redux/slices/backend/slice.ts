@@ -116,17 +116,24 @@ export const BackendSlice = createApi({
             }),
         }),
 
-        // Close vouch
-        closeVouch: builder.query<
-            API.UserVouchDto,
-            { id: string; rating: number; isPositive: boolean; description: string }
-        >({
-            query: params => ({
-                url: '/user/vouch',
+        closeVouch: builder.mutation({
+            query: (vouchData) => ({
+                url: '/user/vouch/close',
                 method: 'POST',
-                params,
+                body: vouchData,
             }),
         }),
+        // Close vouch
+        // closeVouchs: builder.query<
+        //     API.UserVouchDto,
+        //     { id: string; rating: number; isPositive: boolean; description: string }
+        // >({
+        //     query: params => ({
+        //         url: '/user/vouch',
+        //         method: 'POST',
+        //         params,
+        //     }),
+        // }),
     }),
 });
 
@@ -136,8 +143,9 @@ export const {
     useLazySearchNotificationsQuery,
     useSearchNotificationsQuery,
     // vouch
-    useCloseVouchQuery,
-    useLazyCloseVouchQuery,
+    useCloseVouchMutation,
+    // useCloseVouchQuery,
+    // useLazyCloseVouchQuery,
     // trade
     useTradeSearchQuery,
     useLazyTradeSearchQuery,
