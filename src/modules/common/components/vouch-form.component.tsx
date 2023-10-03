@@ -15,7 +15,7 @@ interface VouchFormData {
 }
 
 interface VouchFormProps {
-    vouch: API.UserVouchDto,
+    vouch: API.UserVouchDto;
     entity: API.ServiceDto;
     recipient: API.UserDto;
     description: string;
@@ -28,7 +28,7 @@ export const VouchForm: React.FC<VouchFormProps> = ({
     description,
 }) => {
     const { i18n } = useLingui();
-    const [ closeVouch ] = useCloseVouchMutation();
+    const [closeVouch] = useCloseVouchMutation();
 
     const [vouchData, setVouchData] = React.useState<VouchFormData>({
         starRating: vouch.rating / 2,
@@ -47,9 +47,6 @@ export const VouchForm: React.FC<VouchFormProps> = ({
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setVouchData({ ...vouchData, description: event.target.value });
     };
-
-
-    
 
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         closeVouch({

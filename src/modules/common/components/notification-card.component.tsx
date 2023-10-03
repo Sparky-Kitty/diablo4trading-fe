@@ -104,7 +104,12 @@ export const NotificationCard: React.FC<NotificationCardProps> = ({
                 {isUserVouchDto(entity) && (
                     <Dialog open={openVouch} onClose={handleCloseVouch} maxWidth={'md'}>
                         <DialogContent>
-                            <VouchForm vouch={entity} entity={entity.reference} recipient={recip} description={description} />
+                            <VouchForm
+                                vouch={entity}
+                                entity={entity.reference}
+                                recipient={recip}
+                                description={description}
+                            />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={handleCloseVouch}>Cancel</Button>
